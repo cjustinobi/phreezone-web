@@ -17,6 +17,7 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    'assets/css/all.css',
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -34,10 +35,33 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/auth/login', method: 'post', propertyName: 'access_token' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/user-profile', method: 'get', propertyName: 'data'}
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer',
+        // globalToken: true,
+        // autoFetchUser: true
+      }
+    },
 
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+    redirect: {
+      login: '/',
+      logout: '/',
+      // callback: '/login',
+      home: '/home'
+    }
+  },
+  axios: {
+    baseURL: 'http://167.172.149.121/api/'
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
