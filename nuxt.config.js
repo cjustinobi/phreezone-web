@@ -63,8 +63,9 @@ export default {
   axios: {
     baseURL: 'http://167.172.149.121/api/'
   },
-
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
+  router: {
+    middleware: ['auth']
+  },
   build: {
   }
 }
