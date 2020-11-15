@@ -61,7 +61,8 @@ export default {
     }
   },
   axios: {
-    baseURL: 'http://167.172.149.121/api/'
+    // baseURL: 'http://localhost:8000/api/'
+    baseURL: 'http://167.172.149.121/mlm-api/api/'
   },
   router: {
     middleware: ['auth']

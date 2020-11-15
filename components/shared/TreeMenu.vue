@@ -1,7 +1,8 @@
 <template>
   <li>
     <div :class="{bold: isFolder}" @click="toggle">
-      {{ item.id }}
+      <img width="40px" class="img-responsive img-rounded" src="~assets/img/user.jpg" alt="User picture">
+      {{ item.fullName }}
       <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
     </div>
     <ul v-show="isOpen" v-if="isFolder">
@@ -20,9 +21,7 @@
 
 export default {
   name: 'tree-item',
-  props: {
-    item: Object
-  },
+  props: ['item'],
   data: function() {
     return {
       isOpen: false

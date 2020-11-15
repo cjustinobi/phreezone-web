@@ -1,10 +1,23 @@
 <template>
-  <ul id="demo">
-    <tree-item
-      class="item"
-      :item="treeData"
-    ></tree-item>
-  </ul>
+  <div>
+    <div v-for="(bonus, i) in bonuses" :key="i" class="bonuses">
+      <div class="shadow-sm p-3 mb-5 bg-white rounded">
+        <p>Performance Bonus</p>
+        <h2>{{ bonus.performance }}</h2>
+      </div>
+      <div class="shadow-sm p-3 mb-5 bg-white rounded">
+        <p>Shopping Bonus</p>
+        <h2>{{ bonus.shopping }}</h2>
+      </div>
+      <div class="shadow-sm p-3 mb-5 bg-white rounded">
+        <p>Membership Bonus</p>
+        <h2>3000</h2>
+      </div>
+    </div>
+    <ul id="demo">
+      <TreeItem class="item" :item="treeData" />
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -18,20 +31,32 @@ export default {
   },
   data() {
     return {
-      treeData: ''
+      treeData: '',
+      bonuses: '',
     }
   },
   methods: {
     async getTrees() {
-      this.treeData = (await this.$axios.$get('tree/getTrees'))[0]
+      this.treeData = (await this.$axios.$get(`user/${this.$auth.user.id}/getTrees`))
+    },
+    async getBonuses() {
+      this.bonuses = await this.$axios.$get(`user/${this.$auth.user.id}/bonuses`)
     },
   },
   mounted() {
     this.getTrees()
+    this.getBonuses()
   }
 }
 </script>
 
-<style >
-
+<style lang="scss" scoped>
+  .bonuses {
+    display: flex;
+    justify-content: space-between;
+    div {
+      min-width: 300px;
+      min-height: 200px;
+    }
+  }
 </style>
