@@ -40,7 +40,7 @@ export default {
       this.treeData = (await this.$axios.$get(`user/${this.$auth.user.id}/getTrees`))
     },
     async getBonuses() {
-      this.bonuses = await this.$axios.$get(`user/${this.$auth.user.id}/bonuses`)
+      this.bonuses = (await this.$axios.$get(`user/${this.$auth.user.id}/perfShopBonus`)).data
     },
   },
   mounted() {

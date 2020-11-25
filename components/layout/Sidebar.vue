@@ -2,7 +2,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a href="#">AfricInnovate</a>
+        <a href="#">MLM</a>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
@@ -41,16 +41,16 @@
           <li class="header-menu">
             <span>General</span>
           </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-folder"></i>
-              <span>Examples</span>
-            </a>
-          </li>
+<!--          <li>-->
+<!--            <a href="#">-->
+<!--              <i class="fa fa-folder"></i>-->
+<!--              <span>Membership</span>-->
+<!--            </a>-->
+<!--          </li>-->
           <li class="sidebar-dropdown">
             <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Payment</span>
+              <i class="fa fa-id-card"></i>
+              <span>Membership</span>
 <!--              <span class="badge badge-pill badge-warning">New</span>-->
             </a>
             <div class="sidebar-submenu">
@@ -59,29 +59,39 @@
                   <nuxt-link to="/pop">Upload POP</nuxt-link>
                 </li>
                 <li>
-                  <a href="#">Dashboard 2</a>
+                  <a href="#">Edit Personal Information</a>
                 </li>
                 <li>
-                  <a href="#">Dashboard 3</a>
+                  <a href="#">Search Sponsor Tree Network</a>
+                </li>
+                <li>
+                  <a href="#">Search Placement</a>
+                </li>
+                <li>
+                  <a href="#">Performance of Sponsor Network</a>
+                </li>
+                <li>
+                  <a href="#">Placement Tree Performance</a>
+                </li>
+                <li>
+                  <a href="#">Performance Service Organization</a>
                 </li>
               </ul>
             </div>
           </li>
           <li class="sidebar-dropdown">
             <a href="#">
-              <i class="fa fa-shopping-cart"></i>
-              <span>E-commerce</span>
+              <i class="fa fa-credit-card"></i>
+              <span>Commission</span>
 <!--              <span class="badge badge-pill badge-danger">3</span>-->
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">Products
-
-                  </a>
+                  <a href="#">Commission</a>
                 </li>
                 <li>
-                  <a href="#">Orders</a>
+                  <a href="#">Incentive Point Management</a>
                 </li>
                 <li>
                   <a href="#">Credit cart</a>
@@ -91,25 +101,19 @@
           </li>
           <li class="sidebar-dropdown">
             <a href="#">
-              <i class="far fa-gem"></i>
-              <span>Components</span>
+              <i class="far fa-envelope"></i>
+              <span>Message Control</span>
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">General</a>
+                  <a href="#">View Announcement</a>
                 </li>
                 <li>
-                  <a href="#">Panels</a>
+                  <a href="#">Contact Us</a>
                 </li>
                 <li>
                   <a href="#">Tables</a>
-                </li>
-                <li>
-                  <a href="#">Icons</a>
-                </li>
-                <li>
-                  <a href="#">Forms</a>
                 </li>
               </ul>
             </div>

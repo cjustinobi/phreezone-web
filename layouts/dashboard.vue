@@ -137,7 +137,7 @@ body {
 /*----------------show sidebar button----------------*/
 #show-sidebar {
   position: fixed;
-  left: 0;
+  left: 30px;
   top: 10px;
   border-radius: 0 4px 4px 0px;
   width: 35px;
@@ -149,7 +149,7 @@ body {
 /*----------------sidebar-wrapper----------------*/
 
 .sidebar-wrapper {
-  width: 260px;
+  width: 321px;
   height: 100%;
   max-height: 100%;
   position: fixed;
