@@ -15,7 +15,7 @@
           <span class="user-name">
             <strong>{{ $auth.user.fullName }}</strong>
           </span>
-          <span class="user-role">Administrator</span>
+          <span v-if="isAdmin" class="user-role">Administrator</span>
           <span class="user-status">
             <i class="fa fa-circle"></i>
             <span>Online</span>
@@ -47,6 +47,7 @@
 <!--              <span>Membership</span>-->
 <!--            </a>-->
 <!--          </li>-->
+
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-id-card"></i>
@@ -55,6 +56,9 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
+                <li v-if="isAdmin">
+                  <nuxt-link to="/users">All Users</nuxt-link>
+                </li>
                 <li>
                   <nuxt-link to="/pop">Upload POP</nuxt-link>
                 </li>
@@ -62,7 +66,7 @@
                   <a href="#">Edit Personal Information</a>
                 </li>
                 <li>
-                  <a href="#">Search Sponsor Tree Network</a>
+                  <nuxt-link to="#">Search Sponsor Tree Network</nuxt-link>
                 </li>
                 <li>
                   <a href="#">Search Placement</a>

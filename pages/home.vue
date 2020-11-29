@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     async getTrees() {
-      this.treeData = (await this.$axios.$get(`user/${this.$auth.user.id}/getTrees`))
+      this.treeData = (await this.$axios.$get(`user/${this.$auth.user.id}/trees`))
     },
     async getBonuses() {
       this.bonuses = (await this.$axios.$get(`user/${this.$auth.user.id}/perfShopBonus`)).data

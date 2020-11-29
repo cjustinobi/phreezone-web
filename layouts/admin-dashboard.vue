@@ -1,20 +1,21 @@
 <template>
 
-    <div class="page-wrapper chiller-theme toggled">
-      <Notification />
-      <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-        <i class="fas fa-bars"></i>
-      </a>
-      <DashboardSidebar />
+  <div class="page-wrapper chiller-theme toggled">
+    <Notification />
 
+    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+      <i class="fas fa-bars"></i>
+    </a>
+    <DashboardSidebar />
 
-      <main class="page-content">
-        <div class="container">
-          <Nuxt />
-        </div>
-      </main>
+    <main class="page-content">
+      <div class="container">
 
-    </div>
+        <Nuxt />
+      </div>
+    </main>
+
+  </div>
 </template>
 
 <script>

@@ -15,7 +15,7 @@
               <label>Password</label>
               <input v-model="details.password" autocomplete="new-password" class="form-control" required="" type="password">
             </div>
-<!--            <small @click="$emit('loginRegister', 'Register')">Create account? <a href="#">Register</a></small>-->
+            <small @click="$emit('loginRegister', 'Register')">Create account? <a href="#">Register</a></small>
             <!--        <div class="form-check small">-->
             <!--          <label class="form-check-label">-->
             <!--            <input class="form-check-input" type="checkbox">-->
