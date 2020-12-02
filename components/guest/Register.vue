@@ -9,7 +9,7 @@
           <form autocomplete="off" class="form" role="form">
             <div class="form-group">
               <label for="inputName">Name</label>
-              <input v-model="details.fullName" class="form-control" id="inputName" placeholder="Full name" required>
+              <input v-model="details.full_name" class="form-control" id="inputName" placeholder="Full name" required>
             </div>
             <div class="form-group">
               <label for="phone">Phone</label>
@@ -80,7 +80,7 @@ export default {
       invalidPhone: false,
       referralNotFound: false,
       details: {
-        fullName: '',
+        full_name: '',
         phone: '',
         email: '',
         parent_id: 1,

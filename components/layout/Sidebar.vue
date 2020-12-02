@@ -13,7 +13,7 @@
         </div>
         <div class="user-info">
           <span class="user-name">
-            <strong>{{ $auth.user.fullName }}</strong>
+            <strong>{{ $auth.user.full_name }}</strong>
           </span>
           <span v-if="isAdmin" class="user-role">Administrator</span>
           <span class="user-status">
@@ -60,7 +60,7 @@
                   <nuxt-link to="/users">All Users</nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="/pop">Upload POP</nuxt-link>
+                  <nuxt-link to="/pop">{{ isAdmin ? 'View POP' : 'Upload POP' }}</nuxt-link>
                 </li>
                 <li>
                   <a href="#">Edit Personal Information</a>

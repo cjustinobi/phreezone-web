@@ -81,15 +81,15 @@
   const columns = [
     {
       title: 'Full Name',
-      dataIndex: 'fullName',
-      key: 'fullName',
+      dataIndex: 'full_name',
+      key: 'full_name',
       scopedSlots: {
         customRender: 'fullName',
         filterDropdown: 'filterDropdown',
         filterIcon: 'filterIcon',
       },
       onFilter: (value, record) =>
-        record.fullName
+        record.full_name
           .toString()
           .toLowerCase()
           .includes(value.toLowerCase()),

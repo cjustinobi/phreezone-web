@@ -22,14 +22,12 @@
   import {mapGetters} from "vuex";
   import dashboardInit from "@/mixins/dashboardInit";
   import Notification from '@/components/shared/Notification';
-  import DashboardHeader from '@/components/layout/Header';
   import DashboardSidebar from '@/components/layout/Sidebar';
 
   export default {
     mixins: [dashboardInit],
     components: {
       Notification,
-      DashboardHeader,
       DashboardSidebar
     },
     computed: {

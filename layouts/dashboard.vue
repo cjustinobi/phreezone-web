@@ -1,34 +1,28 @@
 <template>
-
-    <div class="page-wrapper chiller-theme toggled">
-      <Notification />
-      <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-        <i class="fas fa-bars"></i>
-      </a>
-      <DashboardSidebar />
-
-
-      <main class="page-content">
-        <div class="container">
-          <Nuxt />
-        </div>
-      </main>
-
-    </div>
+  <div class="page-wrapper chiller-theme toggled">
+    <Notification />
+    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+      <i class="fas fa-bars"></i>
+    </a>
+    <DashboardSidebar />
+    <main class="page-content">
+      <div class="container">
+        <Nuxt />
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
   import {mapGetters} from "vuex";
   import dashboardInit from "@/mixins/dashboardInit";
   import Notification from '@/components/shared/Notification';
-  import DashboardHeader from '@/components/layout/Header';
   import DashboardSidebar from '@/components/layout/Sidebar';
 
   export default {
     mixins: [dashboardInit],
     components: {
       Notification,
-      DashboardHeader,
       DashboardSidebar
     },
     computed: {
