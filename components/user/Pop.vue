@@ -10,7 +10,21 @@
     </div>
   </div>
   <div v-else>
+    <a-page-header sub-title="Proof of Payment"/>
+    <div v-if="pendingPop">
+      <a-card hoverable style="width: 240px">
+        <img slot="cover" alt="pop" :src="`${$config.imagePath}/${pendingPop.pop_path}`"/>
+        <a-card-meta>
+          <template slot="description">
+            {{ pendingPop.amount | currency }}
+            <a-tag color="orange">{{ pendingPop.status }}</a-tag>
+            <p v-if="pendingPop.reject_reason">{{ pendingPop.reject_reason }}</p>
+          </template>
+        </a-card-meta>
+      </a-card>
+    </div>
     <a-empty
+      v-else
       image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
       :image-style="{
       height: '60px',
@@ -26,11 +40,19 @@
 
 
 <script>
+
   export default {
     name: 'pop',
     layout: 'dashboard',
+    filters: {
+      currency: function (val) {
+        if (!val) return ''
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(val)
+      }
+    },
     data() {
       return {
+        // serverPath: process.env.imageBase,
         img: require('assets/img/africinnovate.png'),
         file: '',
         amount: '',

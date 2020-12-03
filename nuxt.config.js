@@ -64,8 +64,14 @@ export default {
     }
   },
   axios: {
-    baseURL: 'http://localhost:8000/api/'
-    // baseURL: 'http://167.172.149.121/mlm-api/api/'
+    baseURL: process.env.NODE_ENV === 'dev'
+      ? 'http://localhost:8000/api/'
+      : 'http://167.172.149.121/mlm-api/api/'
+  },
+  publicRuntimeConfig: {
+    imagePath: process.env.NODE_ENV === 'dev'
+      ? 'http://localhost:8000'
+      : 'http://167.172.149.121',
   },
   router: {
     middleware: ['auth']
