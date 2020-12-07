@@ -52,22 +52,18 @@
         this.pkgs = (await this.$axios.$get('getPackages')).data
       },
       async updateUser() {
-        debugger
         if (this.isValidFields() == true) {
-          const details = {
-            id: this.user.id,
-            full_name: this.user.full_name,
-            phone: this.user.phone,
-            email: this.user.email,
-          }
+
           let formData = new FormData();
           formData.append('id', this.user.id)
           formData.append('full_name', this.user.full_name)
           formData.append('phone', this.user.phone)
           formData.append('email', this.user.email)
           formData.append('_method', 'PUT')
-          let res = (await this.$axios.$post(`user/${this.$route.params.id}`, formData)).data
-          console.log(res)
+
+          let res = await this.$axios.$post(`user/${this.$route.params.id}`, formData)
+          res.success ? this.$message.success(res.message) : this.$message.error(res.message)
+          this.$router.push('/users')
         }
       },
       isValidFields() {

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a-table v-if="users" :columns="columns" :data-source="users" rowKey="{record => record.id}">
+    <a-page-header sub-title="All Users"/>
+    <a-table v-if="users" :columns="columns" :data-source="users" :rowKey="record => record.id">
       <a-dropdown slot="action" slot-scope="text" href="javascript:;">
         <a-menu slot="overlay" @click="handleMenuClick">
           <a-menu-item key="1">
@@ -73,6 +74,7 @@
         {{ active == '0' ? 'Not Active' : 'Active'}}
       </a-tag>
     </span>
+      <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'Not subscribed to any package' : pkg }}</span>
     </a-table>
   </div>
 </template>
@@ -82,7 +84,6 @@
     {
       title: 'Full Name',
       dataIndex: 'full_name',
-      key: 'full_name',
       scopedSlots: {
         customRender: 'fullName',
         filterDropdown: 'filterDropdown',
@@ -104,25 +105,22 @@
     {
       title: 'Phone',
       dataIndex: 'phone',
-      key: 'phone',
     },
     {
       title: 'Package',
       dataIndex: 'package.name',
-      key: 'package',
+      scopedSlots: { customRender: 'pkg' },
     },
     {
       title: 'Referral',
-      key: 'referral',
       dataIndex: 'referral',
     },
     {
       title: 'Status',
       dataIndex: 'active',
-      key: 'active',
       scopedSlots: { customRender: 'active' },
     },
-    { title: 'Action', dataIndex: '', key: 'x', scopedSlots: { customRender: 'action' } },
+    { title: 'Action', dataIndex: '', scopedSlots: { customRender: 'action' } },
   ];
   export default {
     name: 'users',

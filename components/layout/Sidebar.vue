@@ -13,7 +13,8 @@
         </div>
         <div class="user-info">
           <span class="user-name">
-            <strong>{{ $auth.user.full_name }}</strong>
+            <strong>{{ $auth.user.full_name }}</strong><br>
+            <span class="badge badge-pill badge-warning" v-if="$auth.user.package">{{ $auth.user.package.name }}</span>
           </span>
           <span v-if="isAdmin" class="user-role">Administrator</span>
           <span class="user-status">
@@ -61,9 +62,6 @@
                 </li>
                 <li>
                   <nuxt-link to="/pop">{{ isAdmin ? 'View POP' : 'Upload POP' }}</nuxt-link>
-                </li>
-                <li>
-                  <a href="#">Edit Personal Information</a>
                 </li>
                 <li>
                   <nuxt-link to="#">Search Sponsor Tree Network</nuxt-link>
