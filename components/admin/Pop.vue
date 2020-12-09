@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a-page-header sub-title="List of Proof of Payment"/>
     <a-modal
       title="Reason for rejecting PoP"
       :visible="visible"
