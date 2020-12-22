@@ -6,9 +6,9 @@ export default {
     removeErrorClass(selector) {
       document.querySelector(selector).classList.remove('is-invalid')
     },
-    async login({ phone, password }) {
+    async login({ referral, password }) {
       try {
-        let response = await this.$auth.loginWith('local', {data: {phone, password}})
+        let response = await this.$auth.loginWith('local', {data: {referral, password}})
         this.$auth.setUser(response.data.user)
       } catch (e) {
         this.$store.dispatch('notification/setStatus', {

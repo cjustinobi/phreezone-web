@@ -2,7 +2,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a href="#">MLM</a>
+        <nuxt-link to="/home">MLM</nuxt-link>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
@@ -14,13 +14,11 @@
         <div class="user-info">
           <span class="user-name">
             <strong>{{ $auth.user.full_name }}</strong><br>
-            <span class="badge badge-pill badge-warning" v-if="$auth.user.package">{{ $auth.user.package.name }}</span>
+            <span class="badge badge-pill badge-warning" v-if="$auth.user.package">
+              {{ $auth.user.package.name }}
+            </span>
           </span>
           <span v-if="isAdmin" class="user-role">Administrator</span>
-          <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Online</span>
-          </span>
         </div>
       </div>
       <!-- sidebar-header  -->

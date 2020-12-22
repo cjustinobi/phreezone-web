@@ -1,19 +1,37 @@
 <template>
   <div>
-    <div v-for="(bonus, i) in bonuses" :key="i" class="bonuses">
-      <div class="shadow-sm p-3 mb-5 bg-white rounded">
-        <p>Performance Bonus</p>
-        <h2>{{ bonus.performance }}</h2>
+    <div class="bonuses">
+      <div v-if="pckLevel" class="shadow-sm p-3 mb-5 bg-white rounded">
+        <p>Next package <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span></p>
+        <h2>
+          <a-progress type="circle" :percent="pckLevel.packageLevel"/>
+        </h2>
       </div>
-      <div class="shadow-sm p-3 mb-5 bg-white rounded">
-        <p>Shopping Bonus</p>
-        <h2>{{ bonus.shopping }}</h2>
+      <div v-else>
+        <p>Next package <span class="badge badge-pill badge-primary">QSilver</span></p>
+        <h2>
+          <a-progress type="circle" class="ant-progress-status-exception" :percent="0"/>
+        </h2>
       </div>
-      <div class="shadow-sm p-3 mb-5 bg-white rounded">
+      <div v-if="membershipBonus" class="shadow-sm p-3 mb-5 bg-white rounded">
         <p>Membership Bonus</p>
-        <h2>3000</h2>
+        <h2>{{ membershipBonus | currency }}</h2>
       </div>
     </div>
+<!--    <div v-for="(bonus, i) in bonuses" :key="i" class="bonuses">-->
+<!--      <div class="shadow-sm p-3 mb-5 bg-white rounded">-->
+<!--        <p>Performance Bonus</p>-->
+<!--        <h2>{{ bonus.performance }}</h2>-->
+<!--      </div>-->
+<!--      <div class="shadow-sm p-3 mb-5 bg-white rounded">-->
+<!--        <p>Shopping Bonus</p>-->
+<!--        <h2>{{ bonus.shopping }}</h2>-->
+<!--      </div>-->
+<!--      <div class="shadow-sm p-3 mb-5 bg-white rounded">-->
+<!--        <p>Membership Bonus</p>-->
+<!--        <h2>3000</h2>-->
+<!--      </div>-->
+<!--    </div>-->
     <ul id="demo">
       <TreeItem class="item" :item="treeData" />
     </ul>
@@ -33,6 +51,8 @@ export default {
     return {
       treeData: '',
       bonuses: '',
+      membershipBonus: '',
+      pckLevel: ''
     }
   },
   methods: {
@@ -42,10 +62,18 @@ export default {
     async getBonuses() {
       this.bonuses = (await this.$axios.$get(`user/${this.$auth.user.id}/perfShopBonus`)).data
     },
+    async getMembershipBonus() {
+      this.membershipBonus = (await this.$axios.$get(`user/${this.$auth.user.id}/membershipBonus`)).data
+    },
+    async getPackageLevel() {
+      this.pckLevel = (await this.$axios.$get(`user/${this.$auth.user.id}/packageLevel`)).data
+    }
   },
   mounted() {
     this.getTrees()
     this.getBonuses()
+    this.getPackageLevel()
+    this.getMembershipBonus()
   }
 }
 </script>
@@ -57,6 +85,9 @@ export default {
     div {
       min-width: 300px;
       min-height: 200px;
+    }
+    .badge-primary {
+      font-size: 14px;
     }
   }
 </style>

@@ -8,8 +8,8 @@
         <div class="card-body">
           <form autocomplete="off" class="form" id="formLogin" name="formLogin" role="form">
             <div class="form-group">
-              <label for="phone">Phone</label>
-              <input v-model="details.phone" class="form-control" id="phone"  required="">
+              <label for="referral">Referral</label>
+              <input v-model="details.referral" class="form-control" id="referral"  required="">
             </div>
             <div class="form-group">
               <label>Password</label>
@@ -38,14 +38,14 @@ export default {
   data() {
     return {
       details: {
-        phone: '',
+        referral: '',
         password: ''
       }
     }
   },
   methods: {
     submitForm() {
-      if (!this.details.phone || !this.details.password) {
+      if (!this.details.referral || !this.details.password) {
         this.$store.dispatch('notification/setStatus', {
           messages: ['All fields are required'],
           success: false
@@ -54,7 +54,7 @@ export default {
       }
 
       try {
-        this.login({ phone: this.details.phone, password: this.details.password })
+        this.login({ referral: this.details.referral, password: this.details.password })
       } catch (err) {
         console.log(err.status)
       }

@@ -16,7 +16,8 @@
         <img slot="cover" alt="pop" :src="`${$config.imagePath}/${pendingPop.pop_path}`"/>
         <a-card-meta>
           <template slot="description">
-            {{ pendingPop.amount | currency }}
+            <span v-if="pendingPop.status == 'pending'">{{ pendingPop.pending_amount | currency }}</span>
+            <span v-else>{{ pendingPop.amount | currency }}</span>
             <a-tag color="orange">{{ pendingPop.status }}</a-tag>
             <p v-if="pendingPop.reject_reason">{{ pendingPop.reject_reason }}</p>
           </template>
@@ -89,6 +90,7 @@
             success: true,
             messages: ['Confirmation uploaded']
           })
+          window.location.href = '/pop'
         }
 
       },

@@ -100,7 +100,10 @@
       <span slot="status" slot-scope="status">
       <a-tag :color="status == 'pending' ? 'volcano' : status == 'rejected' ? 'red' : 'green' ">{{ status }}</a-tag>
     </span>
-      <span slot="amount" slot-scope="text">{{ text | currency }}</span>
+      <span slot="amount" slot-scope="amount, rec">
+        <span v-if="rec.status == 'pending'">{{ rec.pending_amount | currency }}</span>
+        <span v-else>{{ amount | currency }}</span>
+      </span>
 
     </a-table>
   </div>
