@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a-page-header sub-title="Register New Member"/>
     <Register />
   </div>
 </template>
@@ -8,6 +9,7 @@
   import Register from '@/components/guest/Register'
   export default {
     name: 'register',
+    layout: 'admin-dashboard',
     components: {
       Register
     }

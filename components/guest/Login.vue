@@ -65,7 +65,7 @@ export default {
         console.log(err.status)
       }
     },
-    getRandomNumber(min = 30000, max = 40000) {
+    getRandomNumber(min = 10000, max = 99999) {
       min = Math.ceil(min);
       max = Math.floor(max);
       this.randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;

@@ -56,7 +56,10 @@
             <div class="sidebar-submenu">
               <ul>
                 <li v-if="isAdmin">
-                  <nuxt-link to="/users">All Users</nuxt-link>
+                  <nuxt-link to="/register">Add new Member</nuxt-link>
+                </li>
+                <li v-if="isAdmin">
+                  <nuxt-link to="/users">All Members</nuxt-link>
                 </li>
                 <li>
                   <nuxt-link to="/pop">{{ isAdmin ? 'View POP' : 'Upload POP' }}</nuxt-link>

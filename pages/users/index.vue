@@ -1,7 +1,11 @@
 <template>
   <div>
     <a-page-header sub-title="All Users"/>
-    <a-button @click="() => $router.push('/register')">Add User</a-button>
+    <a-row>
+      <a-col :span="3">
+      <a-button type="primary" @click="() => $router.push('/register')">Add New Member</a-button>
+      </a-col>
+    </a-row>
     <br>
     <a-table v-if="users" :columns="columns" :data-source="users" :rowKey="record => record.id">
       <a-dropdown slot="action" slot-scope="text" href="javascript:;">
