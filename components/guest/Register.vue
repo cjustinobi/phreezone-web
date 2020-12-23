@@ -45,13 +45,13 @@
                 Invalid Referral code.
               </div>
             </div>
-            <div class="form-group">
-              <label for="package">Package</label>
-              <select v-model="details.package_id" class="form-control" id="package" required>
-                <option>Select Package</option>
-                <option v-for="(pkg, i) in packages" :value="pkg.id">{{ pkg.name }} - {{ pkg.amount }}</option>
-              </select>
-            </div>
+<!--            <div class="form-group">-->
+<!--              <label for="package">Package</label>-->
+<!--              <select v-model="details.package_id" class="form-control" id="package" required>-->
+<!--                <option>Select Package</option>-->
+<!--                <option v-for="(pkg, i) in packages" :value="pkg.id">{{ pkg.name }} - {{ pkg.amount }}</option>-->
+<!--              </select>-->
+<!--            </div>-->
             <div class="form-group">
               <label for="inputPassword3">Password</label>
               <input v-model="details.password" class="form-control" id="inputPassword3" placeholder="Password" required type="password">
@@ -60,7 +60,7 @@
             <div class="form-group">
               <button @click.prevent="submitForm" class="btn btn-success btn-lg float-right" type="submit">Register</button>
             </div>
-            <small @click="$emit('loginRegister', 'Login')">Already have an account? <a href="#">Sign in</a>.</small>
+<!--            <small @click="$emit('loginRegister', 'Login')">Already have an account? <a href="#">Sign in</a>.</small>-->
           </form>
         </div>
       </div><!-- /form card register -->
@@ -84,7 +84,7 @@ export default {
         phone: '',
         email: '',
         parent_id: 1,
-        package_id: 'Select Package',
+        // package_id: 'Select Package',
         password: ''
       }
     }

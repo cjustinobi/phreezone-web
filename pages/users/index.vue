@@ -1,6 +1,8 @@
 <template>
   <div>
     <a-page-header sub-title="All Users"/>
+    <a-button @click="() => $router.push('/register')">Add User</a-button>
+    <br>
     <a-table v-if="users" :columns="columns" :data-source="users" :rowKey="record => record.id">
       <a-dropdown slot="action" slot-scope="text" href="javascript:;">
         <a-menu slot="overlay" @click="handleMenuClick">
