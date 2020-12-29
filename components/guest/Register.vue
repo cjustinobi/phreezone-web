@@ -92,11 +92,15 @@ export default {
   methods: {
     async submitForm() {
       let res = await this.$axios.$post('/auth/register', this.details)
-      this.$store.dispatch('notification/setStatus', {
-        success: true,
-        messages: ['Account successfully created']
-      })
-      this.login({phone: this.details.phone, password: this.details.password})
+      if (res.success) {
+        Object.keys(this.details).map(item => this.details[item] = '')
+        this.referral = ''
+        this.$store.dispatch('notification/setStatus', {
+          success: true,
+          messages: ['Account successfully created']
+        })
+      }
+
     },
     async getPackages() {
       this.packages = (await this.$axios.$get('/getPackages')).data
@@ -113,7 +117,7 @@ export default {
       let error = false
       if (!this.isNumber(this.details.phone)) {
         error = true
-      } else if (this.details.phone.length < 11 || this.details.phone.length > 11) {
+      } else if (this.details.phone.length !== 11) {
         error = true
       }
       if (error) {

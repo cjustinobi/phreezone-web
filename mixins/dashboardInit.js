@@ -1,6 +1,13 @@
 import $ from "jquery";
 
 export default {
+  methods: {
+    hideSidebarOnSmallDevice() {
+      if(window.innerWidth < 767) {
+        $(".page-wrapper").removeClass("toggled");
+      }
+    }
+  },
   mounted() {
     $(".sidebar-dropdown > a").click(function() {
       $(".sidebar-submenu").slideUp(200);
@@ -30,5 +37,7 @@ export default {
     $("#show-sidebar").click(function() {
       $(".page-wrapper").addClass("toggled");
     });
+
+    this.hideSidebarOnSmallDevice()
   }
 }

@@ -82,6 +82,9 @@ export default {
   .bonuses {
     display: flex;
     justify-content: space-between;
+    #demo {
+      list-style-type: none;
+    }
     div {
       min-width: 300px;
       min-height: 200px;
