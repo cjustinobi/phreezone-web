@@ -3,6 +3,7 @@
     <div :class="{bold: isFolder}" @click="toggle">
       <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
       <img width="40px" class="img-responsive img-rounded" src="~assets/img/user.jpg" alt="User picture">
+      <strong class="display-block">{{ item.referral }}</strong>
       <strong class="display-block">{{ item.full_name }}</strong>
       <span class="display-block">{{ item.phone }}</span>
       <span class="badge badge-pill badge-warning" v-if="item.package">{{ item.package.name }}</span>
