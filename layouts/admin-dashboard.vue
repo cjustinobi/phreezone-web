@@ -23,6 +23,7 @@
   import dashboardInit from "@/mixins/dashboardInit";
   import Notification from '@/components/shared/Notification';
   import DashboardSidebar from '@/components/layout/Sidebar';
+  import $ from "jquery";
 
   export default {
     mixins: [dashboardInit],
@@ -33,7 +34,13 @@
     computed: {
       ...mapGetters(['isAuthenticated', 'loggedInUser'])
     },
-
+    watch: {
+      '$route': function () {
+        if(window.innerWidth < 767) {
+          $(".page-wrapper").removeClass("toggled");
+        }
+      }
+    }
   }
 
 
