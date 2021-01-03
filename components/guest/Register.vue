@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="card card-outline-secondary">
         <div class="card-header m-b-33">
           <h3 class="mb-0">Sign Up</h3>
@@ -8,50 +8,99 @@
         <div class="card-body">
           <form autocomplete="off" class="form" role="form">
             <div class="form-group">
-              <label for="inputName">Name</label>
-              <input v-model="details.full_name" class="form-control" id="inputName" placeholder="Full name" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input
-                v-model="details.phone"
-                @change="validatePhone"
-                @input="removeErrorClass('#phone'); invalidPhone = false"
-                class="form-control"
-                id="phone"
-                placeholder="Phone"
-                required
-              >
-              <div v-if="invalidPhone" class="invalid-feedback">
-                Invalid Phone number.
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="inputName">First Name</label>
+                  <input v-model="details.first_name" class="form-control" id="inputName" placeholder="First name" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="lastName">Last Name</label>
+                  <input v-model="details.last_name" class="form-control" id="lastName" placeholder="Last Name" required>
+                </div>
               </div>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input v-model="details.email" class="form-control" id="email" placeholder="Email" required="" type="email">
-            </div>
-            <div class="form-group">
-              <label for="referral">Referral ID</label>
-              <input
-                v-model="referral"
-                @input="removeErrorClass('#referral'); referralNotFound = false"
-                @change="getReferral"
-                placeholder="Your sponsor ID"
-                class="form-control"
-                id="referral"
-                required
-              >
-              <div v-if="referralNotFound" class="invalid-feedback">
-                Invalid Referral code.
+              <div class="row">
+                <div class="col-md-6">
+                  <label style="display: block">Gender</label>
+                  <div class="form-check">
+                    <input v-model="details.gender" class="form-check-input" name="gender" type="radio" required>
+                    <label class="form-check-label">Male</label>
+                  </div>
+                  <div class="form-check female">
+                    <input v-model="details.gender" class="form-check-input" name="gender" type="radio" required>
+                    <label class="form-check-label">Female</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="dob">Date of Birth</label>
+                  <a-date-picker class="form-control" @change="onDOBChange" />
+                </div>
               </div>
             </div>
-<!--            <div class="form-group">-->
-<!--              <label for="package">Package</label>-->
-<!--              <select v-model="details.package_id" class="form-control" id="package" required>-->
-<!--                <option>Select Package</option>-->
-<!--                <option v-for="(pkg, i) in packages" :value="pkg.id">{{ pkg.name }} - {{ pkg.amount }}</option>-->
-<!--              </select>-->
-<!--            </div>-->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="phone">Phone</label>
+                  <input
+                    v-model="details.phone"
+                    @change="validatePhone"
+                    @input="removeErrorClass('#phone'); invalidPhone = false"
+                    class="form-control"
+                    id="phone"
+                    placeholder="Phone"
+                    required
+                  >
+                  <div v-if="invalidPhone" class="invalid-feedback">
+                    Invalid Phone number.
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="email">Email</label>
+                  <input v-model="details.email" class="form-control" id="email" placeholder="Email" required="" type="email">
+                </div>
+                <div class="col-md-4">
+                  <label for="referral">Referral ID</label>
+                  <input
+                    v-model="referral"
+                    @input="removeErrorClass('#referral'); referralNotFound = false"
+                    @change="getReferral"
+                    placeholder="Your sponsor ID"
+                    class="form-control"
+                    id="referral"
+                    required
+                  >
+                  <div v-if="referralNotFound" class="invalid-feedback">
+                    Invalid Referral code.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="country">Country</label>
+                  <select v-model="details.country" class="form-control" id="country" required>
+                    <option>Select Country</option>
+                    <option v-for="(country, i) in countries" :key="i">{{ country.nicename }}</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="state">State</label>
+                  <select v-model="details.state" class="form-control" id="state" required>
+                    <option>Select State</option>
+                    <option v-for="(state, i) in states" :key="i">{{ state.name }}</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="lga">LGA</label>
+                  <select v-model="details.lga" class="form-control" id="lga" required>
+                    <option>Select LGA</option>
+                    <option v-for="(lga, i) in lgas" :value="pkg.id">{{ lga.name }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
             <div class="form-group">
               <label for="inputPassword3">Password</label>
               <input v-model="details.password" class="form-control" id="inputPassword3" placeholder="Password" required type="password">
@@ -60,7 +109,6 @@
             <div class="form-group">
               <button @click.prevent="submitForm" class="btn btn-success btn-lg float-right" type="submit">Register</button>
             </div>
-<!--            <small @click="$emit('loginRegister', 'Login')">Already have an account? <a href="#">Sign in</a>.</small>-->
           </form>
         </div>
       </div><!-- /form card register -->
@@ -77,14 +125,21 @@ export default {
     return {
       referral: '',
       packages: '',
+      countries: '',
       invalidPhone: false,
       referralNotFound: false,
       details: {
-        full_name: '',
+        first_name: '',
+        last_name: '',
         phone: '',
         email: '',
+        gender: '',
+        dob: '',
+        country: 'Select Country',
+        state: 'Select State',
+        lga: 'Select LGA',
+        address: '',
         parent_id: 1,
-        // package_id: 'Select Package',
         password: ''
       }
     }
@@ -103,15 +158,21 @@ export default {
 
     },
     async getPackages() {
-      this.packages = (await this.$axios.$get('/getPackages')).data
+      this.packages = (await this.$axios.$get('/packages')).data
+    },
+    async getCountries() {
+      this.countries = (await this.$axios.$get('/countries')).data
     },
     async getReferral() {
-      let res = await this.$axios.$post('/user/getReferral', {'referral': this.referral})
+      let res = await this.$axios.$post('/user/referral', {'referral': this.referral})
       if (res.success) {
         return this.details.parent_id = res.data
       }
       document.querySelector('#referral').classList.add('is-invalid')
       return this.referralNotFound = true
+    },
+    onDOBChange(date, dateString) {
+      console.log(dateString);
     },
     validatePhone() {
       let error = false
@@ -134,10 +195,12 @@ export default {
   },
   mounted() {
     this.getPackages()
+    this.getCountries()
   }
 }
 </script>
 
 <style scoped>
-
+  .form-check { display: inline;}
+  .female { margin-left: 12px;}
 </style>
