@@ -24,11 +24,11 @@
                 <div class="col-md-6">
                   <label style="display: block">Gender</label>
                   <div class="form-check">
-                    <input v-model="details.gender" class="form-check-input" name="gender" type="radio" required>
+                    <input v-model="details.gender" class="form-check-input" value="m" name="gender" type="radio">
                     <label class="form-check-label">Male</label>
                   </div>
                   <div class="form-check female">
-                    <input v-model="details.gender" class="form-check-input" name="gender" type="radio" required>
+                    <input v-model="details.gender" class="form-check-input" value="f" name="gender" type="radio">
                     <label class="form-check-label">Female</label>
                   </div>
                 </div>
@@ -79,24 +79,52 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-4">
+                  <label for="account-number">Account Number</label>
+                  <input
+                    v-model="details.account_number"
+                    @change="getAccountName"
+                    class="form-control"
+                    id="account-number"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    placeholder="Account Number"
+                    required
+                  >
+                </div>
+                <div class="col-md-4">
+                  <label for="bank">Bank</label>
+                  <select v-model="details.bank_name" class="form-control" id="bank" @change="getAccountName">
+                    <option>Select Bank</option>
+                    <option v-for="(bank, i) in banks" :key="i">{{ bank.name }}</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="account-name">Account Name</label>
+                  <input v-model="details.account_name" placeholder="Account Name" class="form-control" id="account-name" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4">
                   <label for="country">Country</label>
                   <select v-model="details.country" class="form-control" id="country" required>
                     <option>Select Country</option>
                     <option v-for="(country, i) in countries" :key="i">{{ country.nicename }}</option>
                   </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" v-if="details.country == 'Nigeria'">
                   <label for="state">State</label>
                   <select v-model="details.state" class="form-control" id="state" required>
                     <option>Select State</option>
                     <option v-for="(state, i) in states" :key="i">{{ state.name }}</option>
                   </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" v-if="details.country == 'Nigeria'">
                   <label for="lga">LGA</label>
                   <select v-model="details.lga" class="form-control" id="lga" required>
                     <option>Select LGA</option>
-                    <option v-for="(lga, i) in lgas" :value="pkg.id">{{ lga.name }}</option>
+                    <option v-for="(lga, i) in lgas" :value="lga.name">{{ lga.name }}</option>
                   </select>
                 </div>
               </div>
@@ -126,6 +154,9 @@ export default {
       referral: '',
       packages: '',
       countries: '',
+      states: '',
+      lgas: '',
+      banks: '',
       invalidPhone: false,
       referralNotFound: false,
       details: {
@@ -135,7 +166,10 @@ export default {
         email: '',
         gender: '',
         dob: '',
-        country: 'Select Country',
+        account_number: '',
+        account_name: '',
+        bank_name: 'Select Bank',
+        country: 'Nigeria',
         state: 'Select State',
         lga: 'Select LGA',
         address: '',
@@ -163,6 +197,43 @@ export default {
     async getCountries() {
       this.countries = (await this.$axios.$get('/countries')).data
     },
+    async getStates() {
+      this.states = (await this.$axios.$get('/states')).data
+    },
+    async getLgas(state) {
+      if (state) {
+        this.lgas = (await this.$axios.$post('/lgas', {state})).data
+      }
+    },
+    async getBanks() {
+      this.banks = (await this.$axios.$get('/banks')).data
+    },
+
+    async getAccountName() {
+      if (
+        this.details.bank_name != '' &&
+        this.details.account_number != '' &&
+        this.details.bank_name != undefined &&
+        this.details.account_number != undefined &&
+        this.banks &&
+        this.banks.length
+      ) {
+        const bank = this.banks.find(bank => bank.name == this.details.bank_name)
+
+        if (bank) {
+          const bank_code = bank.code
+          const res = await this.$axios.$post('/banks', {
+            account_number: this.details.account_number,
+            bank_code
+          })
+          if (res.status) {
+            this.details.account_name = res.data.account_name
+          } else {
+            this.details.account_name = ''
+          }
+        }
+      }
+    },
     async getReferral() {
       let res = await this.$axios.$post('/user/referral', {'referral': this.referral})
       if (res.success) {
@@ -172,7 +243,7 @@ export default {
       return this.referralNotFound = true
     },
     onDOBChange(date, dateString) {
-      console.log(dateString);
+      this.details.dob = dateString
     },
     validatePhone() {
       let error = false
@@ -196,6 +267,15 @@ export default {
   mounted() {
     this.getPackages()
     this.getCountries()
+    this.getStates()
+    this.getBanks()
+  },
+  watch: {
+    'details.state': {
+      handler: function (val) {
+        this.getLgas(val)
+      }
+    }
   }
 }
 </script>
