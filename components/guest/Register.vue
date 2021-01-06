@@ -52,7 +52,7 @@
                     required
                   >
                   <div v-if="invalidPhone" class="invalid-feedback">
-                    Invalid Phone number.
+                    Invalid Phone number
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -123,7 +123,7 @@
                 <div class="col-md-4" v-if="details.country == 'Nigeria'">
                   <label for="lga">LGA</label>
                   <select v-model="details.lga" class="form-control" id="lga" required>
-                    <option>Select LGA</option>
+                    <option>Selecmlm-api/api/packagest LGA</option>
                     <option v-for="(lga, i) in lgas" :value="lga.name">{{ lga.name }}</option>
                   </select>
                 </div>
