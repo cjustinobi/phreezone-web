@@ -18,7 +18,7 @@ export default {
     return {
       loginRegister: 'Login'
     }
-  },,
+  },
   methods: {
     setFacet(val) {
       this.loginRegister = val
