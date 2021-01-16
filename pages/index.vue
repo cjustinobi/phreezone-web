@@ -22,7 +22,8 @@ export default {
   methods: {
     setFacet(val) {
       this.loginRegister = val
-    }
+console.log('here')    
+}
   },
 }
 </script>
