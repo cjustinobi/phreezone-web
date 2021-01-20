@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Opps. Trying to break this page? Kindly go <nuxt-link to="/">home</nuxt-link></p>
+    <p>Oops. Trying to break this page? Kindly go <nuxt-link to="/">home</nuxt-link></p>
   </div>
 </template>
 
