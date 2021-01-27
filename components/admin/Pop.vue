@@ -184,7 +184,8 @@
         let res = await this.$axios.$post(`admin/pop/${popId}`, { status: 'approved' })
         res.success ? this.$message.success('Confirmed payment successfully') :
           this.$message.error('Payment not confirmed')
-        window.location.href = '/pop'
+        console.log(res)
+        // window.location.href = '/pop'
       },
       async rejectPop() {
         let res = await this.$axios.$post(`admin/pop/${this.selectedPopId}`, { status: 'rejected', reject_reason: this.rejectReason })

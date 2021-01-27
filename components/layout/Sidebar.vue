@@ -91,7 +91,7 @@
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">Commission</a>
+                  <nuxt-link to="/commissions">Commission</nuxt-link>
                 </li>
                 <li>
                   <a href="#">Incentive Point Management</a>
