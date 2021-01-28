@@ -64,10 +64,6 @@
       </a-tag>
     </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'Not subscribed to any package' : pkg }}</span>
-      <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
-      <span slot="shopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
-      <span slot="performance" slot-scope="perf">{{ perf == null ? 0 : perf }}</span>
-      <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
     </a-table>
   </div>
 </template>
@@ -96,6 +92,10 @@
       },
     },
     {
+      title: 'Week No.',
+      dataIndex: 'shopping_week',
+    },
+    {
       title: 'Package',
       dataIndex: 'package_name',
       scopedSlots: { customRender: 'pkg' },
@@ -107,28 +107,28 @@
     {
       title: 'Performance',
       dataIndex: 'performance_amount',
-      scopedSlots: { customRender: 'performance' },
     },
     {
       title: 'Leadership',
       dataIndex: 'leadership_amount',
-      scopedSlots: { customRender: 'leadership' },
     },
     {
       title: 'Shopping',
       dataIndex: 'shopping_amount',
-      scopedSlots: { customRender: 'shopping' },
     },
     {
       title: 'Spillover',
       dataIndex: 'spillover_amount',
-      scopedSlots: { customRender: 'spillover' },
     },
     {
-      title: 'Paid',
-      dataIndex: 'active',
-      scopedSlots: { customRender: 'active' },
+      title: 'Total',
+      dataIndex: 'total'
     },
+    // {
+    //   title: 'Paid',
+    //   dataIndex: 'active',
+    //   scopedSlots: { customRender: 'active' },
+    // },
     // { title: 'Action', dataIndex: '', scopedSlots: { customRender: 'action' } },
   ];
 
