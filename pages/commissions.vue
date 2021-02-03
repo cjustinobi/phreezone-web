@@ -64,6 +64,12 @@
       </a-tag>
     </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'Not subscribed to any package' : pkg }}</span>
+      <span slot="performance" slot-scope="perf">{{ perf == null ? 0 : perf }}</span>
+      <span slot="shopping" slot-scope="ship">{{ ship == null ? 0 : ship }}</span>
+      <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
+      <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
+      <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
+      <span slot="total" slot-scope="total"><b>{{ total }}</b></span>
     </a-table>
   </div>
 </template>
@@ -93,7 +99,7 @@
     },
     {
       title: 'Week No.',
-      dataIndex: 'shopping_week',
+      dataIndex: 'week',
     },
     {
       title: 'Package',
@@ -107,22 +113,27 @@
     {
       title: 'Performance',
       dataIndex: 'performance_amount',
+      scopedSlots: { customRender: 'performance' }
     },
     {
       title: 'Leadership',
       dataIndex: 'leadership_amount',
+      scopedSlots: { customRender: 'leadership' }
     },
     {
       title: 'Shopping',
       dataIndex: 'shopping_amount',
+      scopedSlots: { customRender: 'shopping' }
     },
     {
       title: 'Spillover',
       dataIndex: 'spillover_amount',
+      scopedSlots: { customRender: 'spillover' }
     },
     {
       title: 'Total',
-      dataIndex: 'total'
+      dataIndex: 'total',
+      scopedSlots: { customRender: 'total' }
     },
     // {
     //   title: 'Paid',
