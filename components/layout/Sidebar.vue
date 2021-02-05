@@ -135,10 +135,10 @@
         <i class="fa fa-envelope"></i>
         <span class="badge badge-pill badge-success notification">7</span>
       </a>
-      <a href="#">
+      <nuxt-link to="/settings">
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
-      </a>
+      </nuxt-link>
       <a @click="$auth.logout()" href="#">
         <i class="fa fa-power-off"></i>
       </a>
