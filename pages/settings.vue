@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a-page-header sub-title="Settings"/>
     <ChangePassword />
   </div>
 </template>
