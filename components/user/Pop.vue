@@ -3,7 +3,13 @@
     <a-page-header sub-title="Upload Proof of Payment"/>
     <img class="img-thumbnail" :src="url ? url : img" />
     <input class="hide-input" @change="handleFile" ref="file" type="file">
-    <a-input v-model="amount" style="margin-top: 15px; width: 205px; display: block" placeholder="Amount" />
+    <a-form-model-item label="">
+      <br>
+        <a-select v-model="amount" style="width: 200px">
+          <a-select-option value="">Select Amount</a-select-option>
+          <a-select-option v-for="(amt, i) in amounts" :value="amt" :key="i">{{ amt }}</a-select-option>
+        </a-select>
+      </a-form-model-item>
     <div class="buttons">
       <button type="button" class="btn btn-light" @click.prevent="$refs.file.click">Choose file</button>
       <button type="button" class="btn btn-info" @click="upload">Upload</button>
@@ -41,13 +47,14 @@
 
 
 <script>
-
+  const amounts = [5000, 15000, 50000, 150000, 300000, 600000, 1200000]
   export default {
     name: 'pop',
     layout: 'dashboard',
     data() {
       return {
         // serverPath: process.env.imageBase,
+        amounts,
         img: require('assets/img/africinnovate.png'),
         file: '',
         amount: '',

@@ -64,8 +64,11 @@
       </a-tag>
     </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'Not subscribed to any package' : pkg }}</span>
+      <span slot="agent" slot-scope="agent">{{ agent == null ? 0 : agent }}</span>
+      <span slot="accumulative" slot-scope="ac">{{ ac == null ? 0 : ac }}</span>
       <span slot="performance" slot-scope="perf">{{ perf == null ? 0 : perf }}</span>
-      <span slot="shopping" slot-scope="ship">{{ ship == null ? 0 : ship }}</span>
+      <span slot="shopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
+      <span slot="sponsorShopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
       <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
       <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
@@ -116,6 +119,16 @@
       scopedSlots: { customRender: 'performance' }
     },
     {
+      title: 'Agent',
+      dataIndex: 'agent_amount',
+      scopedSlots: { customRender: 'agent' }
+    },
+    {
+      title: 'Accumulative',
+      dataIndex: 'accumulative_amount',
+      scopedSlots: { customRender: 'accumulative' }
+    },
+    {
       title: 'Leadership',
       dataIndex: 'leadership_amount',
       scopedSlots: { customRender: 'leadership' }
@@ -124,6 +137,11 @@
       title: 'Shopping',
       dataIndex: 'shopping_amount',
       scopedSlots: { customRender: 'shopping' }
+    },
+    {
+      title: 'Sponsor Shopping',
+      dataIndex: 'sponsor_shopping_amount',
+      scopedSlots: { customRender: 'sponsorShopping' }
     },
     {
       title: 'Spillover',

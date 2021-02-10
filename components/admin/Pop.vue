@@ -181,10 +181,21 @@
         this.searchText = '';
       },
       async confirmPop(popId) {
+        const self = this
         let res = await this.$axios.$post(`admin/pop/${popId}`, { status: 'approved' })
-        res.success ? this.$message.success('Confirmed payment successfully') :
-          this.$message.error('Payment not confirmed')
-        console.log(res)
+        if (res.success) {
+          this.$message.success('Confirmed payment successfully')
+          const popIndex = self.pops.indexOf(pop => pop.id == res.data.id)
+          console.log(popIndex)
+          return self.$set(self.pops, popIndex, res.data)
+          // return this.pops[popIndex] = res.data
+        }
+        this.$message.error('Payment not confirmed')
+        // res.success ? this.$message.success('Confirmed payment successfully') :
+        //   this.$message.error('Payment not confirmed')
+        // console.log(res)
+        // let popIndex = this.pops.indexOf(pop => pop.id == res.data.id)
+        // this.pops[popIndex]['status'] = 'approved'
         // window.location.href = '/pop'
       },
       async rejectPop() {
