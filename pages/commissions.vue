@@ -1,7 +1,14 @@
 <template>
   <div>
-    <a-page-header sub-title="All Commissions"/>
-    <a-table v-if="bonuses" :columns="columns" :data-source="bonuses" :rowKey="record => record.id">
+    <a-page-header :sub-title="`All Commissions for week ${week}`"/>
+    <a-input-search
+      placeholder="Enter week number"
+      v-model="week"
+      style="width: 188px; margin-bottom: 8px;"
+      @change="getWeekCommissions"
+      min="1"
+      type="number"/>
+    <a-table v-if="bonuses" :columns="columns" :data-source="bonuses" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }">
       <div
         slot="filterDropdown"
         slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
@@ -58,9 +65,9 @@
 
         </template>
       </template>
-      <span slot="active" slot-scope="active">
-      <a-tag :color="active == '0' ? 'volcano' : 'green'">
-        {{ active == '0' ? 'Not Active' : 'Active'}}
+      <span slot="paid" slot-scope="paid">
+      <a-tag :color="paid == null ? 'volcano' : 'green'">
+        {{ paid == null ? 'Not Paid' : 'Paid'}}
       </a-tag>
     </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'Not subscribed to any package' : pkg }}</span>
@@ -82,6 +89,7 @@
     {
       title: 'Full Name',
       dataIndex: 'full_name',
+      fixed: 'left',
       scopedSlots: {
         customRender: 'fullName',
         filterDropdown: 'filterDropdown',
@@ -100,10 +108,10 @@
         }
       },
     },
-    {
-      title: 'Week No.',
-      dataIndex: 'week',
-    },
+    // {
+    //   title: 'Week No.',
+    //   dataIndex: 'week',
+    // },
     {
       title: 'Package',
       dataIndex: 'package_name',
@@ -155,8 +163,8 @@
     },
     // {
     //   title: 'Paid',
-    //   dataIndex: 'active',
-    //   scopedSlots: { customRender: 'active' },
+    //   dataIndex: 'paid',
+    //   scopedSlots: { customRender: 'paid' },
     // },
     // { title: 'Action', dataIndex: '', scopedSlots: { customRender: 'action' } },
   ];
@@ -167,16 +175,28 @@
     data() {
       return {
         bonuses: '',
-        columns
+        columns,
+        week: '',
+        referral: this.isAdmin ? '' : this.$auth.user.referral
       }
     },
     methods: {
       async getCommissions() {
-        this.bonuses = (await this.$axios.$get('admin/bonuses')).data
+        this.bonuses = (await this.$axios.$post('admin/bonuses', {
+          referral: this.referral ,
+          week: this.week
+        })).data
+      },
+      getWeekCommissions() {
+        this.getCommissions()
+      },
+      setWeek() {
+        this.week = this.$dateFns.getISOWeek(new Date())
       }
     },
     mounted() {
       this.getCommissions()
+      this.setWeek()
     }
   }
 </script>
