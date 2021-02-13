@@ -177,7 +177,7 @@
         bonuses: '',
         columns,
         week: '',
-        referral: this.isAdmin ? '' : this.$auth.user.referral
+        referral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral
       }
     },
     methods: {
