@@ -1,13 +1,29 @@
 <template>
   <div>
     <a-page-header :sub-title="`All Commissions for week ${week}`"/>
-    <a-input-search
-      placeholder="Enter week number"
-      v-model="week"
-      style="width: 188px; margin-bottom: 8px;"
-      @change="getWeekCommissions"
-      min="1"
-      type="number"/>
+    <a-row>
+      <a-col span="6">
+        <a-input-search
+          placeholder="Enter week number"
+          v-model="week"
+          style="width: 188px; margin-bottom: 8px;"
+          @change="getWeekCommissions"
+          min="1"
+          type="number"/>
+      </a-col>
+      <a-col span="6">
+        <a-input-search
+          placeholder="Referral ID"
+          v-model="referral"
+          style="width: 188px; margin-bottom: 8px;"
+          @change="getWeekCommissions"
+          />
+      </a-col>
+      <a-col span="6">
+        <a-button @click="downloadBonus">Download</a-button>
+      </a-col>
+    </a-row>
+
     <a-table v-if="bonuses" :columns="columns" :data-source="bonuses" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }">
       <div
         slot="filterDropdown"
@@ -186,6 +202,9 @@
           referral: this.referral ,
           week: this.week
         })).data
+      },
+      downloadBonus() {
+        return window.open(`${this.$axios.defaults.baseURL}exportBonuses?referral=${this.referral}&week=${this.week}`)
       },
       getWeekCommissions() {
         this.getCommissions()
