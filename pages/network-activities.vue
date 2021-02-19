@@ -1,0 +1,68 @@
+<template>
+  <div>
+    <a-page-header sub-title="Sponsor's Network Activities"/>
+    <a-table v-if="activities" :columns="columns" :data-source="activities" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }">
+      <span slot="fullName" slot-scope="fn, rec"><b>{{ rec.referral }}</b>  <br> <span>{{ rec.full_name }}</span></span>
+      <span slot="pkg" slot-scope="pkg">{{ pkg.name }}</span>
+      <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
+      <span slot="rank" slot-scope="rank">None</span>
+    </a-table>
+  </div>
+</template>
+
+<script>
+  const columns = [
+    {
+      title: 'Member',
+      dataIndex: 'full_name',
+      fixed: 'left',
+      scopedSlots: { customRender: 'fullName' },
+    },
+    {
+      title: 'Level',
+      dataIndex: 'package',
+      scopedSlots: { customRender: 'pkg' },
+    },
+    {
+      title: 'Date Joined',
+      dataIndex: 'created_at',
+      scopedSlots: { customRender: 'joined' },
+    },
+    {
+      title: 'Rank',
+      // dataIndex: 'created_at',
+      scopedSlots: { customRender: 'rank' },
+    },
+    {
+      title: 'Accumulated Performance',
+      dataIndex: 'pv',
+      scopedSlots: { customRender: 'pv' },
+    },
+  ]
+  import DateFormat from '../mixins/dateFormat'
+  export default {
+    name: 'network-activities',
+    layout: 'dashboard',
+    mixins: [DateFormat],
+    data() {
+      return {
+        columns,
+        dateFormat: 'd MMM, Y',
+        activities: ''
+      }
+    },
+    methods: {
+      async getActivites() {
+        this.activities = (await this.$axios.$get(`user/accumulatedPv/${this.userId}`)).data
+      },
+
+    },
+    mounted() {
+      this.getActivites()
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>

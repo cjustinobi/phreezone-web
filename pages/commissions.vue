@@ -86,7 +86,8 @@
         {{ paid == null ? 'Not Paid' : 'Paid'}}
       </a-tag>
     </span>
-      <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'Not subscribed to any package' : pkg }}</span>
+      <span slot="pkg" slot-scope="txt, rec" v-if="rec.package">{{ rec.package.name == null ? 'Not subscribed to any package' : rec.package.name }}</span>
+      <span v-else>Not subscribed to any package</span>
       <span slot="agent" slot-scope="agent">{{ agent == null ? 0 : agent }}</span>
       <span slot="accumulative" slot-scope="ac">{{ ac == null ? 0 : ac }}</span>
       <span slot="performance" slot-scope="perf">{{ perf == null ? 0 : perf }}</span>
@@ -130,7 +131,7 @@
     // },
     {
       title: 'Package',
-      dataIndex: 'package_name',
+      dataIndex: 'package',
       scopedSlots: { customRender: 'pkg' },
     },
     {

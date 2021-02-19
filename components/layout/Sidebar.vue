@@ -65,19 +65,19 @@
                   <nuxt-link to="/pop">{{ isAdmin ? 'View POP' : 'Upload POP' }}</nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="#">Search Sponsor Tree Network</nuxt-link>
+                  <nuxt-link to="#">Sponsor Network Tree</nuxt-link>
                 </li>
                 <li>
-                  <a href="#">Search Placement</a>
+                  <a href="#">Placement Activities</a>
                 </li>
                 <li>
-                  <a href="#">Performance of Sponsor Network</a>
+                  <nuxt-link to="/network-activities">Sponsor's Network Activities</nuxt-link>
                 </li>
                 <li>
-                  <a href="#">Placement Tree Performance</a>
+                  <a href="#">Placement Tree Activities</a>
                 </li>
                 <li>
-                  <a href="#">Performance Service Organization</a>
+                  <a href="#">Team Performance Activities</a>
                 </li>
               </ul>
             </div>
