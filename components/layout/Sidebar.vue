@@ -21,6 +21,20 @@
           <span v-if="isAdmin" class="user-role">Administrator</span>
         </div>
       </div>
+      <div>
+        <div v-if="pckLevel" class="shadow-sm p-3 mb-5 rounded">
+          <p>Next package <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span></p>
+          <h2>
+            <a-progress type="linear" :percent="pckLevel.packageLevel"/>
+          </h2>
+        </div>
+        <div v-else>
+          <p>Next package <span class="badge badge-pill badge-primary">QSilver</span></p>
+          <h2>
+            <a-progress type="circle" class="ant-progress-status-exception" :percent="0"/>
+          </h2>
+        </div>
+      </div>
       <!-- sidebar-header  -->
       <div class="sidebar-search">
         <div>
@@ -77,7 +91,7 @@
                   <a href="#">Placement Tree Activities</a>
                 </li>
                 <li>
-                  <a href="#">Team Performance Activities</a>
+                  <nuxt-link to="/team-performance">Team Performance Activities</nuxt-link>
                 </li>
               </ul>
             </div>
@@ -148,7 +162,20 @@
 
 <script>
   export default {
-    name: 'dashboardSidebar'
+    name: 'dashboardSidebar',
+    data() {
+      return {
+        pckLevel: ''
+      }
+    },
+    methods: {
+      async getPackageLevel() {
+        this.pckLevel = (await this.$axios.$get(`user/${this.userId}/packageLevel`)).data
+      }
+    },
+    mounted() {
+      this.getPackageLevel()
+    }
   }
 </script>
 
