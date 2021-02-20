@@ -5,7 +5,7 @@
         <a-button type="primary" @click="visible = true">Add Message</a-button>
       </template>
     </a-page-header>
-    <a-modal v-model="visible" title="Create Message" :confirm-loading="loading" @cancel="cancel" @ok="saveMessage">
+    <a-modal v-model="visible" title="Create Message" :footer="false" :confirm-loading="loading" @cancel="cancel" @ok="saveMessage">
       <a-input v-model="title" placeholder="Message Title" />
       <br><br>
       <a-textarea
@@ -14,7 +14,17 @@
         :auto-size="{ minRows: 3, maxRows: 5 }"
       />
     </a-modal>
+
+    <a-modal v-model="readingMode" title="Message" :footer="null">
+      <a-input v-model="title"/>
+      <br><br>
+      <a-textarea v-model="description" :auto-size="{ minRows: 3, maxRows: 5 }"/>
+    </a-modal>
+
     <a-table v-if="messages" :columns="columns" :data-source="messages" :rowKey="record => record.id">
+      <span slot="topic" slot-scope="txt, rec">
+        <a href="javascript:;" @click="readMessage(rec)">{{ txt }}</a>
+      </span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
     </a-table>
   </div>
@@ -26,7 +36,7 @@
     {
       title: 'Title',
       dataIndex: 'title',
-      scopedSlots: { customRender: 'title' },
+      scopedSlots: { customRender: 'topic' },
     },
     {
       title: 'Release Time',
@@ -48,6 +58,7 @@
         visible: false,
         title: '',
         description: '',
+        readingMode: false
       }
     },
     methods: {
@@ -72,6 +83,11 @@
         this.description = ''
         this.loading = false
         this.visible = false
+      },
+      readMessage(item) {
+        this.title = item.title
+        this.description = item.description
+        this.readingMode = true
       }
     },
     mounted() {

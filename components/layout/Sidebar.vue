@@ -22,10 +22,10 @@
         </div>
       </div>
       <div>
-        <div v-if="pckLevel" class="shadow-sm p-3 mb-5 rounded">
-          <p>Next package <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span></p>
+        <div v-if="pckLevel" class="p-3">
+          <span>Next package <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span></span>
           <h2>
-            <a-progress type="linear" :percent="pckLevel.packageLevel"/>
+            <a-progress :percent="pckLevel.packageLevel"/>
           </h2>
         </div>
         <div v-else>
