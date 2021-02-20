@@ -1,19 +1,19 @@
 <template>
   <div>
-    <a-page-header sub-title="Message Notifications">
-      <template slot="extra" v-if="isAdmin">
-        <a-button type="primary" @click="visible = true">Add Message</a-button>
-      </template>
-    </a-page-header>
-    <a-modal v-model="visible" title="Create Message" :confirm-loading="loading" @cancel="cancel" @ok="saveMessage">
-      <a-input v-model="title" placeholder="Message Title" />
-      <br><br>
-      <a-textarea
-        v-model="description"
-        placeholder="Enter the message ..."
-        :auto-size="{ minRows: 3, maxRows: 5 }"
-      />
-    </a-modal>
+<!--    <a-page-header sub-title="Message Notifications">-->
+<!--      <template slot="extra" v-if="isAdmin">-->
+<!--        <a-button type="primary" @click="visible = true">Add Message</a-button>-->
+<!--      </template>-->
+<!--    </a-page-header>-->
+<!--    <a-modal v-model="visible" title="Create Message" :confirm-loading="loading" @cancel="cancel" @ok="saveMessage">-->
+<!--      <a-input v-model="title" placeholder="Message Title" />-->
+<!--      <br><br>-->
+<!--      <a-textarea-->
+<!--        v-model="description"-->
+<!--        placeholder="Enter the message ..."-->
+<!--        :auto-size="{ minRows: 3, maxRows: 5 }"-->
+<!--      />-->
+<!--    </a-modal>-->
     <Message />
 
 <!--    <div class="bonuses">-->
@@ -55,14 +55,14 @@ export default {
     }
   },
   methods: {
-    async saveMessage() {
-      this.loading = true
-      const res = await this.$axios.$post(`admin/message`, {
-        title: this.title,
-        description: this.description,
-      })
-      console.log(res)
-    },
+    // async saveMessage() {
+    //   this.loading = true
+    //   const res = await this.$axios.$post(`admin/message`, {
+    //     title: this.title,
+    //     description: this.description,
+    //   })
+    //   console.log(res)
+    // },
     // async getPackageLevel() {
     //   this.pckLevel = (await this.$axios.$get(`user/${this.userId}/packageLevel`)).data
     // }
