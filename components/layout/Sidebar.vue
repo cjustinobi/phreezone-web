@@ -23,7 +23,10 @@
       </div>
       <div>
         <div v-if="pckLevel" class="p-3">
-          <span>Next package <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span></span>
+          <span>
+            <span class="user-role">Next package</span>
+            <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span>
+          </span>
           <h2>
             <a-progress :percent="pckLevel.packageLevel"/>
           </h2>
@@ -36,18 +39,18 @@
         </div>
       </div>
       <!-- sidebar-header  -->
-      <div class="sidebar-search">
-        <div>
-          <div class="input-group">
-            <input type="text" class="form-control search-menu" placeholder="Search...">
-            <div class="input-group-append">
-              <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--      <div class="sidebar-search">-->
+<!--        <div>-->
+<!--          <div class="input-group">-->
+<!--            <input type="text" class="form-control search-menu" placeholder="Search...">-->
+<!--            <div class="input-group-append">-->
+<!--              <span class="input-group-text">-->
+<!--                <i class="fa fa-search" aria-hidden="true"></i>-->
+<!--              </span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <!-- sidebar-search  -->
       <div class="sidebar-menu">
         <ul>
