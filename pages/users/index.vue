@@ -80,7 +80,7 @@
         {{ active == '0' ? 'Not Active' : 'Active'}}
       </a-tag>
     </span>
-      <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'Not subscribed to any package' : pkg }}</span>
+      <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'N/P' : pkg }}</span>
     </a-table>
   </div>
 </template>
@@ -118,7 +118,7 @@
       scopedSlots: { customRender: 'pkg' },
     },
     {
-      title: 'Referral',
+      title: 'Sponsor ID',
       dataIndex: 'referral',
     },
     {

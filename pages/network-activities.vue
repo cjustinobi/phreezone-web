@@ -9,7 +9,7 @@
       <span slot="pv" slot-scope="pv, rec">{{ rec.accumulatedPv ? rec.accumulatedPv : rec.pv }}</span>
       <span slot="pw" slot-scope="pw, rec">{{ rec.prevWeekAccumulatedPv ? rec.prevWeekAccumulatedPv : rec.prevWeekPoint }}</span>
 <!--      <span slot="cw" slot-scope="cw, rec">{{ rec.currentWeekAccumulatedPv ? rec.currentWeekAccumulatedPv : rec.currentWeekPoint }}</span>-->
-      <span slot="depth" slot-scope="depth">{{ depth - 1 === 0 ? '' : depth - 1 }}</span>
+<!--      <span slot="depth" slot-scope="depth">{{ depth - 1 === 0 ? '' : depth - 1 }}</span>-->
     </a-table>
   </div>
 </template>

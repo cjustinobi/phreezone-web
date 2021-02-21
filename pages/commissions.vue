@@ -3,7 +3,7 @@
     <a-page-header :sub-title="`All Commissions for week ${week}`"/>
     <a-row>
       <a-col span="6">
-        <a-input-search
+        <a-input
           placeholder="Enter week number"
           v-model="week"
           style="width: 188px; margin-bottom: 8px;"
@@ -12,8 +12,8 @@
           type="number"/>
       </a-col>
       <a-col span="6">
-        <a-input-search
-          placeholder="Referral ID"
+        <a-input
+          placeholder="Sponsor ID"
           v-model="referral"
           style="width: 188px; margin-bottom: 8px;"
           @change="getWeekCommissions"
@@ -86,8 +86,8 @@
         {{ paid == null ? 'Not Paid' : 'Paid'}}
       </a-tag>
     </span>
-      <span slot="pkg" slot-scope="txt, rec" v-if="rec.package">{{ rec.package.name == null ? 'Not subscribed to any package' : rec.package.name }}</span>
-      <span v-else>Not subscribed to any package</span>
+      <span slot="pkg" slot-scope="txt, rec" v-if="rec.package">{{ rec.package.name == null ? 'N/P' : rec.package.name }}</span>
+      <span v-else>N/P</span>
       <span slot="agent" slot-scope="agent">{{ agent == null ? 0 : agent }}</span>
       <span slot="accumulative" slot-scope="ac">{{ ac == null ? 0 : ac }}</span>
       <span slot="performance" slot-scope="perf">{{ perf == null ? 0 : perf }}</span>
@@ -135,7 +135,7 @@
       scopedSlots: { customRender: 'pkg' },
     },
     {
-      title: 'Referral',
+      title: 'Sponsor ID',
       dataIndex: 'referral',
     },
     {

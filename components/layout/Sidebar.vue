@@ -14,27 +14,26 @@
         <div class="user-info">
           <span class="user-name">
             <strong>{{ $auth.user.full_name }}</strong><br>
-            <span class="badge badge-pill badge-warning" v-if="$auth.user.package">
-              {{ $auth.user.package.name }}
-            </span>
+            <span v-if="$auth.user.package" class="badge badge-pill badge-warning">{{ $auth.user.package.name }}</span>
+            <span v-else class="badge badge-pill badge-light">N/P</span>
           </span>
           <span v-if="isAdmin" class="user-role">Administrator</span>
         </div>
       </div>
       <div>
-        <div v-if="pckLevel" class="p-3">
+        <div v-if="pckLevel" class="pl-3 pr-3">
           <span>
-            <span class="user-role">Next package</span>
+            <span style="color: lightgrey">Next package</span>
             <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span>
           </span>
           <h2>
-            <a-progress :percent="pckLevel.packageLevel"/>
+            <a-progress class="ant-progress-status-success" :percent="pckLevel.packageLevel"/>
           </h2>
         </div>
-        <div v-else>
-          <p>Next package <span class="badge badge-pill badge-primary">QSilver</span></p>
+        <div v-else class="pl-3 pr-3">
+          <span>Next package <span class="badge badge-pill badge-primary">Treasure</span></span>
           <h2>
-            <a-progress type="circle" class="ant-progress-status-exception" :percent="0"/>
+            <a-progress class="ant-progress-status-exception" :percent="0"/>
           </h2>
         </div>
       </div>
