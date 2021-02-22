@@ -1,9 +1,11 @@
 <template>
   <div>
     <a-page-header sub-title="Team Performance Activities"/>
-    <ul id="demo">
-      <TreeItem class="item" :item="treeData" />
-    </ul>
+    <div class="tf-tree example">
+      <ul id="demo">
+        <TreeItem class="item" :item="treeData"/>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -32,7 +34,20 @@
 </script>
 
 <style scoped>
+  @import "https://unpkg.com/treeflex/dist/css/treeflex.css";
   #demo {
     list-style-type: none;
+  }
+  .example .tf-nc {
+    /* css here */
+  }
+
+  .tf-custom .tf-nc:before,
+  .tf-custom .tf-nc:after {
+    /* css here */
+  }
+
+  .tf-custom li li:before {
+    /* css here */
   }
 </style>
