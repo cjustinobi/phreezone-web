@@ -145,6 +145,7 @@
 </template>
 
 <script>
+
 import utils from "@/mixins/utils";
 export default {
   name: 'register',
@@ -178,8 +179,50 @@ export default {
       }
     }
   },
+
+  // validations: {
+  //     details: {
+  //       gender: {
+  //         required,
+  //       },
+  //     },
+  // },
+
   methods: {
+    isInValidField() {
+      let error = false
+      if (this.details.gender == '') {
+        error = true
+        this.$message.error("Gender is required")
+      }
+      if (this.details.first_name == '') {
+        error = true
+        this.$message.error("First Name is required")
+      }
+      if (this.details.last_name == '') {
+        error = true
+        this.$message.error("Last Name is required")
+      }
+      if (parseInt(this.details.dob) > 2003 ) {
+        error = true
+        this.$message.error("Must be above 18 years of age")
+      }
+      if (this.details.dob == '') {
+        error = true
+        this.$message.error("Date of birth is required")
+      }
+      if (this.details.lga == 'Select LGA') {
+        error = true
+        this.$message.error("Select Local Government")
+      }
+      return error
+
+    },
     async submitForm() {
+       if (this.isInValidField()) {
+         return
+       }
+
       let res = await this.$axios.$post('/auth/register', this.details)
       if (res.success) {
         Object.keys(this.details).map(item => this.details[item] = '')
