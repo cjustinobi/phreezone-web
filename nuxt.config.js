@@ -69,12 +69,12 @@ export default {
   axios: {
     baseURL: process.env.NODE_ENV === 'dev'
       ? 'http://localhost:8000/api/'
-      : 'http://167.172.149.121/mlm-api/api/'
+      : 'https://phreezone.com.ng/mlm-api/api/'
   },
   publicRuntimeConfig: {
     imagePath: process.env.NODE_ENV === 'dev'
       ? 'http://localhost:8000'
-      : 'http://167.172.149.121',
+      : 'https://phreezone.com.ng',
   },
   router: {
     middleware: ['auth']
