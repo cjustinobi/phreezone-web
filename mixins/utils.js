@@ -11,6 +11,7 @@ export default {
         let response = await this.$auth.loginWith('local', {data: {referral, password}})
         this.$auth.setUser(response.data.user)
       } catch (e) {
+        console.log(e)
         this.$store.dispatch('notification/setStatus', {
           messages: ['Incorrect login details'],
           success: false
