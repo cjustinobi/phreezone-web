@@ -67,7 +67,9 @@ export default {
     }
   },
   axios: {
-    baseURL: 'https://phreezone.com.ng/mlm-api/api/'
+    baseURL: process.env.NODE_ENV === 'dev'
+      ? 'http://localhost:8000/api/'
+      : 'https://phreezone.com.ng/mlm-api/api/'
   },
   publicRuntimeConfig: {
     imagePath: process.env.NODE_ENV === 'dev'

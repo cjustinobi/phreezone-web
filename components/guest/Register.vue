@@ -138,7 +138,7 @@
                 <div class="col-md-4" v-if="details.country == 'Nigeria'">
                   <label for="lga">LGA</label>
                   <select v-model="details.lga" class="form-control" id="lga" required>
-                    <option>Selecmlm-api/api/packagest LGA</option>
+                    <option>Select LGA</option>
                     <option v-for="(lga, i) in lgas" :value="lga.name">{{ lga.name }}</option>
                   </select>
                 </div>

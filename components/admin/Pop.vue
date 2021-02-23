@@ -12,7 +12,7 @@
     </a-modal>
     <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id">
       <img width="80px" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>
-      <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
+        <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
         <a-menu slot="overlay">
           <a-menu-item key="1">
             <a-popconfirm
