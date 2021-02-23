@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label for="phone">Phone</label>
                   <input
                     v-model="details.phone"
@@ -55,12 +55,12 @@
                     Invalid Phone number
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label for="email">Email</label>
                   <input v-model="details.email" class="form-control" id="email" placeholder="Email" required="" type="email">
                 </div>
-                <div class="col-md-4">
-                  <label for="referral">Referral ID</label>
+                <div class="col-md-3">
+                  <label for="referral">Sponsor ID</label>
                   <input
                     v-model="referral"
                     @input="removeErrorClass('#referral'); referralNotFound = false"
@@ -72,6 +72,21 @@
                   >
                   <div v-if="referralNotFound" class="invalid-feedback">
                     Invalid Referral code.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="placement">Placement ID</label>
+                  <input
+                    v-model="placement"
+                    @input="removeErrorClass('#placement'); placementNotFound = false"
+                    @change="getPlacement"
+                    placeholder="Your Placement ID"
+                    class="form-control"
+                    id="placement"
+                    required
+                  >
+                  <div v-if="placementNotFound" class="invalid-feedback">
+                    Invalid Placement code.
                   </div>
                 </div>
               </div>
@@ -135,7 +150,7 @@
               <small class="form-text text-muted" id="passwordHelpBlock">Your password must be 6-20 characters long</small>
             </div>
             <div class="form-group">
-              <button @click.prevent="submitForm" class="btn btn-success btn-lg float-right" type="submit">Register</button>
+              <button @click.prevent="submitForm" class="btn btn-success btn-sm float-right" type="submit">Register</button>
             </div>
           </form>
         </div>
@@ -153,6 +168,7 @@ export default {
   data() {
     return {
       referral: '',
+      placement: '',
       packages: '',
       countries: '',
       states: '',
@@ -160,6 +176,7 @@ export default {
       banks: '',
       invalidPhone: false,
       referralNotFound: false,
+      placementNotFound: false,
       details: {
         first_name: '',
         last_name: '',
@@ -174,19 +191,12 @@ export default {
         state: 'Select State',
         lga: 'Select LGA',
         address: '',
-        parent_id: 1,
+        parent_id: '',
+        brought_by: '',
         password: ''
       }
     }
   },
-
-  // validations: {
-  //     details: {
-  //       gender: {
-  //         required,
-  //       },
-  //     },
-  // },
 
   methods: {
     isInValidField() {
@@ -215,6 +225,15 @@ export default {
         error = true
         this.$message.error("Select Local Government")
       }
+      if (this.details.password == '') {
+        error = true
+        this.$message.error("Password is required")
+      }
+      if (this.details.password.length < 6) {
+        error = true
+        this.$message.error("Password is must be at least 6 characters")
+      }
+
       return error
 
     },
@@ -280,10 +299,18 @@ export default {
     async getReferral() {
       let res = await this.$axios.$post('/user/referral', {'referral': this.referral})
       if (res.success) {
-        return this.details.parent_id = res.data
+        return this.details.brought_by = res.data
       }
       document.querySelector('#referral').classList.add('is-invalid')
       return this.referralNotFound = true
+    },
+    async getPlacement() {
+      let res = await this.$axios.$post('/user/referral', {'referral': this.placement})
+      if (res.success) {
+        return this.details.parent_id = res.data
+      }
+      document.querySelector('#placement').classList.add('is-invalid')
+      return this.placementNotFound = true
     },
     onDOBChange(date, dateString) {
       this.details.dob = dateString

@@ -26,7 +26,7 @@
             <!--            <span>Remember me on this computer</span>-->
             <!--          </label>-->
             <!--        </div>-->
-            <button @click.prevent="submitForm" :disabled="!isValidCode" class="btn btn-success btn-lg float-right" type="submit">Login</button>
+            <button @click.prevent="submitForm" :disabled="!isValidCode" class="btn btn-success btn-sm float-right" type="submit">Login</button>
           </form>
         </div><!--/card-block-->
       </div><!-- /form card login -->

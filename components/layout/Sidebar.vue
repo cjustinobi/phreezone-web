@@ -14,26 +14,42 @@
         <div class="user-info">
           <span class="user-name">
             <strong>{{ $auth.user.full_name }}</strong><br>
-            <span class="badge badge-pill badge-warning" v-if="$auth.user.package">
-              {{ $auth.user.package.name }}
-            </span>
+            <span v-if="$auth.user.package" class="badge badge-pill badge-warning">{{ $auth.user.package.name }}</span>
+            <span v-else class="badge badge-pill badge-light">N/P</span>
           </span>
           <span v-if="isAdmin" class="user-role">Administrator</span>
         </div>
       </div>
-      <!-- sidebar-header  -->
-      <div class="sidebar-search">
-        <div>
-          <div class="input-group">
-            <input type="text" class="form-control search-menu" placeholder="Search...">
-            <div class="input-group-append">
-              <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </span>
-            </div>
-          </div>
+      <div>
+        <div v-if="pckLevel" class="pl-3 pr-3">
+          <span>
+            <span style="color: lightgrey">Next package</span>
+            <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span>
+          </span>
+          <h2>
+            <a-progress class="ant-progress-status-success" :percent="pckLevel.packageLevel"/>
+          </h2>
+        </div>
+        <div v-else class="pl-3 pr-3">
+          <span>Next package <span class="badge badge-pill badge-primary">Treasure</span></span>
+          <h2>
+            <a-progress class="ant-progress-status-exception" :percent="0"/>
+          </h2>
         </div>
       </div>
+      <!-- sidebar-header  -->
+<!--      <div class="sidebar-search">-->
+<!--        <div>-->
+<!--          <div class="input-group">-->
+<!--            <input type="text" class="form-control search-menu" placeholder="Search...">-->
+<!--            <div class="input-group-append">-->
+<!--              <span class="input-group-text">-->
+<!--                <i class="fa fa-search" aria-hidden="true"></i>-->
+<!--              </span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <!-- sidebar-search  -->
       <div class="sidebar-menu">
         <ul>
@@ -65,19 +81,19 @@
                   <nuxt-link to="/pop">{{ isAdmin ? 'View POP' : 'Upload POP' }}</nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="#">Search Sponsor Tree Network</nuxt-link>
+                  <nuxt-link to="#">Sponsor Network Tree</nuxt-link>
                 </li>
                 <li>
-                  <a href="#">Search Placement</a>
+                  <a href="#">Placement Activities</a>
                 </li>
                 <li>
-                  <a href="#">Performance of Sponsor Network</a>
+                  <nuxt-link to="/network-activities">Sponsor's Network Activities</nuxt-link>
                 </li>
                 <li>
-                  <a href="#">Placement Tree Performance</a>
+                  <a href="#">Placement Tree Activities</a>
                 </li>
                 <li>
-                  <a href="#">Performance Service Organization</a>
+                  <nuxt-link to="/team-performance">Team Performance Activities</nuxt-link>
                 </li>
               </ul>
             </div>
@@ -148,7 +164,20 @@
 
 <script>
   export default {
-    name: 'dashboardSidebar'
+    name: 'dashboardSidebar',
+    data() {
+      return {
+        pckLevel: ''
+      }
+    },
+    methods: {
+      async getPackageLevel() {
+        this.pckLevel = (await this.$axios.$get(`user/${this.userId}/packageLevel`)).data
+      }
+    },
+    mounted() {
+      this.getPackageLevel()
+    }
   }
 </script>
 

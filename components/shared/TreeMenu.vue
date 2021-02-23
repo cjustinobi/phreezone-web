@@ -1,6 +1,6 @@
 <template>
   <li>
-    <a-card class="bold" @click="toggle">
+    <a-card class="tf-nc"  @click="toggle">
       <span v-if="isFolder">
         <a-icon v-if="isOpen" type="down" />
         <a-icon v-else type="up" />
@@ -32,35 +32,32 @@
 export default {
   name: 'tree-item',
   props: ['item'],
-  data: function() {
+  data() {
     return {
       isOpen: false
     };
   },
   computed: {
-    isFolder: function() {
+    isFolder() {
       return this.item.children && this.item.children.length;
     }
   },
   methods: {
-    toggle: function() {
+    toggle() {
       if (this.isFolder) {
         this.isOpen = !this.isOpen;
       }
     },
+  },
+  mounted() {
+    document.querySelector('.tf-nc').click()
   }
 }
 </script>
 
 <style scoped lang="scss">
   li { list-style: none }
-  .bold {
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*justify-items: center;*/
-    margin: 30px 0;
-    width: 220px;
-  }
+
 </style>
 
 

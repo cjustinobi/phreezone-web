@@ -185,7 +185,7 @@
         let res = await this.$axios.$post(`admin/pop/${popId}`, { status: 'approved' })
         if (res.success) {
           this.$message.success('Confirmed payment successfully')
-          const popIndex = self.pops.indexOf(pop => pop.id == res.data.id)
+          const popIndex = self.pops.findIndex(pop => pop.id == res.data.id)
           console.log(popIndex)
           return self.$set(self.pops, popIndex, res.data)
           // return this.pops[popIndex] = res.data
