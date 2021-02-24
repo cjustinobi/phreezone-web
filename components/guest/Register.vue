@@ -62,7 +62,7 @@
                 <div class="col-md-3">
                   <label for="referral">Sponsor ID</label>
                   <input
-                    v-model="referral"
+                    v-model="referralId"
                     @input="removeErrorClass('#referral'); referralNotFound = false"
                     @change="getReferral"
                     placeholder="Your sponsor ID"
@@ -138,7 +138,7 @@
                 <div class="col-md-4" v-if="details.country == 'Nigeria'">
                   <label for="lga">LGA</label>
                   <select v-model="details.lga" class="form-control" id="lga" required>
-                    <option>Selecmlm-api/api/packagest LGA</option>
+                    <option>Select LGA</option>
                     <option v-for="(lga, i) in lgas" :value="lga.name">{{ lga.name }}</option>
                   </select>
                 </div>
@@ -167,7 +167,7 @@ export default {
   mixins: [utils],
   data() {
     return {
-      referral: '',
+      referralId: '',
       placement: '',
       packages: '',
       countries: '',
@@ -231,7 +231,7 @@ export default {
       }
       if (this.details.password.length < 6) {
         error = true
-        this.$message.error("Password is must be at least 6 characters")
+        this.$message.error("Password must be at least 6 characters")
       }
 
       return error
@@ -242,14 +242,18 @@ export default {
          return
        }
 
-      let res = await this.$axios.$post('/auth/register', this.details)
-      if (res.success) {
-        Object.keys(this.details).map(item => this.details[item] = '')
-        this.referral = ''
-        this.$store.dispatch('notification/setStatus', {
-          success: true,
-          messages: ['Account successfully created']
-        })
+      try {
+        let res = await this.$axios.$post('/auth/register', this.details)
+        if (res.success) {
+          Object.keys(this.details).map(item => this.details[item] = '')
+          this.referralId = ''
+          this.$store.dispatch('notification/setStatus', {
+            success: true,
+            messages: ['Account successfully created']
+          })
+        }
+      } catch (e) {
+        this.$message.error(e.response.data.message)
       }
 
     },
@@ -297,7 +301,7 @@ export default {
       }
     },
     async getReferral() {
-      let res = await this.$axios.$post('/user/referral', {'referral': this.referral})
+      let res = await this.$axios.$post('/user/referral', {'referral': this.referralId})
       if (res.success) {
         return this.details.brought_by = res.data
       }

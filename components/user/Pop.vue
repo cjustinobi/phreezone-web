@@ -47,14 +47,11 @@
 
 
 <script>
-  const amounts = [5000, 15000, 50000, 150000, 300000, 600000, 1200000]
   export default {
     name: 'pop',
     layout: 'dashboard',
     data() {
       return {
-        // serverPath: process.env.imageBase,
-        amounts,
         img: require('assets/img/africinnovate.png'),
         file: '',
         amount: '',

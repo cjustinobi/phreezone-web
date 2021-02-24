@@ -39,15 +39,18 @@
     list-style-type: none;
   }
   .example .tf-nc {
-    /* css here */
+    color: gold;
   }
 
   .tf-custom .tf-nc:before,
   .tf-custom .tf-nc:after {
-    /* css here */
+    color: red;
   }
 
   .tf-custom li li:before {
-    /* css here */
+    color: yellow;
+  }
+  .tf-dotted-children {
+    color: green;
   }
 </style>
