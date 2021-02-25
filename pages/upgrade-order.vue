@@ -7,7 +7,7 @@
       </a-col>
       <a-col :span="4">
         <a-select v-model="amount" style="width: 200px">
-          <a-select-option value="">Select Amount</a-select-option>
+          <a-select-option  value="">Select Amount</a-select-option>
           <a-select-option v-for="(amt, i) in amounts" :value="amt" :key="i">{{ amt }}</a-select-option>
         </a-select>
       </a-col>
@@ -16,10 +16,10 @@
                 title="Are you sure confirming this payment?"
                 ok-text="Yes"
                 cancel-text="No"
-                @confirm="confirmPop(pop.id)"
+                @confirm="upgrade"
                 @cancel="visible = false"
               >
-                <a href="#">Upgrade</a>
+                <a href="#" >Upgrade</a>
               </a-popconfirm>
 
       </a-col>
@@ -40,12 +40,27 @@
     },
     methods: {
       async upgrade() {
-
+        const self = this
+        let res = await this.$axios.$post(`user/uploadConfirmation/null`, {
+          userReferral: this.userReferral,
+          amount: this.amount,
+          status: "approved",
+          isUpgrade: true })
+        if (res.success) {
+          this.$message.success('Confirmed payment successfully')
+          this.$message(res.message)
+        }
+        else {this.$message.error('failed')}
       }
     }
   }
 </script>
 
 <style scoped>
+  div{
+    color: rebeccapurple;
+  }
+
+
 
 </style>
