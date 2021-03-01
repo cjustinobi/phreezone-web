@@ -5,7 +5,12 @@
         <a-icon v-if="isOpen" type="down" />
         <a-icon v-else type="up" />
       </span>
-      <img width="40px" class="img-responsive img-rounded display-block" src="~assets/img/user.jpg" alt="User picture">
+      <img
+        width="40px"
+        class="img-responsive img-rounded display-block"
+        :src="item.gender == 'm' ? require('@/assets/img/user.jpg') : require('@/assets/img/female.png')"
+        alt="User picture"
+      >
       <strong class="display-block">{{ item.referral }}</strong>
       <strong class="display-block">{{ item.full_name }}</strong>
       <span class="display-block">{{ item.phone }}</span>

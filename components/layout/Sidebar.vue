@@ -9,7 +9,11 @@
       </div>
       <div class="sidebar-header">
         <div class="user-pic">
-          <img class="img-responsive img-rounded" src="~assets/img/user.jpg" alt="User picture">
+          <img
+            class="img-responsive img-rounded"
+            :src="$auth.user.gender == 'm' ? require('@/assets/img/user.jpg') : require('@/assets/img/female.png')"
+            alt="User picture"
+          >
         </div>
         <div class="user-info">
           <span class="user-name">
@@ -90,7 +94,7 @@
                   <nuxt-link to="/network-activities">Sponsor's Network Activities</nuxt-link>
                 </li>
                 <li>
-                  <a href="#">Placement Tree Activities</a>
+                  <nuxt-link to="/placement-activities">Placement Tree Activities</nuxt-link>
                 </li>
                 <li>
                   <nuxt-link to="/team-performance">Team Performance Activities</nuxt-link>
