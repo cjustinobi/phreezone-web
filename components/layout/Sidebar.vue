@@ -84,17 +84,17 @@
                 <li>
                   <nuxt-link to="/pop">{{ isAdmin ? 'View POP' : 'Upload POP' }}</nuxt-link>
                 </li>
+<!--                <li>-->
+<!--                  <nuxt-link to="#">Sponsor Network Tree</nuxt-link>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <a href="#">Placement Activities</a>-->
+<!--                </li>-->
                 <li>
-                  <nuxt-link to="#">Sponsor Network Tree</nuxt-link>
+                  <nuxt-link to="/placement-list">Placement List</nuxt-link>
                 </li>
                 <li>
-                  <a href="#">Placement Activities</a>
-                </li>
-                <li>
-                  <nuxt-link to="/network-activities">Sponsor's Network Activities</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link to="/placement-activities">Placement Tree Activities</nuxt-link>
+                  <nuxt-link to="/sponsor-list">Sponsor's List</nuxt-link>
                 </li>
                 <li>
                   <nuxt-link to="/team-performance">Team Performance Activities</nuxt-link>

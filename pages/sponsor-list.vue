@@ -61,7 +61,7 @@
   ]
   import DateFormat from '../mixins/dateFormat'
   export default {
-    name: 'network-activities',
+    name: 'sponsor-list',
     layout: 'dashboard',
     mixins: [DateFormat],
     data() {
