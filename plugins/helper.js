@@ -11,6 +11,9 @@ Vue.mixin({
     isAdmin() {
       return this.$auth.user.userType == 1
     },
+    isStockist() {
+      return this.$auth.user.userType == 2
+    },
     referral() {
       return this.$auth.user.referral
     },

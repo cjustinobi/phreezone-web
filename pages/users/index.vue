@@ -9,11 +9,22 @@
     <br>
     <a-table v-if="users" :columns="columns" :data-source="users" :rowKey="record => record.id">
       <a-dropdown slot="action" slot-scope="text" href="javascript:;">
-        <a-menu slot="overlay" @click="handleMenuClick">
-          <a-menu-item key="1">
-            <nuxt-link :to="{ name: 'users-id', params: { id: text.id , user: text }}">Edit</nuxt-link>
+        <a-menu slot="overlay">
+          <a-menu-item v-if="text.active" key="1">
+            <a-popconfirm
+              :title="`Sure you want to ${text.userType === 2 ? 'disable' : 'enable'} stockist?`"
+              ok-text="Yes"
+              cancel-text="No"
+              @confirm="disableEnableStockist(text.id)"
+              @cancel="visible = false"
+            >
+              <a href="#">{{ text.userType == 2 ? 'Disable Stockist' : 'Enable Stockist' }}</a>
+            </a-popconfirm>
           </a-menu-item>
           <a-menu-item key="2">
+            <nuxt-link :to="{ name: 'users-id', params: { id: text.id , user: text }}">Edit</nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="3">
             Delete
           </a-menu-item>
         </a-menu>
@@ -137,6 +148,7 @@
     data() {
       return {
         users: '',
+        visible: false,
         columns
       }
     },
@@ -149,7 +161,14 @@
         this.searchText = selectedKeys[0];
         this.searchedColumn = dataIndex;
       },
-
+      async disableEnableStockist(userId) {
+        const { success } = await this.$axios.$post(`admin/disableEnableStockist/${userId}`)
+        if (success) {
+          let userIndex = this.users.findIndex(user => user.id == userId)
+          this.users[userIndex].userType = this.users[userIndex].userType == 2 ? 3 : 2
+          this.$message.success('User updated')
+        }
+      },
       handleReset(clearFilters) {
         clearFilters();
         this.searchText = '';

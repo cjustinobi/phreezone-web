@@ -75,7 +75,7 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li v-if="isAdmin">
+                <li v-if="isAdmin || isStockist">
                   <nuxt-link to="/register">Add new Member</nuxt-link>
                 </li>
                 <li v-if="isAdmin">
@@ -122,7 +122,7 @@
               </ul>
             </div>
           </li>
-          <li v-if="isAdmin" class="sidebar-dropdown">
+          <li v-if="isAdmin || isStockist" class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-id-card"></i>
               <span>Order Management</span>

@@ -251,6 +251,7 @@ export default {
             success: true,
             messages: ['Account successfully created']
           })
+          this.$router.push('/upgrade-order')
         }
       } catch (e) {
         this.$message.error(e.response.data.message)
