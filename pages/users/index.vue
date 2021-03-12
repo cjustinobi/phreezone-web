@@ -7,7 +7,7 @@
       </a-col>
     </a-row>
     <br>
-    <a-table v-if="users" :columns="columns" :data-source="users" :rowKey="record => record.id">
+    <a-table v-if="users" :columns="columns" :data-source="users" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }">
       <a-dropdown slot="action" slot-scope="text" href="javascript:;">
         <a-menu slot="overlay">
           <a-menu-item v-if="text.active" key="1">
@@ -101,6 +101,7 @@
     {
       title: 'Full Name',
       dataIndex: 'full_name',
+      fixed: 'left',
       scopedSlots: {
         customRender: 'fullName',
         filterDropdown: 'filterDropdown',

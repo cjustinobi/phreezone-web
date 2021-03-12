@@ -213,10 +213,6 @@ export default {
         error = true
         this.$message.error("Last Name is required")
       }
-      if (parseInt(this.details.dob) < 2003 ) {
-        error = true
-        this.$message.error("Must be above 18 years of age")
-      }
       if (this.details.dob == '') {
         error = true
         this.$message.error("Date of birth is required")
