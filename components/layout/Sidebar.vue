@@ -114,6 +114,9 @@
                   <nuxt-link to="/commissions">Commission</nuxt-link>
                 </li>
                 <li>
+                  <nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link>
+                </li>
+                <li>
                   <a href="#">Incentive Point Management</a>
                 </li>
                 <li>
