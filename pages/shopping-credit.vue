@@ -85,7 +85,7 @@
       <a-form-model-item v-bind="formItemLayoutWithOutLabel">
         <a-button type="dashed" @click="addItem"><a-icon type="plus" /> Add field</a-button>
       </a-form-model-item>
-      <a-form-model-item v-bind="formItemLayoutWithOutLabel">
+      <a-form-model-item v-if="dynamicValidateForm.data.length" v-bind="formItemLayoutWithOutLabel">
         <a-button type="primary" html-type="submit" @click="submitForm('dynamicValidateForm')">Submit</a-button>
         <a-button style="margin-left: 10px" @click="resetForm('dynamicValidateForm')">Reset</a-button>
       </a-form-model-item>
