@@ -95,6 +95,7 @@
       <span slot="sponsorShopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
       <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
       <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
+      <span slot="stockistSales" slot-scope="stockist">{{ stockist == null ? 0 : stockist }}</span>
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
       <span slot="total" slot-scope="total"><b>{{ total }}</b></span>
     </a-table>
@@ -172,6 +173,11 @@
       title: 'Spillover',
       dataIndex: 'spillover_amount',
       scopedSlots: { customRender: 'spillover' }
+    },
+    {
+      title: 'Stockist Sales',
+      dataIndex: 'stockist_sales_amount',
+      scopedSlots: { customRender: 'stockistSales' }
     },
     {
       title: 'Total',

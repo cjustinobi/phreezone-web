@@ -2,8 +2,11 @@
   <div>
     <a-page-header sub-title="Edit User"/>
     <a-form-model v-bind="formItemLayout">
-      <a-form-model-item label="Full Name">
-        <a-input v-model="user.full_name" placeholder="Full Name" />
+      <a-form-model-item label="First Name">
+        <a-input v-model="user.first_name" placeholder="First Name" />
+      </a-form-model-item>
+      <a-form-model-item label="Last Name">
+        <a-input v-model="user.last_name" placeholder="Last Name" />
       </a-form-model-item>
       <a-form-model-item label="Phone">
         <a-input v-model="user.phone" placeholder="Phone" />
@@ -56,7 +59,8 @@
 
           let formData = new FormData();
           formData.append('id', this.user.id)
-          formData.append('full_name', this.user.full_name)
+          formData.append('first_name', this.user.first_name)
+          formData.append('last_name', this.user.last_name)
           formData.append('phone', this.user.phone)
           formData.append('email', this.user.email)
           formData.append('_method', 'PUT')
@@ -69,9 +73,13 @@
       isValidFields() {
         let valid = true
         let msgs = []
-        if (this.user.full_name == '') {
+        if (this.user.first_name == '') {
           valid = false
-          msgs.push('Name is required')
+          msgs.push('First Name is required')
+        }
+        if (this.user.last_name == '') {
+          valid = false
+          msgs.push('Last Name is required')
         }
         if (this.user.phone == '') {
           valid = false

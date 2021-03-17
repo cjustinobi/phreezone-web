@@ -4,7 +4,15 @@ Vue.mixin({
 
   data() {
     return {
-      amounts: [5000, 15000, 50000, 150000, 300000, 600000, 1200000]
+      amounts: [
+        { title: 'Treasure', amount: 5000 },
+        { title: 'Bronze', amount: 15000 },
+        { title: 'Silver', amount: 50000 },
+        { title: 'Silver Star', amount: 150000 },
+        { title: 'Gold', amount: 300000 },
+        { title: 'Platinum', amount: 600000 },
+        { title: 'Vip Royal', amount: 1200000 }
+      ]
     }
   },
   computed: {

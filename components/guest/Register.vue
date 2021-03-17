@@ -144,11 +144,11 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="inputPassword3">Password</label>
-              <input v-model="details.password" class="form-control" id="inputPassword3" placeholder="Password" required type="password">
-              <small class="form-text text-muted" id="passwordHelpBlock">Your password must be 6-20 characters long</small>
-            </div>
+<!--            <div class="form-group">-->
+<!--              <label for="inputPassword3">Password</label>-->
+<!--              <input v-model="details.password" class="form-control" id="inputPassword3" placeholder="Password" required type="password">-->
+<!--              <small class="form-text text-muted" id="passwordHelpBlock">Your password must be 6-20 characters long</small>-->
+<!--            </div>-->
             <div class="form-group">
               <button @click.prevent="submitForm" class="btn btn-success btn-sm float-right" type="submit">Register</button>
             </div>
@@ -193,7 +193,6 @@ export default {
         address: '',
         parent_id: '',
         brought_by: '',
-        password: ''
       }
     }
   },
@@ -221,14 +220,14 @@ export default {
         error = true
         this.$message.error("Select Local Government")
       }
-      if (this.details.password == '') {
-        error = true
-        this.$message.error("Password is required")
-      }
-      if (this.details.password.length < 6) {
-        error = true
-        this.$message.error("Password must be at least 6 characters")
-      }
+      // if (this.details.password == '') {
+      //   error = true
+      //   this.$message.error("Password is required")
+      // }
+      // if (this.details.password.length < 6) {
+      //   error = true
+      //   this.$message.error("Password must be at least 6 characters")
+      // }
 
       return error
 

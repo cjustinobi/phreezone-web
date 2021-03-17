@@ -1,17 +1,17 @@
 <template>
   <div>
     <a-page-header sub-title="Upgrade Order"/>
-    <a-row>
+    <a-row :gutter="4">
       <a-col :span="4">
-        <a-input v-model="referralCode" />
+        <a-input v-model="referralCode" placeholder="Member Referral" />
       </a-col>
       <a-col :span="4">
         <a-select v-model="amount" style="width: 200px">
-          <a-select-option  value="">Select Amount</a-select-option>
-          <a-select-option v-for="(amt, i) in amounts" :value="amt" :key="i">{{ amt }}</a-select-option>
+          <a-select-option value="">Select Amount</a-select-option>
+          <a-select-option v-for="(amt, i) in amounts" :value="amt.amount" :key="i">{{ amt.title }}</a-select-option>
         </a-select>
       </a-col>
-      <a-col :span="4">
+      <a-col :span="24" style="margin-top: 12px">
               <a-popconfirm
                 title="Are you sure confirming this payment?"
                 ok-text="Yes"
@@ -19,7 +19,7 @@
                 @confirm="upgrade"
                 @cancel="visible = false"
               >
-                <a href="#" >Upgrade</a>
+                <a-button type="primary">Upgrade</a-button>
               </a-popconfirm>
 
       </a-col>

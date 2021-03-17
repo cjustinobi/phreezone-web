@@ -69,7 +69,7 @@
             <a-input v-model="item.item" placeholder="Enter Product name" style="margin-right: 8px"/>
           </a-col>
           <a-col :xs="10" :md="4">
-            <a-input v-model="item.amount" placeholder="Enter Amount" style="margin-right: 8px"/>
+            <a-input v-model="item.amount" type="number" placeholder="Enter Amount" style="margin-right: 8px"/>
           </a-col>
           <a-col :xs="4" :md="2">
             <a-icon
@@ -123,6 +123,7 @@
         },
         dynamicValidateForm: {
           data: [],
+          stockistId: this.$auth.user.id
         },
       };
     },
@@ -139,6 +140,7 @@
           if (this.userReferral && this.canSubmit && valid) {
             try {
               this.$axios.$post('user/spendShoppingBonus', this.dynamicValidateForm).then(res => {
+                console.log(res)
                 this.getShoppingBonus()
                 this.$message.success('Added successfully')
               })

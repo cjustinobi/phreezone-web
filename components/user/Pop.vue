@@ -7,7 +7,7 @@
       <br>
         <a-select v-model="amount" style="width: 200px">
           <a-select-option value="">Select Amount</a-select-option>
-          <a-select-option v-for="(amt, i) in amounts" :value="amt" :key="i">{{ amt }}</a-select-option>
+          <a-select-option v-for="(amt, i) in amounts" :value="amt.amount" :key="i">{{ amt.amount }}</a-select-option>
         </a-select>
       </a-form-model-item>
     <div class="buttons">
