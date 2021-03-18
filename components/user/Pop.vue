@@ -52,7 +52,7 @@
     layout: 'dashboard',
     data() {
       return {
-        img: require('assets/img/africinnovate.png'),
+        img: require('assets/img/logo.png'),
         file: '',
         amount: '',
         url: '',

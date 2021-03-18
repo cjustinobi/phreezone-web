@@ -12,6 +12,15 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: 'vendor/jquery/jquery.min.js' },
+      {  src: 'vendor/bootstrap/js/bootstrap.bundle.min.js' },
+      {  src: 'vendor/jquery.easing/jquery.easing.min.js' },
+      {  src: 'vendor/isotope-layout/isotope.pkgd.min.js' },
+      {  src: 'vendor/venobox/venobox.min.js' },
+      {  src: 'vendor/aos/aos.js' },
+      {  src: 'vendor/js/main.js' },
     ]
   },
 
@@ -34,8 +43,7 @@ export default {
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
-    '@nuxtjs/date-fns',
-    '@nuxtjs/ngrok',
+    '@nuxtjs/date-fns'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -60,7 +68,7 @@ export default {
     },
 
     redirect: {
-      login: '/',
+      login: '/login',
       logout: '/',
       // callback: '/login',
       home: '/home'

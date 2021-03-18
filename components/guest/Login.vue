@@ -84,4 +84,7 @@ export default {
 </script>
 
 <style scoped>
+  .row {
+    margin: 100px;
+  }
 </style>

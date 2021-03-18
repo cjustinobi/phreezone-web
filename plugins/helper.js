@@ -4,6 +4,7 @@ Vue.mixin({
 
   data() {
     return {
+      windowWidth: '',
       amounts: [
         { title: 'Treasure', amount: 5000 },
         { title: 'Bronze', amount: 15000 },
@@ -13,6 +14,11 @@ Vue.mixin({
         { title: 'Platinum', amount: 600000 },
         { title: 'Vip Royal', amount: 1200000 }
       ]
+    }
+  },
+  methods: {
+    getWindowWidth(event) {
+      this.windowWidth = document.documentElement.clientWidth;
     }
   },
   computed: {
@@ -28,6 +34,10 @@ Vue.mixin({
     userId() {
       return this.$auth.user.id
     }
+  },
+  mounted() {
+    window.addEventListener('resize', this.getWindowWidth);
+    this.getWindowWidth()
   }
 
 })

@@ -17,7 +17,7 @@
   import {mapGetters} from "vuex";
   import dashboardInit from "@/mixins/dashboardInit";
   import Notification from '@/components/shared/Notification';
-  import DashboardSidebar from '@/components/layout/Sidebar';
+  import DashboardSidebar from '@/components/admin/Sidebar';
   import $ from "jquery";
 
   export default {
