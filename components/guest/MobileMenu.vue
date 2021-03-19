@@ -1,7 +1,6 @@
 <template>
   <div v-if="windowWidth < 992" id="menuArea">
     <input type="checkbox" id="menuToggle" />
-
     <label for="menuToggle" class="menuOpen">
       <div class="open"></div>
     </label>
@@ -25,23 +24,18 @@
     components: {
       Links
     },
-    data() {
-      return {
-        // windowWidth: ''
-      }
-    },
     methods: {
       getWindowWidth(event) {
         this.windowWidth = document.documentElement.clientWidth;
       }
     },
-    // mounted() {
-    //
-    //   window.addEventListener('resize', this.getWindowWidth);
-    //
-    //     //Init
-    //   this.getWindowWidth()
-    // }
+    watch: {
+      '$route': {
+        handler: function (val) {
+          this.windowWidth < 992 ? document.querySelector('.menuOpen').click() : ''
+        }
+      }
+    }
   }
 </script>
 
