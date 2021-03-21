@@ -22,10 +22,10 @@
           <div class="col-lg-3 col-md-6 footer-contact">
             <h3>Phreezone</h3>
             <p>
-              13 Umungasi Street <br>
-              Aba, Abia State<br>
-              Nigeria <br><br>
-              <strong>Phone:</strong> +234 708 4238 234<br>
+<!--              13 Umungasi Street <br>-->
+<!--              Aba, Abia State<br>-->
+<!--              Nigeria <br><br>-->
+<!--              <strong>Phone:</strong> +234 708 4238 234<br>-->
               <strong>Email:</strong> info@phreezone.com.ng<br>
             </p>
           </div>

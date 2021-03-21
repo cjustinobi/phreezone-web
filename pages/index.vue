@@ -3,8 +3,8 @@
     <section id="hero">
       <div class="hero-container">
         <h3>Welcome to <strong>Phreezone</strong></h3>
-        <h1>We're Creative Builders</h1>
-        <h2>A well redefined online and offline network marketing company</h2>
+<!--        <h1>We're Creative Builders</h1>-->
+<!--        <h2>A well redefined online and offline network marketing company</h2>-->
         <nuxt-link to="/login" class="btn-get-started scrollto">Get Started</nuxt-link>
       </div>
     </section>
@@ -14,56 +14,56 @@
 
         <div class="section-title">
           <h2>Packages</h2>
-          <h3>We do offer awesome <span>Packages</span></h3>
-          <p>These are several avenues to help you succeede without sweating it.</p>
+<!--          <h3>We do offer awesome <span>Packages</span></h3>-->
+<!--          <p>These are several avenues to help you succeede without sweating it.</p>-->
         </div>
 
         <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-bullseye"></i></div>
-              <h4 class="title"><a href="">Treasure</a></h4>
-              <p class="description">This is ideal for students or anyone with a low budget bla bla bla</p>
+              <h4 class="title">Treasure</h4>
+              <p class="description">{{ 5000 | currency }}</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
+          <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-box silver">
               <div class="icon"><i class="bx bx-award"></i></div>
-              <h4 class="title"><a href="">Silver</a></h4>
-              <p class="description">This is ideal for students or anyone with a low budget bla bla bla</p>
+              <h4 class="title">Silver</h4>
+              <p class="description">{{ 50000 | currency }}</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
+          <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-box silver-star">
               <div class="icon"><i class="bx bxs-star-half"></i></div>
-              <h4 class="title"><a href="">Silver Star</a></h4>
-              <p class="description">This is ideal for students or anyone with a low budget bla bla bla</p>
+              <h4 class="title">Silver Star</h4>
+              <p class="description">{{ 150000 | currency }}</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
+          <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-box gold">
               <div class="icon"><i class="bx bxs-badge"></i></div>
-              <h4 class="title"><a href="">Gold</a></h4>
-              <p class="description">This is ideal for students or anyone with a low budget bla bla bla</p>
+              <h4 class="title">Gold</h4>
+              <p class="description">{{ 300000 | currency }}</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
+          <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-box platinum">
               <div class="icon"><i class="bx bx-medal"></i></div>
-              <h4 class="title"><a href="">Platinum</a></h4>
-              <p class="description">This is ideal for students or anyone with a low budget bla bla bla</p>
+              <h4 class="title">Platinum</h4>
+              <p class="description">{{ 600000 | currency }}</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
+          <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-box royal">
               <div class="icon"><i class="bx bxs-badge-dollar"></i></div>
-              <h4 class="title"><a href="">VIP Royal</a></h4>
-              <p class="description">This is ideal for students or anyone with a low budget bla bla bla</p>
+              <h4 class="title">VIP Royal</h4>
+              <p class="description">{{ 1200000 | currency }}</p>
             </div>
           </div>
         </div>
@@ -189,3 +189,39 @@
     auth: 'guest',
   }
 </script>
+
+<style scoped>
+  .silver i{
+    color: #d4d416;
+  }
+  .silver:hover::before {
+    background: #d4d416;
+  }
+  .silver-star i{
+    color: #319ce3;
+  }
+  .silver-star:hover::before {
+    background: #319ce3;
+  }
+  .gold i{
+    color: #eeb60a;
+  }
+  .gold:hover::before {
+    background: #eeb60a;
+  }
+  .platinum i{
+    color: #d57266;
+  }
+  .platinum:hover::before {
+    background: #d57266;
+  }
+  .royal i{
+    color: #73c141;
+  }
+  .royal:hover::before {
+    background: #73c141;
+  }
+  .icon-box:hover .title {
+    color: #fff;
+  }
+</style>

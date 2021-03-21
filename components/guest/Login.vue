@@ -85,6 +85,6 @@ export default {
 
 <style scoped>
   .row {
-    margin: 100px;
+    margin: 100px 0;
   }
 </style>
