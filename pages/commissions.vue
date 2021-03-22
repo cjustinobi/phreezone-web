@@ -14,7 +14,7 @@
       <a-col span="6">
         <a-input
           placeholder="Sponsor ID"
-          v-model="referral"
+          v-model="userReferral"
           style="width: 188px; margin-bottom: 8px;"
           @change="getWeekCommissions"
           />
@@ -200,24 +200,24 @@
         bonuses: '',
         columns,
         week: '',
-        referral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral
+        userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral
       }
     },
     methods: {
       async getCommissions() {
         this.bonuses = (await this.$axios.$post('admin/bonuses', {
-          referral: this.referral ,
-          week: this.week
+          referral: this.userReferral ,
+          setWeek: true
         })).data
       },
       downloadBonus() {
-        return window.open(`${this.$axios.defaults.baseURL}exportBonuses?referral=${this.referral}&week=${this.week}`)
+        return window.open(`${this.$axios.defaults.baseURL}exportBonuses?referral=${this.userReferral}&week=${this.week}`)
       },
       getWeekCommissions() {
         this.getCommissions()
       },
       setWeek() {
-        this.week = this.$dateFns.getISOWeek(new Date())
+        this.week = this.$dateFns.getWeek(new Date()) - 1
       }
     },
     mounted() {

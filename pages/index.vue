@@ -31,7 +31,7 @@
             <div class="icon-box silver">
               <div class="icon"><i class="bx bx-award"></i></div>
               <h4 class="title">Silver</h4>
-              <p class="description">{{ 50000 | currency }}</p>
+              <p class="description">{{ 15000 | currency }}</p>
             </div>
           </div>
 

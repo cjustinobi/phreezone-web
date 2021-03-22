@@ -1,25 +1,25 @@
 <template>
   <div>
-    <a-page-header sub-title="List of Proof of Payment"/>
+    <a-page-header sub-title="List of Stockist Sales"/>
     <a-modal
-      title="Reason for rejecting PoP"
+      title="Reason for rejecting Sale"
       :visible="visible"
       :confirm-loading="confirmLoading"
-      @ok="rejectPop"
+      @ok="rejectSale"
       @cancel="visible = false"
     >
       <a-textarea v-model="rejectReason" placeholder="Reason for rejecting" :auto-size="{ minRows: 2, maxRows: 6 }"/>
     </a-modal>
-    <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id">
-      <img width="80px" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>
-        <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
+    <a-table v-if="sales" :columns="columns" :data-source="sales" :rowKey="record => record.id">
+<!--      <img width="80px" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>-->
+      <a-dropdown v-if="sale.status == 'pending'" slot="action" slot-scope="sale" href="javascript:;">
         <a-menu slot="overlay">
           <a-menu-item key="1">
             <a-popconfirm
-              title="Are you sure confirming this payment?"
+              title="Are you sure confirming this sale?"
               ok-text="Yes"
               cancel-text="No"
-              @confirm="confirmPop(pop.id)"
+              @confirm="confirmSale(sale.shopping_id)"
               @cancel="visible = false"
             >
               <a href="#">Confirm</a>
@@ -30,7 +30,7 @@
               title="You about to reject this payment?"
               ok-text="Yes"
               cancel-text="No"
-              @confirm="cancelPop(pop.id)"
+              @confirm="cancelSale(sale.shopping_id)"
               @cancel="visible = false"
             >
               <a href="#">Reject</a>
@@ -101,8 +101,7 @@
       <a-tag :color="status == 'pending' ? 'volcano' : status == 'rejected' ? 'red' : 'green' ">{{ status }}</a-tag>
     </span>
       <span slot="amount" slot-scope="amount, rec">
-        <span v-if="rec.status == 'pending'">{{ rec.pending_amount | currency }}</span>
-        <span v-else>{{ amount | currency }}</span>
+        <span>{{ amount | currency }}</span>
       </span>
 
     </a-table>
@@ -111,27 +110,7 @@
 
 <script>
   const columns = [
-    {
-      title: 'Image',
-      dataIndex: 'pop_path',
-      scopedSlots: {
-        customRender: 'image',
-        // filterDropdown: 'filterDropdown',
-        // filterIcon: 'filterIcon',
-      },
-      onFilter: (value, record) =>
-        record.full_name
-          .toString()
-          .toLowerCase()
-          .includes(value.toLowerCase()),
-      onFilterDropdownVisibleChange: visible => {
-        if (visible) {
-          setTimeout(() => {
-            this.searchInput.focus();
-          }, 0);
-        }
-      },
-    },
+
     {
       title: 'Full Name',
       dataIndex: 'user.full_name'
@@ -155,21 +134,21 @@
     { title: 'Action', dataIndex: '', scopedSlots: { customRender: 'action' } },
   ];
   export default {
-    name: 'pops-list',
+    name: 'sales-list',
     layout: 'admin-dashboard',
     data() {
       return {
-        pops: '',
+        sales: '',
         columns,
         visible: false,
         confirmLoading: false,
         rejectReason: '',
-        selectedPopId: ''
+        selectedSaleId: ''
       }
     },
     methods: {
-      async getPops() {
-        this.pops = (await this.$axios.$get('admin/pops')).data
+      async getSales() {
+        this.sales = (await this.$axios.$post('admin/sales')).data
       },
       handleSearch(selectedKeys, confirm, dataIndex) {
         confirm();
@@ -180,32 +159,39 @@
         clearFilters();
         this.searchText = '';
       },
-      async confirmPop(popId) {
+      async confirmSale(saleId) {
         const self = this
-        let res = await this.$axios.$post(`admin/pop/${popId}`, { status: 'approved' })
+        let res = await this.$axios.$post(`admin/updateSale/${saleId}`, { status: 'approved' })
         if (res.success) {
-          this.$message.success('Confirmed payment successfully')
-          const popIndex = self.pops.findIndex(pop => pop.id == res.data.id)
-          return self.$set(self.pops, popIndex, res.data)
-
+          this.$message.success('Sale updated successfully')
+          return this.getSales()
         }
         this.$message.error('Payment not confirmed')
+
       },
-      async rejectPop() {
-        let res = await this.$axios.$post(`admin/pop/${this.selectedPopId}`, { status: 'rejected', reject_reason: this.rejectReason })
-        res.success ? this.$message.success('Payment Rejected') :
-          this.$message.error('Rejection not successful')
-        this.rejectReason = ''
-        this.selectedPopId = ''
-        this.visible = false
+      async rejectSale() {
+        let res = await this.$axios.$post(`admin/updateSale/${this.selectedSaleId}`, { status: 'rejected', reject_reason: this.rejectReason })
+        if (res.success) {
+          this.reset()
+          this.$message.success('Sales Rejected')
+          return this.getSales()
+        }
+
+        this.$message.error('Rejection not successful')
+        this.reset()
       },
-      cancelPop(popId) {
+      cancelSale(saleId) {
         this.visible = true
-        this.selectedPopId = popId
+        this.selectedSaleId = saleId
       },
+      reset() {
+        this.rejectReason = ''
+        this.selectedSaleId = ''
+        this.visible = false
+      }
     },
     mounted() {
-      this.getPops()
+      this.getSales()
     }
   }
 </script>
