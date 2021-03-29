@@ -48,7 +48,7 @@
         if (this.$route.params.user) {
           this.user = this.$route.params.user
         } else {
-          this.user = (await this.$axios.$get(`user/${this.$route.params.id}`)).data
+          this.user = (await this.$axios.$post(`user/${this.$route.params.id}`)).data
         }
       },
       async getPackages() {

@@ -8,7 +8,7 @@
     <div class="menu menuEffects">
       <label for="menuToggle"></label>
       <div class="menuContent">
-        <img src="~assets/img/logo.png" width="230" alt="Phreezone image">
+        <img src="~assets/img/logo.jpeg" width="230" alt="Phreezone image">
         <Links />
         <a-button size="large" class="get-started-btn">Get Started</a-button>
         <a-button size="large" class="login-btn">Login</a-button>

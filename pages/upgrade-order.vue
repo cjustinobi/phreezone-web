@@ -1,25 +1,27 @@
 <template>
   <div>
     <a-page-header sub-title="Upgrade Order"/>
+    <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
     <a-row :gutter="4">
-      <a-col :span="4">
-        <a-input v-model="referralCode" placeholder="Member Referral" />
+      <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
+        <a-input v-model="userReferral" @blur="getMember" placeholder="Member Referral" />
+        <br><br>
       </a-col>
-      <a-col :span="4">
-        <a-select v-model="amount" style="width: 200px">
+      <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
+        <a-select v-model="amount" style="width: 295px">
           <a-select-option value="">Select Amount</a-select-option>
           <a-select-option v-for="(amt, i) in amounts" :value="amt.amount" :key="i">{{ amt.title }}</a-select-option>
         </a-select>
       </a-col>
       <a-col :span="24" style="margin-top: 12px">
               <a-popconfirm
-                title="Are you sure confirming this payment?"
+                :title="`Are you sure upgrading ${upgradeUser.full_name}?`"
                 ok-text="Yes"
                 cancel-text="No"
                 @confirm="upgrade"
                 @cancel="visible = false"
               >
-                <a-button type="primary">Upgrade</a-button>
+                <a-button type="primary" :disabled="canUpgrade == false">Upgrade</a-button>
               </a-popconfirm>
 
       </a-col>
@@ -35,7 +37,8 @@
       return {
         amount: '',
         visible: false,
-        referralCode: ''
+        userReferral: '',
+        upgradeUser: ''
       }
     },
     methods: {
@@ -47,10 +50,26 @@
           status: "approved",
           isUpgrade: true })
         if (res.success) {
+          this.amount = ''
+          this.userReferral = ''
+          this.upgradeUser = ''
           this.$message.success('Confirmed payment successfully')
-          this.$message(res.message)
         }
         else {this.$message.error('failed')}
+      },
+      async getMember() {
+        try {
+          this.upgradeUser = (await this.$axios.$post(`user/null`, {
+            userReferral: this.userReferral
+          })).data
+        } catch (e) {
+          this.$message.error('Invalid Referral code entered')
+        }
+      }
+    },
+    computed: {
+      canUpgrade() {
+        return !(this.amount == '' || this.upgradeUser == '');
       }
     }
   }
