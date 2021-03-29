@@ -67,7 +67,7 @@
         <div class="col-lg-6 pt-4 pt-lg-0">
           <h6>AIMS</h6>
           <p>
-            phreezone  intends to make network marketing like a normal day to day business whereby somebody can
+            Phreezone  intends to make network marketing like a normal day to day business whereby somebody can
             decide that the profession he or she wants to go into is network marketing and when such a goes into it,
             his success will not be under any form of probability.
           </p>
