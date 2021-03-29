@@ -25,7 +25,7 @@
           <p>
             Looking back over the years, people have witnessed many companies which came with lots of promises which
             attracted lots of people to them only for some of those companies to either use high and near un-realizeable
-            targets/high price to deny it's members such promises or will be so dubious enough not fulfill such promises.
+            targets/high price to deny it's members such promises or will be so dubious enough not fulfil such promises.
           </p>
           <p>
             Research have shown that network marketing is one of the surest way to create very large number of financially
@@ -67,8 +67,8 @@
         <div class="col-lg-6 pt-4 pt-lg-0">
           <h6>AIMS</h6>
           <p>
-            Phreezone  intends to make network marketing like a normal day to day business whereby somebody can
-            decide that the profession he or she wants to go into is network marketing and when such a goes into it,
+            Phreezone intends to make network marketing like a normal day to day business whereby somebody can
+            decide that the profession he or she wants to go into is network marketing and when such a person goes into it,
             his success will not be under any form of probability.
           </p>
           <p>
