@@ -108,6 +108,7 @@
       title: 'Full Name',
       dataIndex: 'full_name',
       fixed: 'left',
+      width: 110,
       scopedSlots: {
         customRender: 'fullName',
         filterDropdown: 'filterDropdown',
