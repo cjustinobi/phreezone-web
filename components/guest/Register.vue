@@ -246,7 +246,8 @@ export default {
             success: true,
             messages: ['Account successfully created']
           })
-          this.$router.push('/upgrade-order')
+          console.log(res)
+          this.$router.push({ name:'upgrade-order', params: { ref: res.data.referral }})
         }
       } catch (e) {
         this.$message.error(e.response.data.message)

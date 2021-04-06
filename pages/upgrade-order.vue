@@ -71,6 +71,13 @@
       canUpgrade() {
         return !(this.amount == '' || this.upgradeUser == '');
       }
+    },
+    mounted() {
+
+      if (this.$route.params.ref) {
+        this.userReferral = this.$route.params.ref
+        this.getMember()
+      }
     }
   }
 </script>
