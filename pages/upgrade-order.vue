@@ -9,7 +9,7 @@
       </a-col>
       <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
         <a-select v-model="amount" style="width: 295px">
-          <a-select-option value="">Select Amount</a-select-option>
+          <a-select-option value="">Select Package</a-select-option>
           <a-select-option v-for="(amt, i) in amounts" :value="amt.amount" :key="i">{{ amt.title }}</a-select-option>
         </a-select>
       </a-col>
