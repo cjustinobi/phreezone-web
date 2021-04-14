@@ -70,116 +70,116 @@
       </div>
     </section>
 
-    <section id="portfolio" class="portfolio">
-      <div class="container aos-init aos-animate" data-aos="fade-up">
+<!--    <section id="portfolio" class="portfolio">-->
+<!--      <div class="container aos-init aos-animate" data-aos="fade-up">-->
 
-        <div class="section-title">
-          <h2>Products</h2>
-          <p>Our Products ranges from Home appliances to Office equipments and health supplementary which highly
-            beneficial.</p>
-        </div>
+<!--        <div class="section-title">-->
+<!--          <h2>Products</h2>-->
+<!--          <p>Our Products ranges from Home appliances to Office equipments and health supplementary which highly-->
+<!--            beneficial.</p>-->
+<!--        </div>-->
 
-        <ul id="portfolio-flters" class="d-flex justify-content-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter="*" class="filter-active">All</li>
-          <li data-filter=".filter-app" class="">Electronics</li>
-          <li data-filter=".filter-card" class="">Household Item</li>
-          <li data-filter=".filter-web" class="">Health Supplement</li>
-        </ul>
+<!--        <ul id="portfolio-flters" class="d-flex justify-content-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">-->
+<!--          <li data-filter="*" class="filter-active">All</li>-->
+<!--          <li data-filter=".filter-app" class="">Electronics</li>-->
+<!--          <li data-filter=".filter-card" class="">Household Item</li>-->
+<!--          <li data-filter=".filter-web" class="">Health Supplement</li>-->
+<!--        </ul>-->
 
-        <div class="row portfolio-container aos-init aos-animate" data-aos="fade-up" data-aos-delay="200" style="position: relative; height: 1267.11px;">
+<!--        <div class="row portfolio-container aos-init aos-animate" data-aos="fade-up" data-aos-delay="200" style="position: relative; height: 1267.11px;">-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="position: absolute; left: 0px; top: 0px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Provision</h4>
-              <p>Prov</p>
-              <a href="~assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="App 1"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="position: absolute; left: 0px; top: 0px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>Provision</h4>-->
+<!--              <p>Prov</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="App 1"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="position: absolute; left: 440px; top: 0px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Web 3</h4>
-              <p>Wee</p>
-              <a href="~assets/img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Web 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="position: absolute; left: 440px; top: 0px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>Web 3</h4>-->
+<!--              <p>Wee</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Web 3"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="position: absolute; left: 880px; top: 0px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>App 2</h4>
-              <p>App</p>
-              <a href="~assets/img/portfolio/portfolio-3.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="App 2"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="position: absolute; left: 880px; top: 0px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>App 2</h4>-->
+<!--              <p>App</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-3.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="App 2"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="position: absolute; left: 880px; top: 264px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Card 2</h4>
-              <p>Card</p>
-              <a href="~assets/img/portfolio/portfolio-4.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Card 2"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="position: absolute; left: 880px; top: 264px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>Card 2</h4>-->
+<!--              <p>Card</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-4.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Card 2"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="position: absolute; left: 440px; top: 308.922px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Web 2</h4>
-              <p>Web</p>
-              <a href="~assets/img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Web 2"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="position: absolute; left: 440px; top: 308.922px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>Web 2</h4>-->
+<!--              <p>Web</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Web 2"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="position: absolute; left: 0px; top: 451.703px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>App 3</h4>
-              <p>App</p>
-              <a href="~assets/img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="App 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-app" style="position: absolute; left: 0px; top: 451.703px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>App 3</h4>-->
+<!--              <p>App</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="App 3"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="position: absolute; left: 880px; top: 569.078px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Card 1</h4>
-              <p>Card</p>
-              <a href="~assets/img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Card 1"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="position: absolute; left: 880px; top: 569.078px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>Card 1</h4>-->
+<!--              <p>Card</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Card 1"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="position: absolute; left: 880px; top: 869.109px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Card 3</h4>
-              <p>Card</p>
-              <a href="~assets/img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Card 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-card" style="position: absolute; left: 880px; top: 869.109px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>Card 3</h4>-->
+<!--              <p>Card</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Card 3"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="position: absolute; left: 440px; top: 960.766px;">
-            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Web 3</h4>
-              <p>Web</p>
-              <a href="~assets/img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Web 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<!--          <div class="col-lg-4 col-md-6 portfolio-item filter-web" style="position: absolute; left: 440px; top: 960.766px;">-->
+<!--            <div class="portfolio-img"><img src="~assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt=""></div>-->
+<!--            <div class="portfolio-info">-->
+<!--              <h4>Web 3</h4>-->
+<!--              <p>Web</p>-->
+<!--              <a href="~assets/img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" class="venobox preview-link vbox-item" title="Web 3"><i class="bx bx-plus"></i></a>-->
+<!--              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </section>-->
   </div>
 </template>
 
