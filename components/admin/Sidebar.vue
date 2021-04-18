@@ -128,6 +128,17 @@
               </ul>
             </div>
           </li>
+          <li v-if="isAdmin" class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-id-card"></i>
+              <span>Stockist Management</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li><nuxt-link to="/upgrade-order">Stockist Commission</nuxt-link></li>
+              </ul>
+            </div>
+          </li>
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="far fa-envelope"></i>

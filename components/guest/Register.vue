@@ -125,14 +125,14 @@
                   <label for="country">Country</label>
                   <select v-model="details.country" class="form-control" id="country" required>
                     <option>Select Country</option>
-                    <option v-for="(country, i) in countries" :key="i">{{ country.nicename }}</option>
+                    <option v-for="(country, i) in countries" :key="i">{{ country.name }}</option>
                   </select>
                 </div>
                 <div class="col-md-4" v-if="details.country == 'Nigeria'">
                   <label for="state">State</label>
                   <select v-model="details.state" class="form-control" id="state" required>
                     <option>Select State</option>
-                    <option v-for="(state, i) in states" :key="i">{{ state.name }}</option>
+                    <option v-for="(state, i) in states" :key="i">{{ state.state.name }}</option>
                   </select>
                 </div>
                 <div class="col-md-4" v-if="details.country == 'Nigeria'">
@@ -144,11 +144,11 @@
                 </div>
               </div>
             </div>
-<!--            <div class="form-group">-->
-<!--              <label for="inputPassword3">Password</label>-->
-<!--              <input v-model="details.password" class="form-control" id="inputPassword3" placeholder="Password" required type="password">-->
-<!--              <small class="form-text text-muted" id="passwordHelpBlock">Your password must be 6-20 characters long</small>-->
-<!--            </div>-->
+            <!--            <div class="form-group">-->
+            <!--              <label for="inputPassword3">Password</label>-->
+            <!--              <input v-model="details.password" class="form-control" id="inputPassword3" placeholder="Password" required type="password">-->
+            <!--              <small class="form-text text-muted" id="passwordHelpBlock">Your password must be 6-20 characters long</small>-->
+            <!--            </div>-->
             <div class="form-group">
               <button @click.prevent="submitForm" class="btn btn-success btn-sm float-right" type="submit">Register</button>
             </div>
@@ -161,194 +161,189 @@
 
 <script>
 
-import utils from "@/mixins/utils";
-export default {
-  name: 'register',
-  mixins: [utils],
-  data() {
-    return {
-      referralId: '',
-      placement: '',
-      packages: '',
-      countries: '',
-      states: '',
-      lgas: '',
-      banks: '',
-      invalidPhone: false,
-      referralNotFound: false,
-      placementNotFound: false,
-      details: {
-        first_name: '',
-        last_name: '',
-        phone: '',
-        email: '',
-        gender: '',
-        dob: '',
-        account_number: '',
-        account_name: '',
-        bank_name: 'Select Bank',
-        country: 'Nigeria',
-        state: 'Select State',
-        lga: 'Select LGA',
-        address: '',
-        parent_id: '',
-        brought_by: '',
-      }
-    }
-  },
-
-  methods: {
-    isInValidField() {
-      let error = false
-      if (this.details.gender == '') {
-        error = true
-        this.$message.error("Gender is required")
-      }
-      if (this.details.first_name == '') {
-        error = true
-        this.$message.error("First Name is required")
-      }
-      if (this.details.last_name == '') {
-        error = true
-        this.$message.error("Last Name is required")
-      }
-      if (this.details.dob == '') {
-        error = true
-        this.$message.error("Date of birth is required")
-      }
-      if (this.details.lga == 'Select LGA') {
-        error = true
-        this.$message.error("Select Local Government")
-      }
-      // if (this.details.password == '') {
-      //   error = true
-      //   this.$message.error("Password is required")
-      // }
-      // if (this.details.password.length < 6) {
-      //   error = true
-      //   this.$message.error("Password must be at least 6 characters")
-      // }
-
-      return error
-
-    },
-    async submitForm() {
-       if (this.isInValidField()) {
-         return
-       }
-
-      try {
-        let res = await this.$axios.$post('/auth/register', this.details)
-        if (res.success) {
-          Object.keys(this.details).map(item => this.details[item] = '')
-          this.referralId = ''
-          this.$store.dispatch('notification/setStatus', {
-            success: true,
-            messages: ['Account successfully created']
-          })
-          console.log(res)
-          this.$router.push({ name:'upgrade-order', params: { ref: res.data.referral }})
+  import states from '../../data/states.json'
+  import countries from '../../data/countries.json'
+  import utils from "@/mixins/utils";
+  export default {
+    name: 'register',
+    mixins: [utils],
+    data() {
+      return {
+        referralId: '',
+        placement: '',
+        packages: '',
+        countries,
+        states,
+        lgas: '',
+        banks: '',
+        invalidPhone: false,
+        referralNotFound: false,
+        placementNotFound: false,
+        details: {
+          first_name: '',
+          last_name: '',
+          phone: '',
+          email: '',
+          gender: '',
+          dob: '',
+          account_number: '',
+          account_name: '',
+          bank_name: 'Select Bank',
+          country: 'Nigeria',
+          state: 'Select State',
+          lga: 'Select LGA',
+          address: '',
+          parent_id: '',
+          brought_by: '',
         }
-      } catch (e) {
-        this.$message.error(e.response.data.message)
-      }
-
-    },
-    async getPackages() {
-      this.packages = (await this.$axios.$get('/packages')).data
-    },
-    async getCountries() {
-      this.countries = (await this.$axios.$get('/countries')).data
-    },
-    async getStates() {
-      this.states = (await this.$axios.$get('/states')).data
-    },
-    async getLgas(state) {
-      if (state) {
-        this.lgas = (await this.$axios.$post('/lgas', {state})).data
       }
     },
-    async getBanks() {
-      this.banks = (await this.$axios.$get('/banks')).data
-    },
 
-    async getAccountName() {
-      if (
-        this.details.bank_name != '' &&
-        this.details.account_number != '' &&
-        this.details.bank_name != undefined &&
-        this.details.account_number != undefined &&
-        this.banks &&
-        this.banks.length
-      ) {
-        const bank = this.banks.find(bank => bank.name == this.details.bank_name)
+    methods: {
+      isInValidField() {
+        let error = false
+        if (this.details.gender == '') {
+          error = true
+          this.$message.error("Gender is required")
+        }
+        if (this.details.first_name == '') {
+          error = true
+          this.$message.error("First Name is required")
+        }
+        if (this.details.last_name == '') {
+          error = true
+          this.$message.error("Last Name is required")
+        }
+        if (this.details.dob == '') {
+          error = true
+          this.$message.error("Date of birth is required")
+        }
+        if (this.details.lga == 'Select LGA') {
+          error = true
+          this.$message.error("Select Local Government")
+        }
+        // if (this.details.password == '') {
+        //   error = true
+        //   this.$message.error("Password is required")
+        // }
+        // if (this.details.password.length < 6) {
+        //   error = true
+        //   this.$message.error("Password must be at least 6 characters")
+        // }
 
-        if (bank) {
-          const bank_code = bank.code
-          const res = await this.$axios.$post('/banks', {
-            account_number: this.details.account_number,
-            bank_code
-          })
-          if (res.status) {
-            this.details.account_name = res.data.account_name
-          } else {
-            this.details.account_name = ''
+        return error
+
+      },
+      async submitForm() {
+        if (this.isInValidField()) {
+          return
+        }
+
+        try {
+          let res = await this.$axios.$post('/auth/register', this.details)
+          if (res.success) {
+            Object.keys(this.details).map(item => this.details[item] = '')
+            this.referralId = ''
+            this.$store.dispatch('notification/setStatus', {
+              success: true,
+              messages: ['Account successfully created']
+            })
+            console.log(res)
+            this.$router.push({ name:'upgrade-order', params: { ref: res.data.referral }})
+          }
+        } catch (e) {
+          this.$message.error(e.response.data.message)
+        }
+
+      },
+      async getPackages() {
+        this.packages = (await this.$axios.$get('/packages')).data
+      },
+      async getLgas(state) {
+        if (state) {
+          this.lgas = (this.states.find(item => item.state['name'] == state)).state.locals
+        }
+      },
+      async getBanks() {
+        this.banks = (await this.$axios.$get('/banks')).data
+      },
+
+      async getAccountName() {
+        if (
+          this.details.bank_name != '' &&
+          this.details.account_number != '' &&
+          this.details.bank_name != undefined &&
+          this.details.account_number != undefined &&
+          this.banks &&
+          this.banks.length
+        ) {
+          const bank = this.banks.find(bank => bank.name == this.details.bank_name)
+
+          if (bank) {
+            const bank_code = bank.code
+            const res = await this.$axios.$post('/banks', {
+              account_number: this.details.account_number,
+              bank_code
+            })
+            if (res.status) {
+              this.details.account_name = res.data.account_name
+            } else {
+              this.details.account_name = ''
+            }
           }
         }
+      },
+      async getReferral() {
+        let res = await this.$axios.$post('/user/referral', {'referral': this.referralId})
+        if (res.success) {
+          return this.details.brought_by = res.data
+        }
+        document.querySelector('#referral').classList.add('is-invalid')
+        return this.referralNotFound = true
+      },
+      async getPlacement() {  this.getCountries()
+      // this.getStates()
+        let res = await this.$axios.$post('/user/referral', {'referral': this.placement})
+        if (res.success) {
+          return this.details.parent_id = res.data
+        }
+        document.querySelector('#placement').classList.add('is-invalid')
+        return this.placementNotFound = true
+      },
+      onDOBChange(date, dateString) {
+        this.details.dob = dateString
+      },
+      validatePhone() {
+        let error = false
+        if (!this.isNumber(this.details.phone)) {
+          error = true
+        } else if (this.details.phone.length !== 11) {
+          error = true
+        }
+        if (error) {
+          document.querySelector('#phone').classList.add('is-invalid')
+          this.invalidPhone = true
+        }
+      },
+      validateFields() {
+        this.$store.dispatch('notification/setStatus', {
+          success: true,
+          messages: ['Account successfully created']
+        })
       }
     },
-    async getReferral() {
-      let res = await this.$axios.$post('/user/referral', {'referral': this.referralId})
-      if (res.success) {
-        return this.details.brought_by = res.data
-      }
-      document.querySelector('#referral').classList.add('is-invalid')
-      return this.referralNotFound = true
+    mounted() {
+      this.getPackages()
+      this.getBanks()
     },
-    async getPlacement() {
-      let res = await this.$axios.$post('/user/referral', {'referral': this.placement})
-      if (res.success) {
-        return this.details.parent_id = res.data
-      }
-      document.querySelector('#placement').classList.add('is-invalid')
-      return this.placementNotFound = true
-    },
-    onDOBChange(date, dateString) {
-      this.details.dob = dateString
-    },
-    validatePhone() {
-      let error = false
-      if (!this.isNumber(this.details.phone)) {
-        error = true
-      } else if (this.details.phone.length !== 11) {
-        error = true
-      }
-      if (error) {
-        document.querySelector('#phone').classList.add('is-invalid')
-        this.invalidPhone = true
-      }
-    },
-    validateFields() {
-      this.$store.dispatch('notification/setStatus', {
-        success: true,
-        messages: ['Account successfully created']
-      })
-    }
-  },
-  mounted() {
-    this.getPackages()
-    this.getCountries()
-    this.getStates()
-    this.getBanks()
-  },
-  watch: {
-    'details.state': {
-      handler: function (val) {
-        this.getLgas(val)
+    watch: {
+      'details.state': {
+        handler: function (val) {
+          this.getLgas(val)
+        }
       }
     }
   }
-}
 </script>
 
 <style scoped>
