@@ -301,8 +301,7 @@
         document.querySelector('#referral').classList.add('is-invalid')
         return this.referralNotFound = true
       },
-      async getPlacement() {  this.getCountries()
-      // this.getStates()
+      async getPlacement() {
         let res = await this.$axios.$post('/user/referral', {'referral': this.placement})
         if (res.success) {
           return this.details.parent_id = res.data
