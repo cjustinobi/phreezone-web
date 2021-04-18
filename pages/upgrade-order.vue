@@ -4,7 +4,7 @@
     <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
     <a-row :gutter="4">
       <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
-        <a-input v-model="userReferral" @blur="getMember" placeholder="Member Referral" />
+        <a-input v-model="userReferral" @blur="getMember" placeholder="Member code" />
         <br><br>
       </a-col>
       <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
