@@ -10,7 +10,7 @@
     >
       <a-textarea v-model="rejectReason" placeholder="Reason for rejecting" :auto-size="{ minRows: 2, maxRows: 6 }"/>
     </a-modal>
-    <a-table v-if="sales" :columns="columns" :data-source="sales" :rowKey="record => record.id">
+    <a-table v-if="sales" :columns="columns" :data-source="sales" :rowKey="record => record.id" size="small">
 <!--      <img width="80px" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>-->
       <a-dropdown v-if="sale.status == 'pending'" slot="action" slot-scope="sale" href="javascript:;">
         <a-menu slot="overlay">

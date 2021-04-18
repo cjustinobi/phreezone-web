@@ -43,10 +43,12 @@
             <h4>Our Packages</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Treasure</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Bronze</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Silver</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Silver Star</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Gold</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Platinum</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">VIP Royal</a></li>
             </ul>
           </div>
 

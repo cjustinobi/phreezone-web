@@ -102,7 +102,7 @@
               </ul>
             </div>
           </li>
-          <li v-if="isAdmin || isStockist" class="sidebar-dropdown">
+          <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-credit-card"></i>
               <span>Commission</span>
@@ -110,10 +110,10 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li v-if="isAdmin"><nuxt-link to="/commissions">Commission</nuxt-link></li>
-                <li><nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link></li>
+                <li><nuxt-link to="/commissions">Commission</nuxt-link></li>
+                <li v-if="isAdmin || isStockist"><nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link></li>
                 <li><a href="#">Incentive Point Management</a></li>
-                <li><nuxt-link to="/sales">Stockist Sales</nuxt-link></li>
+                <li v-if="isAdmin"><nuxt-link to="/sales">Stockist Sales</nuxt-link></li>
               </ul>
             </div>
           </li>

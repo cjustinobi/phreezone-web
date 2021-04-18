@@ -24,7 +24,7 @@
       </a-col>
     </a-row>
 
-    <a-table v-if="bonuses" :columns="columns" :data-source="bonuses" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }">
+    <a-table v-if="bonuses" :columns="columns" :data-source="data" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
       <div
         slot="filterDropdown"
         slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
@@ -95,7 +95,7 @@
       <span slot="sponsorShopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
       <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
       <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
-      <span slot="stockistSales" slot-scope="stockist">{{ stockist == null ? 0 : stockist }}</span>
+<!--      <span slot="stockistSales" slot-scope="stockist">{{ stockist == null ? 0 : stockist }}</span>-->
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
       <span slot="total" slot-scope="total"><b>{{ total }}</b></span>
     </a-table>
@@ -103,7 +103,7 @@
 </template>
 
 <script>
-  const columns = [
+  let columns = [
     {
       title: 'Full Name',
       dataIndex: 'full_name',
@@ -127,10 +127,6 @@
         }
       },
     },
-    // {
-    //   title: 'Week No.',
-    //   dataIndex: 'week',
-    // },
     {
       title: 'Package',
       dataIndex: 'package',
@@ -175,11 +171,11 @@
       dataIndex: 'spillover_amount',
       scopedSlots: { customRender: 'spillover' }
     },
-    {
-      title: 'Stockist Sales',
-      dataIndex: 'stockist_sales_amount',
-      scopedSlots: { customRender: 'stockistSales' }
-    },
+    // {
+    //   title: 'Stockist Sales',
+    //   dataIndex: 'stockist_sales_amount',
+    //   scopedSlots: { customRender: 'stockistSales' }
+    // },
     {
       title: 'Total',
       dataIndex: 'total',
@@ -193,13 +189,13 @@
     // { title: 'Action', dataIndex: '', scopedSlots: { customRender: 'action' } },
   ];
 
+
   export default {
     name: 'commissions',
     layout: 'admin-dashboard',
     data() {
       return {
         bonuses: '',
-        columns,
         week: '',
         userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral
       }
@@ -219,6 +215,21 @@
       },
       setWeek() {
         this.week = this.$dateFns.getWeek(new Date()) - 1
+      }
+    },
+    computed: {
+      columns() {
+        return this.isAdmin ? columns : columns.filter(column => column.dataIndex !== 'sponsor_shopping_amount')
+      },
+      data() {
+        let commissions = this.bonuses
+        if (this.isAdmin) {
+          return commissions
+        }
+        for (let com of commissions) {
+          com['shopping_amount'] = com.sponsor_shopping_amount + com.shopping_amount
+        }
+        return commissions
       }
     },
     mounted() {

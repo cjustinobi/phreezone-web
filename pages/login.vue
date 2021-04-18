@@ -8,6 +8,7 @@
   import Register from "@/components/guest/Register";
   import Login from "@/components/guest/Login";
   export default {
+    layout: 'blank',
     name: 'landing',
     auth: 'guest',
     components: {

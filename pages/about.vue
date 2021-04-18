@@ -32,29 +32,29 @@
             If network marketing has the potency of producing higher number of financially free persons,
             Why then are lots of people getting fade up, losing their enthusiasm and have their fire go down??
             Why do many others get angry at  the  mention of the name network marketing??
-            These and other questions have continue to be a puzzle which no one has been able solve.
+            These and other questions have continue to be a puzzle which no one has been able to solve.
           </p>
 
           <p>
             At the age of 20 James Rohn
-            had already failed in several of his attempt to get a better life through several multilevel platforms
+            had already failed in several of his attempt to get a better life through several multilevel marketing platforms
             which he had been involved in despite all his efforts.
           </p>
           <p>
             This led Rohn and few  others  to start researching and experimenting other ways to build a successful network
-            marketing business without necessarily having the partners go through lots Of unnecessary excruciating difficulties.
+            marketing business without necessarily having the partners go through lots of unnecessary excruciating difficulties.
           </p>
           <p>
             Their research and  experiments of  many decades has  today brought a breakthrough which companies with
             genuine intention of creating wealth has adopted.
           </p>
           <p>
-            Today Phreezone under the able leadership of James Rohn has taken the lead in revolutionizing the multi level
+            Today Phreezone under the able leadership of James Rohn has taken the lead in revolutionizing the multilevel
             marketing industry with a short and long term plans.
           </p>
           <p>
             With the vision that Phreezone had in mind analyst has estimated that in the next ten years, 1/3 of the
-            world population would have something to do with Phreezone whether directly or indirectly.
+            world population would have something to do with Phreezone either directly or indirectly.
             This is indeed a new wave and new definition of network marketing.
           </p>
         </div>
@@ -87,6 +87,7 @@
             Through our system of partnership Phreezone has the liberty of distributing virtually all forms of products be it:
           </p>
           <ul>
+            <li><i class="ri-check-double-line"></i> Food Items</li>
             <li><i class="ri-check-double-line"></i> Toiletries</li>
             <li><i class="ri-check-double-line"></i> Cosmetics</li>
             <li><i class="ri-check-double-line"></i> Health Care Products</li>
