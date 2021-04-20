@@ -26,7 +26,7 @@ Vue.mixin({
       return this.$auth.user.userType == 1
     },
     isStockist() {
-      return this.$auth.user.is_agent
+      return this.$auth.user.isAgent
     },
     referral() {
       return this.$auth.user.referral

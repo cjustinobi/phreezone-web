@@ -13,9 +13,10 @@
       >
       <strong class="display-block">{{ item.referral }}</strong>
       <strong class="display-block">{{ item.full_name }}</strong>
-      <span class="display-block">{{ item.phone }}</span>
+      <span class="display-block">No Rank</span>
       <span class="badge badge-pill badge-warning" v-if="item.package">{{ item.package.name }}</span>
       <span v-else class="display-block">No Package</span>
+<!--      <span class="display-block">{{ getAccumPV(item.id) }}</span>-->
       <span class="display-block">
         Member Under Network {{ item.member_network_count }}
       </span>
@@ -39,7 +40,8 @@ export default {
   props: ['item'],
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      pvs: ''
     };
   },
   computed: {
@@ -53,6 +55,11 @@ export default {
         this.isOpen = !this.isOpen;
       }
     },
+    async getAccumPV(id) {
+      return (await this.$axios.$post(`user/treeAccumulatedPoints/${id}`, {
+        type: 'placement'
+      })).data
+    }
   },
   mounted() {
     document.querySelector('.tf-nc').click()

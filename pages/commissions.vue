@@ -59,7 +59,7 @@
       />
       <template slot="fullName" slot-scope="text, record, index, column">
       <span v-if="searchText && searchedColumn === column.dataIndex">
-      <a-tag v-if="record.userType == '2'" color="geekblue">Stockist</a-tag>
+      <a-tag v-if="record.isAgent" color="geekblue">Stockist</a-tag>
         <template
           v-for="(fragment, i) in text
             .toString()
@@ -77,7 +77,7 @@
         <template v-else>
           {{ text }}
           <!--          <small style="display: inline">{{ record.referral }}</small>-->
-          <a-tag v-if="record.userType == '2'" color="geekblue">Stockist</a-tag>
+          <a-tag v-if="record.isAgent" color="geekblue">Stockist</a-tag>
 
         </template>
       </template>
@@ -98,6 +98,7 @@
 <!--      <span slot="stockistSales" slot-scope="stockist">{{ stockist == null ? 0 : stockist }}</span>-->
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
       <span slot="total" slot-scope="total"><b>{{ total }}</b></span>
+      <span slot="actualAmount" slot-scope="actualAmount"><b>{{ actualAmount }}</b></span>
     </a-table>
   </div>
 </template>
@@ -180,6 +181,11 @@
       title: 'Total',
       dataIndex: 'total',
       scopedSlots: { customRender: 'total' }
+    },
+    {
+      title: 'Actual Amount',
+      dataIndex: 'actualAmount',
+      scopedSlots: { customRender: 'actualAmount' }
     },
     // {
     //   title: 'Paid',
