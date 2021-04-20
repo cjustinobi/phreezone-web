@@ -135,7 +135,7 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li><nuxt-link to="/upgrade-order">Stockist Commission</nuxt-link></li>
+                <li><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
               </ul>
             </div>
           </li>

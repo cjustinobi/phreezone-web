@@ -20,11 +20,11 @@
 
         <div class="col-lg-4">
           <div class="info">
-            <div class="address">
-              <i class="icofont-google-map"></i>
-              <h4>Location:</h4>
-              <p>13 Umungasi Street Aba, Abia State Nigeria </p>
-            </div>
+<!--            <div class="address">-->
+<!--              <i class="icofont-google-map"></i>-->
+<!--              <h4>Location:</h4>-->
+<!--              <p>13c Uqua Road Eket, Akwa Ibom state Nigeria </p>-->
+<!--            </div>-->
 
             <div class="email">
               <i class="icofont-envelope"></i>

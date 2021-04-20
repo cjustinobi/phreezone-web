@@ -46,6 +46,7 @@
         const self = this
         let res = await this.$axios.$post(`user/uploadConfirmation/null`, {
           userReferral: this.userReferral,
+          agentId: this.userId,
           amount: this.amount,
           status: "approved",
           isUpgrade: true })
