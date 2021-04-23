@@ -28,10 +28,18 @@
           </div>
 
           <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-box bronze">
+              <div class="icon"><i class="bx bx-award"></i></div>
+              <h4 class="title">Bronze</h4>
+              <p class="description">{{ 15000 | currency }}</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
             <div class="icon-box silver">
               <div class="icon"><i class="bx bx-award"></i></div>
               <h4 class="title">Silver</h4>
-              <p class="description">{{ 15000 | currency }}</p>
+              <p class="description">{{ 50000 | currency }}</p>
             </div>
           </div>
 
@@ -196,6 +204,12 @@
   }
   .silver:hover::before {
     background: #d4d416;
+  }
+  .bronze i{
+    color: #09764b;
+  }
+  .bronze:hover::before {
+    background: #09764b;
   }
   .silver-star i{
     color: #319ce3;
