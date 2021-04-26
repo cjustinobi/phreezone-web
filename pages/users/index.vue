@@ -64,7 +64,7 @@
       />
       <template slot="fullName" slot-scope="text, record, index, column">
       <span v-if="searchText && searchedColumn === column.dataIndex">
-      <a-tag v-if="record.userType == '2'" color="geekblue">Stockist</a-tag>
+      <a-tag v-if="record.isAgent" color="geekblue">Stockist</a-tag>
         <template
           v-for="(fragment, i) in text
             .toString()
@@ -82,7 +82,7 @@
         <template v-else>
           {{ text }}
           <!--          <small style="display: inline">{{ record.referral }}</small>-->
-          <a-tag v-if="record.userType == '2'" color="geekblue">Stockist</a-tag>
+          <a-tag v-if="record.isAgent" color="geekblue">Stockist</a-tag>
 
         </template>
       </template>
@@ -166,7 +166,7 @@
         const { success } = await this.$axios.$post(`admin/disableEnableStockist/${userId}`)
         if (success) {
           let userIndex = this.users.findIndex(user => user.id == userId)
-          this.users[userIndex].userType = this.users[userIndex].userType == 2 ? 3 : 2
+          this.users[userIndex].isAgent = this.users[userIndex].isAgent ? 0 : 1
           this.$message.success('User updated')
         }
       },
