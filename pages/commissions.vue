@@ -16,7 +16,7 @@
           placeholder="Sponsor ID"
           v-model="userReferral"
           style="width: 188px; margin-bottom: 8px;"
-          @change="getWeekCommissions"
+          @change="getWeekCommissions(week)"
           />
       </a-col>
       <a-col span="6">
@@ -203,14 +203,15 @@
       return {
         bonuses: '',
         week: '',
-        userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral
+        userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral,
+
       }
     },
     methods: {
       async getCommissions() {
         this.bonuses = (await this.$axios.$post('admin/bonuses', {
           referral: this.userReferral ,
-          setWeek: true
+          setWeek: this.week
         })).data
       },
       downloadBonus() {
