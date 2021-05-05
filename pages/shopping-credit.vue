@@ -140,7 +140,7 @@
           if (this.userReferral && this.canSubmit && valid) {
             try {
               this.$axios.$post('user/spendShoppingBonus', this.dynamicValidateForm).then(res => {
-                console.log(res)
+                this.dynamicValidateForm.data = []
                 this.getShoppingBonus()
                 this.$message.success('Added successfully')
               })
