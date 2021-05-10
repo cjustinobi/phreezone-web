@@ -10,6 +10,7 @@ export default {
       try {
         let response = await this.$auth.loginWith('local', {data: {referral, password}})
         this.$auth.setUser(response.data.user)
+        return 'done'
       } catch (e) {
         console.log(e)
         this.$store.dispatch('notification/setStatus', {

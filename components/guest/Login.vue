@@ -26,7 +26,9 @@
             <!--            <span>Remember me on this computer</span>-->
             <!--          </label>-->
             <!--        </div>-->
-            <button @click.prevent="submitForm" :disabled="!isValidCode" class="btn btn-success btn-sm float-right" type="submit">Login</button>
+            <button @click.prevent="submitForm" :disabled="!isValidCode" class="btn btn-success btn-sm float-right" type="submit">
+              {{ loading ? 'Logging in ...' : 'Login' }}
+            </button>
           </form>
         </div><!--/card-block-->
       </div><!-- /form card login -->
@@ -41,6 +43,7 @@ export default {
   mixins: [utils],
   data() {
     return {
+      loading: false,
       checkCode: '',
       randomNumber: '',
       details: {
@@ -50,7 +53,7 @@ export default {
     }
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       if (!this.details.referral || !this.details.password) {
         this.$store.dispatch('notification/setStatus', {
           messages: ['All fields are required'],
@@ -59,9 +62,12 @@ export default {
         return
       }
 
+      this.loading = true
       try {
-        this.login({ referral: this.details.referral, password: this.details.password })
+        await this.login({ referral: this.details.referral, password: this.details.password })
+        this.loading = false
       } catch (err) {
+        this.loading = false
         console.log(err.status)
       }
     },
