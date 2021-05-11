@@ -33,6 +33,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    '@/plugins/excel',
     '@/plugins/helper',
     '@/plugins/currency',
     '@/plugins/ant-design-vue'

@@ -20,7 +20,15 @@
           />
       </a-col>
       <a-col span="6">
-        <a-button @click="downloadBonus">Download</a-button>
+        <download-excel
+          class="btn btn-primary"
+          :data="bonuses"
+          :fields="excelFields"
+          worksheet="My Worksheet"
+          :name="`week-${week}.xls`"
+        >
+          Download
+        </download-excel>
       </a-col>
     </a-row>
 
@@ -204,15 +212,25 @@
         bonuses: '',
         week: '',
         userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral,
-
+        excelFields: {
+          Fullname: 'full_name',
+          ID: 'referral',
+          AccountNumber: 'account_number',
+          BankName: 'bank_name',
+          TotalAmount: 'total'
+        }
       }
     },
     methods: {
       async getCommissions() {
-        this.bonuses = (await this.$axios.$post('admin/bonuses', {
+        let res = (await this.$axios.$post('admin/bonuses', {
           referral: this.userReferral ,
           setWeek: this.week
         })).data
+
+        if (res.length) {
+          this.bonuses = res.filter(item => item.total != 0)
+        }
       },
       downloadBonus() {
         return window.open(`${this.$axios.defaults.baseURL}exportBonuses?referral=${this.userReferral}&week=${this.week}`)
