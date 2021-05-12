@@ -32,11 +32,11 @@
               <p>info@phreezone.com.ng</p>
             </div>
 
-            <div class="phone">
-              <i class="icofont-phone"></i>
-              <h4>Call:</h4>
-              <p>+234 708 4238 234</p>
-            </div>
+<!--            <div class="phone">-->
+<!--              <i class="icofont-phone"></i>-->
+<!--              <h4>Call:</h4>-->
+<!--              <p>+234 708 1111 234</p>-->
+<!--            </div>-->
 
           </div>
 

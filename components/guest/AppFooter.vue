@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
           <div class="col-lg-6">
             <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+<!--            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>-->
             <form action="" method="post">
               <input type="email" name="email"><input type="submit" value="Subscribe">
             </form>
@@ -25,7 +25,7 @@
 <!--              13 Umungasi Street <br>-->
 <!--              Aba, Abia State<br>-->
 <!--              Nigeria <br><br>-->
-<!--              <strong>Phone:</strong> +234 708 4238 234<br>-->
+<!--              <strong>Phone:</strong> +234 708 1111 234<br>-->
               <strong>Email:</strong> info@phreezone.com.ng<br>
             </p>
           </div>
