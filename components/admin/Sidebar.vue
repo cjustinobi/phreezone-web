@@ -111,13 +111,13 @@
             <div class="sidebar-submenu">
               <ul>
                 <li><nuxt-link to="/commissions">Commission</nuxt-link></li>
-                <li v-if="isAdmin || isStockist"><nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link></li>
+                <li v-if="isStockist"><nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link></li>
                 <li><a href="#">Incentive Point Management</a></li>
                 <li v-if="isAdmin"><nuxt-link to="/sales">Stockist Sales</nuxt-link></li>
               </ul>
             </div>
           </li>
-          <li v-if="isAdmin || isStockist" class="sidebar-dropdown">
+          <li v-if="isStockist" class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-id-card"></i>
               <span>Order Management</span>
