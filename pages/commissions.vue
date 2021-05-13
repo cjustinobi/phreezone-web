@@ -19,7 +19,7 @@
           @change="getWeekCommissions(week)"
           />
       </a-col>
-      <a-col span="6">
+      <a-col v-if="isAdmin" span="6">
         <download-excel
           class="btn btn-primary"
           :data="bonuses"
