@@ -24,8 +24,7 @@
     mixins: [dashboardInit],
     components: {
       Notification,
-      DashboardSidebar,
-      MemberSidebar
+      DashboardSidebar
     },
     computed: {
       ...mapGetters(['isAuthenticated', 'loggedInUser'])
