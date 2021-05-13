@@ -23,7 +23,7 @@ Vue.mixin({
   },
   computed: {
     isAdmin() {
-      return this.$auth.user.userType == 1
+      return this.$auth.user.userType == '1'
     },
     isStockist() {
       return this.$auth.user.isAgent
