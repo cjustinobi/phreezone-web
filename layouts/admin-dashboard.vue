@@ -1,15 +1,21 @@
 <template>
+
   <div class="page-wrapper chiller-theme toggled">
     <Notification />
+
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
       <i class="fas fa-bars"></i>
     </a>
-    <DashboardSidebar />
+    <component :is="isStockist == '1' ? 'DashboardSidebar' : 'MemberSidebar'"></component>
+<!--    <DashboardSidebar />-->
+
     <main class="page-content">
       <div class="container">
+
         <Nuxt />
       </div>
     </main>
+
   </div>
 </template>
 
@@ -18,13 +24,15 @@
   import dashboardInit from "@/mixins/dashboardInit";
   import Notification from '@/components/shared/Notification';
   import DashboardSidebar from '@/components/admin/Sidebar';
+  import MemberSidebar from '@/components/user/Sidebar';
   import $ from "jquery";
 
   export default {
     mixins: [dashboardInit],
     components: {
       Notification,
-      DashboardSidebar
+      DashboardSidebar,
+      MemberSidebar
     },
     computed: {
       ...mapGetters(['isAuthenticated', 'loggedInUser'])
