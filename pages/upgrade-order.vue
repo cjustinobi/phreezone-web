@@ -32,7 +32,7 @@
 <script>
   export default {
     name: 'upgrade-order',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     data() {
       return {
         amount: '',

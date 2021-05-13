@@ -142,7 +142,7 @@
   ];
   export default {
     name: 'users',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     validate({ app, params, query, store }) {
       return store.$auth.$state.user.userType == 1
     },

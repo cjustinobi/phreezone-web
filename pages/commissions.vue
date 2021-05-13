@@ -206,7 +206,7 @@
 
   export default {
     name: 'commissions',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     data() {
       return {
         bonuses: '',

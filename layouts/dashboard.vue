@@ -4,8 +4,8 @@
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
       <i class="fas fa-bars"></i>
     </a>
-    <component :is="isStockist == '1' ? 'DashboardSidebar' : 'MemberSidebar'"></component>
-<!--    <DashboardSidebar />-->
+<!--    <component :is="isStockist == '1' ? 'DashboardSidebar' : 'MemberSidebar'"></component>-->
+    <DashboardSidebar />
     <main class="page-content">
       <div class="container">
         <Nuxt />

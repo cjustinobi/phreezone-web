@@ -156,7 +156,7 @@
   ];
   export default {
     name: 'pops-list',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     data() {
       return {
         pops: '',

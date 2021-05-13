@@ -32,7 +32,7 @@
 <script>
   export default {
     name: 'user',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     validate({ params }) {
       return /^\d+$/.test(params.id)
     },

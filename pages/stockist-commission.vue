@@ -76,7 +76,7 @@
 
   export default {
     name: 'stockist-commissions',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     data() {
       return {
         bonuses: '',

@@ -135,7 +135,7 @@
   ];
   export default {
     name: 'sales-list',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     data() {
       return {
         sales: '',

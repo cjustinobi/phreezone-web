@@ -9,7 +9,7 @@
   import Register from '@/components/guest/Register'
   export default {
     name: 'register',
-    layout: 'admin-dashboard',
+    layout: 'dashboard',
     components: {
       Register
     }
