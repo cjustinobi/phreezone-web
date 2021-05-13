@@ -4,7 +4,6 @@
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
       <i class="fas fa-bars"></i>
     </a>
-<!--    <component :is="isStockist == '1' ? 'DashboardSidebar' : 'MemberSidebar'"></component>-->
     <DashboardSidebar />
     <main class="page-content">
       <div class="container">
@@ -19,8 +18,7 @@
   import dashboardInit from "@/mixins/dashboardInit";
   import Notification from '@/components/shared/Notification';
   import DashboardSidebar from '@/components/admin/Sidebar';
-  import MemberSidebar from '@/components/user/Sidebar';
-  import $ from "jquery";
+  // import $ from "jquery";
 
   export default {
     mixins: [dashboardInit],
