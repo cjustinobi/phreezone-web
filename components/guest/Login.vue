@@ -27,7 +27,7 @@
             <!--          </label>-->
             <!--        </div>-->
             <button @click.prevent="submitForm" :disabled="!isValidCode" class="btn btn-success btn-sm float-right" type="submit">
-              {{ loading ? 'Logging in ...' : 'Login' }}
+              {{ loading ? 'Loading ...' : 'Login' }}
             </button>
           </form>
         </div><!--/card-block-->
