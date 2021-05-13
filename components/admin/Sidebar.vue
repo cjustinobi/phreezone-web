@@ -2,7 +2,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <nuxt-link to="/home">Phreezone</nuxt-link>
+        <nuxt-link to="/home">Phreezone-a</nuxt-link>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
