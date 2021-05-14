@@ -82,7 +82,7 @@
         <template v-else>
           {{ text }}
           <!--          <small style="display: inline">{{ record.referral }}</small>-->
-          <a-tag v-if="record.isAgent" color="geekblue">Stockist</a-tag>
+          <a-tag v-if="record.isAgent" color="geekblue">Stockist {{record.isAgent}}</a-tag>
 
         </template>
       </template>
