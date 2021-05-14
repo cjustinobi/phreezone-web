@@ -64,7 +64,7 @@
       />
       <template slot="fullName" slot-scope="text, record, index, column">
       <span v-if="searchText && searchedColumn === column.dataIndex">
-      <a-tag v-if="record.isAgent === 1" color="geekblue">Stockist</a-tag>
+      <a-tag v-if="record.isAgent == 1" color="geekblue">Stockist</a-tag>
         <template
           v-for="(fragment, i) in text
             .toString()
@@ -82,7 +82,7 @@
         <template v-else>
           {{ text }}
           <!--          <small style="display: inline">{{ record.referral }}</small>-->
-          <a-tag v-if="record.isAgent === 1" color="geekblue">Stockist</a-tag>
+          <a-tag v-if="record.isAgent == 1" color="geekblue">Stockist</a-tag>
 
         </template>
       </template>
