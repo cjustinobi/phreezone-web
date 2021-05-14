@@ -24,7 +24,7 @@
   import dashboardInit from "@/mixins/dashboardInit";
   import Notification from '@/components/shared/Notification';
   import DashboardSidebar from '@/components/admin/Sidebar';
-  import MemberSidebar from '@/components/user/Sidebar';
+  // import MemberSidebar from '@/components/user/Sidebar';
   import $ from "jquery";
 
   export default {
@@ -32,7 +32,7 @@
     components: {
       Notification,
       DashboardSidebar,
-      MemberSidebar
+      // MemberSidebar
     },
     computed: {
       ...mapGetters(['isAuthenticated', 'loggedInUser'])
