@@ -70,13 +70,13 @@
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-id-card"></i>
-              <span>Membership</span>
+              <span>Membership {{ isStockist}}</span>
 <!--              <span class="badge badge-pill badge-warning">New</span>-->
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li v-if="isStockist == '1'">
-                  <nuxt-link to="/register">Add new Member {{isStockist}}</nuxt-link>
+                  <nuxt-link to="/register">Add new Member</nuxt-link>
                 </li>
                 <li v-if="isAdmin">
                   <nuxt-link to="/users">All Members</nuxt-link>
