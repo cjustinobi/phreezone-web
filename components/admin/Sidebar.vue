@@ -75,7 +75,7 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li v-if="isStockist">
+                <li v-if="isStockist == 1">
                   <nuxt-link to="/register">Add new Member</nuxt-link>
                 </li>
                 <li v-if="isAdmin">
