@@ -12,13 +12,13 @@
         <a-menu slot="overlay">
           <a-menu-item v-if="text.active" key="1">
             <a-popconfirm
-              :title="`Sure you want to ${text.isAgent === 1 ? 'disable' : 'enable'} stockist?`"
+              :title="`Sure you want to ${text.isAgent == 1 ? 'disable' : 'enable'} stockist?`"
               ok-text="Yes"
               cancel-text="No"
               @confirm="disableEnableStockist(text.id)"
               @cancel="visible = false"
             >
-              <a href="#">{{ text.isAgent === 1 ? 'Disable Stockist' : 'Enable Stockist' }}</a>
+              <a href="#">{{ text.isAgent == 1 ? 'Disable Stockist' : 'Enable Stockist' }}</a>
             </a-popconfirm>
           </a-menu-item>
           <a-menu-item key="2">
@@ -64,7 +64,7 @@
       />
       <template slot="fullName" slot-scope="text, record, index, column">
       <span v-if="searchText && searchedColumn === column.dataIndex">
-      <a-tag v-if="record.isAgent" color="geekblue">Stockist {{record.isAgent}}</a-tag>
+      <a-tag v-if="record.isAgent === 1" color="geekblue">Stockist</a-tag>
         <template
           v-for="(fragment, i) in text
             .toString()
@@ -82,7 +82,7 @@
         <template v-else>
           {{ text }}
           <!--          <small style="display: inline">{{ record.referral }}</small>-->
-          <a-tag v-if="record.isAgent" color="geekblue">Stockist {{record.isAgent}}</a-tag>
+          <a-tag v-if="record.isAgent === 1" color="geekblue">Stockist</a-tag>
 
         </template>
       </template>
