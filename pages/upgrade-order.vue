@@ -1,6 +1,7 @@
 <template>
   <div>
     <a-page-header sub-title="Upgrade Order"/>
+    <h5>Available Amount: {{ agentWallet | currency }}</h5> <br>
     <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
     <a-row :gutter="4">
       <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
@@ -38,12 +39,15 @@
         amount: '',
         visible: false,
         userReferral: '',
-        upgradeUser: ''
+        upgradeUser: '',
+        agentWallet: ''
       }
     },
     methods: {
       async upgrade() {
-        const self = this
+
+        if (this.amount > this.agentWallet) return this.$message.error('Insufficient amount in wallet')
+
         let res = await this.$axios.$post(`user/uploadConfirmation/null`, {
           userReferral: this.userReferral,
           agentId: this.userId,
@@ -66,6 +70,9 @@
         } catch (e) {
           this.$message.error('Invalid Referral code entered')
         }
+      },
+      async getAgentWallet() {
+        this.agentWallet = (await this.$axios.$get(`admin/agentWallet/${this.userId}`)).data
       }
     },
     computed: {
@@ -74,6 +81,7 @@
       }
     },
     mounted() {
+      this.getAgentWallet()
 
       if (this.$route.params.ref) {
         this.userReferral = this.$route.params.ref

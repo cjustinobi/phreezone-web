@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <component :is="createList"></component>
+    <component @togglePop="togglePop" :popState="listPop" :is="createList"></component>
   </div>
 </template>
 
@@ -18,14 +18,28 @@
     },
     data() {
       return {
+        listPop: false,
+        // formVisibility: false
       }
     },
     computed: {
       createList() {
-        return this.isAdmin ? 'List' : 'Create'
-      }
+        return this.listPop ? 'List' : 'Create'
+      },
+      // formVisibility() {
+      //   return this.store.getters['formVisibility']
+      // }
     },
     methods: {
+      togglePop({ formVisibility }) {
+        if (formVisibility) {
+          this.listPop = false
+          return this.$store.dispatch('setPopVisibility', formVisibility)
+        }
+        this.listPop = !this.listPop
+        this.$store.dispatch('setPopVisibility', formVisibility)
+      },
+
       setFacet(val) {
         this.createList = val
       }

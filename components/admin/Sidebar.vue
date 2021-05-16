@@ -81,8 +81,8 @@
                 <li v-if="isAdmin">
                   <nuxt-link to="/users">All Members</nuxt-link>
                 </li>
-                <li>
-                  <nuxt-link to="/pop">{{ isAdmin ? 'View POP' : 'Upload POP' }}</nuxt-link>
+                <li v-if="isStockist">
+                  <nuxt-link to="/pop">POP</nuxt-link>
                 </li>
 <!--                <li>-->
 <!--                  <nuxt-link to="#">Sponsor Network Tree</nuxt-link>-->

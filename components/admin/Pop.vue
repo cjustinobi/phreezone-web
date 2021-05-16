@@ -1,6 +1,10 @@
 <template>
   <div>
-    <a-page-header sub-title="List of Proof of Payment"/>
+    <a-page-header sub-title="List of Proof of Payment">
+      <template slot="extra">
+        <a-button type="primary" @click="$emit('togglePop', { formVisibility: true })">Add New POP</a-button>
+      </template>
+    </a-page-header>
     <a-modal
       title="Reason for rejecting PoP"
       :visible="visible"
@@ -19,7 +23,7 @@
               title="Are you sure confirming this payment?"
               ok-text="Yes"
               cancel-text="No"
-              @confirm="confirmPop(pop.id)"
+              @confirm="confirmPop(pop.id, pop.agent.id, pop.user_id)"
               @cancel="visible = false"
             >
               <a href="#">Confirm</a>
@@ -101,8 +105,7 @@
       <a-tag :color="status == 'pending' ? 'volcano' : status == 'rejected' ? 'red' : 'green' ">{{ status }}</a-tag>
     </span>
       <span slot="amount" slot-scope="amount, rec">
-        <span v-if="rec.status == 'pending'">{{ rec.pending_amount | currency }}</span>
-        <span v-else>{{ amount | currency }}</span>
+        <span>{{ amount | currency }}</span>
       </span>
 
     </a-table>
@@ -134,13 +137,12 @@
     },
     {
       title: 'Full Name',
-      dataIndex: 'user.full_name'
+      dataIndex: 'agent.full_name'
     },
-    // {
-    //   title: 'Package',
-    //   dataIndex: 'package',
-    //   key: 'package'
-    // },
+    {
+      title: 'Ref',
+      dataIndex: 'ref'
+    },
     {
       title: 'Amount',
       key: 'amount',
@@ -180,9 +182,13 @@
         clearFilters();
         this.searchText = '';
       },
-      async confirmPop(popId) {
+      async confirmPop(popId, agentId, userId) {
         const self = this
-        let res = await this.$axios.$post(`admin/pop/${popId}`, { status: 'approved' })
+        let res = await this.$axios.$post(`admin/pop/${popId}`, {
+          status: 'approved' ,
+          agentId,
+          userId
+        })
         if (res.success) {
           this.$message.success('Confirmed payment successfully')
           const popIndex = self.pops.findIndex(pop => pop.id == res.data.id)

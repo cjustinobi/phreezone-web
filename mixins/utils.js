@@ -13,10 +13,6 @@ export default {
         return 'done'
       } catch (e) {
         console.log(e)
-        this.$store.dispatch('notification/setStatus', {
-          messages: ['Incorrect login details'],
-          success: false
-        })
       }
     }
   }
