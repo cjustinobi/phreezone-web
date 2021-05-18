@@ -14,9 +14,17 @@
     >
       <a-textarea v-model="rejectReason" placeholder="Reason for rejecting" :auto-size="{ minRows: 2, maxRows: 6 }"/>
     </a-modal>
-    <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
-      <img width="80px" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>
-        <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
+    <a-modal
+      :visible="preview"
+      @ok="rejectPop"
+      @cancel="preview = false"
+    >
+      <img class="img" @click="viewImage(image)" alt="pop" :src="`${$config.imagePath}/${previewImage}`"/>
+    </a-modal>
+    <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small" defaultPageSize="50">
+      <img width="80px" @click="viewImage(image)" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>
+
+      <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
         <a-menu slot="overlay">
           <a-menu-item key="1">
             <a-popconfirm
@@ -115,10 +123,11 @@
 <script>
   const columns = [
     {
-      title: 'Image',
-      dataIndex: 'pop_path',
+      title: 'Full Name',
+      dataIndex: 'agent.full_name',
+      fixed: 'left',
       scopedSlots: {
-        customRender: 'image',
+        // customRender: 'fullName',
         // filterDropdown: 'filterDropdown',
         // filterIcon: 'filterIcon',
       },
@@ -136,9 +145,13 @@
       },
     },
     {
-      title: 'Full Name',
-      dataIndex: 'agent.full_name',
-      fixed: 'left',
+      title: 'Image',
+      dataIndex: 'pop_path',
+      scopedSlots: {customRender: 'image'}
+    },
+    {
+      title: 'Sponsor ID',
+      dataIndex: 'agent.referral'
     },
     {
       title: 'Ref',
@@ -165,6 +178,8 @@
         pops: '',
         columns,
         visible: false,
+        preview: true,
+        previewImage: '',
         confirmLoading: false,
         rejectReason: '',
         selectedPopId: ''
@@ -210,9 +225,20 @@
         this.visible = true
         this.selectedPopId = popId
       },
+      viewImage(image) {
+        this.previewImage = image
+        this.preview = true
+      }
     },
     mounted() {
       this.getPops()
     }
   }
 </script>
+
+<style scoped>
+  img {
+    width: 100%;
+    height: auto;
+  }
+</style>
