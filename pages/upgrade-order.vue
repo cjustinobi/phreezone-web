@@ -55,6 +55,7 @@
           status: "approved",
           isUpgrade: true })
         if (res.success) {
+          this.agentWallet -= this.amount
           this.amount = ''
           this.userReferral = ''
           this.upgradeUser = ''

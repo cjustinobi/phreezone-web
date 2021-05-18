@@ -14,10 +14,11 @@
         <br>
         <a-input v-model="ref" class="add-width" placeholder="Transaction Reference" />
         <br>
-        <a-select v-model="amount" class="add-width">
-          <a-select-option value="">Select Amount</a-select-option>
-          <a-select-option v-for="(amt, i) in amounts" :value="amt.amount" :key="i">{{ amt.amount }}</a-select-option>
-        </a-select>
+        <a-input v-model="amount" type="number" class="add-width" placeholder="Enter amount"/>
+<!--        <a-select v-model="amount" class="add-width">-->
+<!--          <a-select-option value="">Select Amount</a-select-option>-->
+<!--          <a-select-option v-for="(amt, i) in amounts" :value="amt.amount" :key="i">{{ amt.amount }}</a-select-option>-->
+<!--        </a-select>-->
       </a-form-model-item>
       <div class="buttons">
         <button type="button" class="btn btn-light" @click.prevent="$refs.file.click">Choose file</button>
@@ -66,7 +67,8 @@
     layout: 'dashboard',
     data() {
       return {
-        img: require('assets/img/logo.png'),
+        img: '',
+        // img: require('assets/img/logo.png'),
         file: '',
         ref: '',
         amount: '',
@@ -82,7 +84,7 @@
         form.append('amount', this.amount)
         form.append('file', this.file)
         form.append('ref', this.ref)
-        form.append('userRef', this.userReferral)
+        form.append('userReferral', this.userReferral)
         return form;
       },
       formVisibility() {
@@ -97,10 +99,7 @@
       async upload() {
 
         if(this.amount == '' || this.ref == '' || this.file == '') {
-          this.$store.dispatch('notification/setStatus', {
-            success: false,
-            messages: ['All fields are required']
-          })
+          this.$message.error('All fields are required')
           return
         }
 

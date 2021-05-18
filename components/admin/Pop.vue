@@ -182,9 +182,9 @@
         clearFilters();
         this.searchText = '';
       },
-      async confirmPop(popId, agentId, userId) {
+      async confirmPop(walletId, agentId, userId) {
         const self = this
-        let res = await this.$axios.$post(`admin/pop/${popId}`, {
+        let res = await this.$axios.$post(`admin/approveTopUp/${walletId}`, {
           status: 'approved' ,
           agentId,
           userId
@@ -198,7 +198,7 @@
         this.$message.error('Payment not confirmed')
       },
       async rejectPop() {
-        let res = await this.$axios.$post(`admin/pop/${this.selectedPopId}`, { status: 'rejected', reject_reason: this.rejectReason })
+        let res = await this.$axios.$post(`admin/approveTopUp/${this.selectedPopId}`, { status: 'rejected', reject_reason: this.rejectReason })
         res.success ? this.$message.success('Payment Rejected') :
           this.$message.error('Rejection not successful')
         this.rejectReason = ''
