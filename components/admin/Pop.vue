@@ -14,7 +14,7 @@
     >
       <a-textarea v-model="rejectReason" placeholder="Reason for rejecting" :auto-size="{ minRows: 2, maxRows: 6 }"/>
     </a-modal>
-    <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id">
+    <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
       <img width="80px" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>
         <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
         <a-menu slot="overlay">
@@ -137,7 +137,8 @@
     },
     {
       title: 'Full Name',
-      dataIndex: 'agent.full_name'
+      dataIndex: 'agent.full_name',
+      fixed: 'left',
     },
     {
       title: 'Ref',
