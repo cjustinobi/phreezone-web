@@ -1,7 +1,8 @@
 <template>
   <div>
     <a-page-header sub-title="Upgrade Order"/>
-    <h5>Available Amount: {{ agentWallet | currency }}</h5> <br>
+    <h5 v-if="agentWallet">Available Amount: {{ agentWallet | currency }}</h5>
+    <h5 v-else>Available Amount: NGN 0.00</h5> <br>
     <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
     <a-row :gutter="4">
       <a-col :md="{ span: 4 }" :xs="{ span: 24 }">

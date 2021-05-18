@@ -22,8 +22,8 @@
       <img class="img" @click="viewImage(image)" alt="pop" :src="`${$config.imagePath}/${previewImage}`"/>
     </a-modal>
     <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small" defaultPageSize="50">
-      <img width="80px" @click="viewImage(image)" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>
-
+<!--      <img width="80px" @click="viewImage(image)" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>-->
+      <a href="#" slot="image" slot-scope="image" @click.prevent="viewImage(image)">View</a>
       <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
         <a-menu slot="overlay">
           <a-menu-item key="1">
@@ -178,7 +178,7 @@
         pops: '',
         columns,
         visible: false,
-        preview: true,
+        preview: false,
         previewImage: '',
         confirmLoading: false,
         rejectReason: '',
