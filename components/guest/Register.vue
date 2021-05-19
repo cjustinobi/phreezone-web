@@ -60,7 +60,7 @@
                   <input v-model="details.email" class="form-control" id="email" placeholder="Email" required="" type="email">
                 </div>
                 <div class="col-md-3">
-                  <label for="referral">Sponsor ID</label>
+                  <label for="referral">Sponsor ID<small v-if="sponsor">: {{sponsor }}</small></label>
                   <input
                     v-model="referralId"
                     @input="removeErrorClass('#referral'); referralNotFound = false"
@@ -75,7 +75,7 @@
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <label for="placement">Placement ID</label>
+                  <label for="placement">Placement ID<small v-if="parent">: {{ parent }}</small></label>
                   <input
                     v-model="placement"
                     @input="removeErrorClass('#placement'); placementNotFound = false"
@@ -176,6 +176,8 @@
         states,
         lgas: '',
         banks: '',
+        sponsor: '',
+        parent: '',
         invalidPhone: false,
         referralNotFound: false,
         placementNotFound: false,
@@ -329,6 +331,10 @@
           success: true,
           messages: ['Account successfully created']
         })
+      },
+      async getFullName(val, action) {
+        const res = (await this.$axios.$get(`user/getFullName/${val}`)).data
+        action === 'sponsor' ? this.sponsor = res : this.parent = res
       }
     },
     mounted() {
@@ -339,6 +345,16 @@
       'details.state': {
         handler: function (val) {
           this.getLgas(val)
+        }
+      },
+      'details.brought_by': {
+        handler: function (val) {
+          this.getFullName(val, 'sponsor')
+        }
+      },
+      'details.parent_id': {
+        handler: function (val) {
+          this.getFullName(val, 'placement')
         }
       }
     }
