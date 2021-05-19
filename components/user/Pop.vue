@@ -22,7 +22,7 @@
       </a-form-model-item>
       <div class="buttons">
         <button type="button" class="btn btn-light" @click.prevent="$refs.file.click">Choose file</button>
-        <button type="button" class="btn btn-info" @click="upload">Upload</button>
+        <button type="button" class="btn btn-info" @click="upload">{{ loading ? 'Uploading ...' : 'Upload' }}</button>
       </div>
     </div>
 <!--    <div v-else>-->
@@ -75,7 +75,8 @@
         url: '',
         pendingPop: '',
         theMember: '',
-        userReferral: ''
+        userReferral: '',
+        loading: false
       }
     },
     computed: {
@@ -103,9 +104,10 @@
           return
         }
 
+        this.loading = true
         let res = await this.$axios.$post(`user/uploadConfirmation/${this.userId}`, this.form)
         if (res.success) {
-          console.log(res)
+          this.loading = false
           this.url = ''
           this.amount = ''
           this.ref = ''
