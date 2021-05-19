@@ -23,7 +23,7 @@
                 @confirm="upgrade"
                 @cancel="visible = false"
               >
-                <a-button type="primary" :disabled="canUpgrade == false">Upgrade</a-button>
+                <a-button type="primary" :disabled="canUpgrade == false">{{ loading ? 'Upgrading ...' : 'Upgrade' }}</a-button>
               </a-popconfirm>
 
       </a-col>
@@ -39,6 +39,7 @@
       return {
         amount: '',
         visible: false,
+        loading: false,
         userReferral: '',
         upgradeUser: '',
         agentWallet: ''
@@ -49,6 +50,7 @@
 
         if (this.amount > this.agentWallet) return this.$message.error('Insufficient amount in wallet')
 
+        this.loading = true
         let res = await this.$axios.$post(`user/uploadConfirmation/null`, {
           userReferral: this.userReferral,
           agentId: this.userId,
@@ -56,13 +58,17 @@
           status: "approved",
           isUpgrade: true })
         if (res.success) {
+          this.loading = false
           this.agentWallet -= this.amount
           this.amount = ''
           this.userReferral = ''
           this.upgradeUser = ''
           this.$message.success('Confirmed payment successfully')
         }
-        else {this.$message.error('failed')}
+        else {
+          this.loading = false
+          this.$message.error('failed')
+        }
       },
       async getMember() {
         try {
