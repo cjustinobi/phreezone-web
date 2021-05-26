@@ -2,7 +2,7 @@
   <header id="header" class="fixed-top ">
     <MobileMenu />
     <div class="container d-flex align-items-center">
-       <nuxt-link to="/" class="logo me-auto"><img src="~assets/img/logo.jpeg" alt="phreezone logo" class="img-fluid"></nuxt-link>
+       <nuxt-link to="/" class="logo me-auto"><img src="~assets/img/logo.png" alt="phreezone logo" class="img-fluid"></nuxt-link>
       <nav id="nav" class="nav-menu d-none d-lg-block">
         <Links />
       </nav>

@@ -216,8 +216,30 @@
           Fullname: 'full_name',
           ID: 'referral',
           AccountNumber: 'account_number',
+          // AccountNumber: {
+          //   field: 'account_number',
+          //   callback: val => {
+          //     function Num ()
+          //     {
+          //       // debugger
+          //       this.value = arguments[0];
+          //       this.val = this.valueOf = function ()
+          //       {
+          //         return parseInt(this.value);
+          //       }
+          //       this.toString = function()
+          //       {
+          //         return this.value;
+          //       }
+          //     }
+          //     let x = new Num(val);
+          //     console.log(x)
+          //     // x.val() // returns 11
+          //     return x.toString() // returns "00011"
+          //   }
+          // },
           BankName: 'bank_name',
-          TotalAmount: 'total'
+          ActualAmount: 'actualAmount'
         }
       }
     },
