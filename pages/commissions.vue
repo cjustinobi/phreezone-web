@@ -25,7 +25,8 @@
           :data="bonuses"
           :fields="excelFields"
           worksheet="My Worksheet"
-          :name="`week-${week}.xls`"
+          :name="`week-${week}.csv`"
+          type="csv"
         >
           Download
         </download-excel>
