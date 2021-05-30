@@ -43,13 +43,15 @@
 
     <a-modal v-model="showSoldItems" :title="`Sold Items for week ${week}`" :footer="null">
       <a-table v-if="soldItems" :columns="columns2" :data-source="soldItems" :rowKey="record => record.id" size="small">
-      <span slot="ids" slot-scope="ids, rec">
-        <a @click.prevent="getItems(ids)" href="#">View</a>
-      </span>
+        <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>
+        <span slot="ids" slot-scope="ids, rec">
+          <a @click.prevent="getItems(ids)" href="#">View</a>
+        </span>
       </a-table>
     </a-modal>
 
     <a-table v-if="sales" :columns="columns" :data-source="sales" :rowKey="record => record.id" size="small">
+      <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>
       <span slot="ids" slot-scope="ids, rec">
         <a @click.prevent="getItems(ids)" href="#">View</a>
       </span>
@@ -60,19 +62,25 @@
 <script>
   const columns = [
     {title: 'Full Name', dataIndex: 'user.full_name'},
-    {title: 'Amount', key: 'amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount'}},
+    {title: 'Sponsor ID', dataIndex: 'user.referral'},
+    {title: 'Amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount'}},
+    {title: 'Date', dataIndex: 'created_at', scopedSlots: { customRender: 'date'}},
     {title: 'View Items', dataIndex: 'ids', scopedSlots: { customRender: 'ids' },},
   ]
 
   const columns2 = [
     {title: 'Full Name', dataIndex: 'user.full_name'},
+    {title: 'Sponsor ID', dataIndex: 'user.referral'},
     {title: 'Item', dataIndex: 'item'},
+    {title: 'Date', dataIndex: 'created_at', scopedSlots: { customRender: 'date'}},
     {title: 'Amount', key: 'amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount'}},
   ]
 
+  import DateFormat from '@/mixins/dateFormat'
   export default {
     name: 'sales-list',
     layout: 'dashboard',
+    mixins: [DateFormat],
     data() {
       return {
         sales: '',
@@ -83,7 +91,8 @@
         showSoldItems: false,
         customer: '',
         userReferral: '',
-        totalSales: ''
+        totalSales: '',
+        dateFormat: 'd MMM, Y',
       }
     },
     methods: {

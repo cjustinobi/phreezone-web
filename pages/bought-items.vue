@@ -33,6 +33,7 @@
     </a-row>
 
     <a-table v-if="items" :columns="columns" :data-source="items" :rowKey="record => record.id" size="small">
+      <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>
       <span slot="ids" slot-scope="ids, rec">
         <a @click.prevent="getItems(ids)" href="#">View</a>
       </span>
@@ -44,19 +45,23 @@
   const columns = [
     {title: 'Stockist Name', dataIndex: 'user.full_name'},
     {title: 'Item', dataIndex: 'item'},
+    {title: 'Date', dataIndex: 'created_at', scopedSlots: { customRender: 'date'}},
     {title: 'Amount', key: 'amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount'}},
   ]
 
+  import DateFormat from '@/mixins/dateFormat'
   export default {
     name: 'sales-list',
     layout: 'dashboard',
+    mixins: [DateFormat],
     data() {
       return {
         items: '',
         columns,
         week: '',
         userReferral: '',
-        totalSales: ''
+        totalSales: '',
+        dateFormat: 'd MMM, Y',
       }
     },
     methods: {
