@@ -60,12 +60,6 @@
           <li class="header-menu">
             <span>General</span>
           </li>
-<!--          <li>-->
-<!--            <a href="#">-->
-<!--              <i class="fa fa-folder"></i>-->
-<!--              <span>Membership</span>-->
-<!--            </a>-->
-<!--          </li>-->
 
           <li class="sidebar-dropdown">
             <a href="#">
@@ -113,7 +107,7 @@
                 <li><nuxt-link to="/commissions">Commission</nuxt-link></li>
                 <li v-if="isStockist == '1'"><nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link></li>
                 <li><a href="#">Incentive Point Management</a></li>
-                <li v-if="isAdmin"><nuxt-link to="/sales">Stockist Sales</nuxt-link></li>
+<!--                <li v-if="isAdmin"><nuxt-link to="/sales">Stockist Sales</nuxt-link></li>-->
               </ul>
             </div>
           </li>
@@ -128,16 +122,23 @@
               </ul>
             </div>
           </li>
-          <li v-if="isAdmin" class="sidebar-dropdown">
+          <li v-if="isStockist" class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-id-card"></i>
               <span>Stockist Management</span>
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
+                <li v-if="isAdmin"><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
+                <li><nuxt-link to="/stockist-sales">Stockist Sales</nuxt-link></li>
               </ul>
             </div>
+          </li>
+          <li>
+            <nuxt-link to="/bought-items">
+              <i class="fa fa-folder"></i>
+              <span>Bought Items</span>
+            </nuxt-link>
           </li>
           <li class="sidebar-dropdown">
             <a href="#">
