@@ -94,7 +94,7 @@
         })).data
       },
       async getItems(ids) {
-        const res = await this.$axios.$post(`user/soldItems/`, {
+        const res = await this.$axios.$post(`user/soldItems`, {
           ids
         })
         if (res.success) {
