@@ -73,7 +73,7 @@
         this.messages = (await this.$axios.$get('admin/message')).data
       },
       async saveMessage() {
-        if (this.title == '' || this.description) {
+        if (this.title == '' || this.description == '') {
           return this.$message.error('Fill in the required field')
         }
         this.loading = true
