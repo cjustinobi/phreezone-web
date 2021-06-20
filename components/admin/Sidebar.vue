@@ -148,14 +148,11 @@
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">View Announcement</a>
+                  <nuxt-link to="/home">View Announcement</nuxt-link>
                 </li>
-                <li>
-                  <a href="#">Contact Us</a>
-                </li>
-                <li>
-                  <a href="#">Tables</a>
-                </li>
+<!--                <li>-->
+<!--                  <a href="#">Contact Us</a>-->
+<!--                </li>-->
               </ul>
             </div>
           </li>
