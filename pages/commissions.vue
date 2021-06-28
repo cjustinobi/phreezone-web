@@ -175,15 +175,10 @@
       dataIndex: 'sponsor_shopping_amount',
       scopedSlots: { customRender: 'sponsorShopping' }
     },
-    {
-      title: 'Spillover',
-      dataIndex: 'spillover_amount',
-      scopedSlots: { customRender: 'spillover' }
-    },
     // {
-    //   title: 'Stockist Sales',
-    //   dataIndex: 'stockist_sales_amount',
-    //   scopedSlots: { customRender: 'stockistSales' }
+    //   title: 'Spillover',
+    //   dataIndex: 'spillover_amount',
+    //   scopedSlots: { customRender: 'spillover' }
     // },
     {
       title: 'Total',
@@ -251,7 +246,7 @@
         })).data
 
         if (res.length) {
-          this.bonuses = res.filter(item => item.total != 0)
+          this.bonuses = res.filter(item => item.actualAmount != 0)
         }
       },
       downloadBonus() {

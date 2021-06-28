@@ -6,7 +6,7 @@
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
       <span slot="rank" slot-scope="rank">None</span>
-      <span slot="pv" slot-scope="pv, rec">{{ rec.accumulatedPv ? rec.accumulatedPv : rec.pv }}</span>
+      <span slot="pv" slot-scope="pv, rec">{{ rec.accumulatedPv }}</span>
       <span slot="pw" slot-scope="pw, rec">{{ rec.prevWeekAccumulatedPv ? rec.prevWeekAccumulatedPv : rec.prevWeekPoint }}</span>
 <!--      <span slot="cw" slot-scope="cw, rec">{{ rec.currentWeekAccumulatedPv ? rec.currentWeekAccumulatedPv : rec.currentWeekPoint }}</span>-->
 <!--      <span slot="depth" slot-scope="depth">{{ depth - 1 === 0 ? '' : depth - 1 }}</span>-->
