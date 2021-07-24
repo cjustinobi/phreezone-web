@@ -14,6 +14,9 @@
       </template>
       <a-input style="margin-top: 25px;" v-model="item.name" placeholder="Product name" />
       <a-input style="margin-top: 25px;" v-model="item.code" placeholder="Code" />
+      <a-select v-model="item.category_id" placeholder="Select category" style="margin-top: 25px; width: 200px" >
+        <a-select-option v-for="cat in categories" :value="cat.id">{{ cat.name }}</a-select-option>
+      </a-select>
       <a-input type="number" style="margin-top: 25px;" v-model="item.amount" placeholder="Amount" />
       <a-input type="number" style="margin-top: 25px;" v-model="item.pv" placeholder="PV" />
     </a-modal>
@@ -62,8 +65,10 @@
           code: '',
           amount: '',
           pv: '',
+          category_id: ''
         },
-        products: ''
+        products: '',
+        categories: ''
       }
     },
     methods: {
@@ -76,7 +81,7 @@
           await this.$axios.$put(`admin/products/${this.productId}`, this.item) :
           await this.$axios.$post('admin/products', this.item)
         if (res.success) {
-          !this.editMode ? this.products.unshift(res.data) : await this.getProducts()
+          await this.getProducts()
           this.$message.success('Successfully updated')
           this.reset()
         }
@@ -94,6 +99,9 @@
       async getProducts() {
         this.products = (await this.$axios.$get('admin/products')).data
       },
+      async getProductCategories() {
+        this.categories = (await this.$axios.$get('admin/product-category')).data
+      },
       editProduct(item) {
         this.item = item
         this.productId = item.id
@@ -101,7 +109,7 @@
         this.editMode = true
       },
       reset() {
-        this.name = ''
+        this.item = {}
         this.loading = false
         this.productForm = false
         this.editMode = false
@@ -109,6 +117,7 @@
     },
     beforeMount() {
       this.getProducts()
+      this.getProductCategories()
     }
   }
 </script>
