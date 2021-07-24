@@ -105,13 +105,27 @@
             <div class="sidebar-submenu">
               <ul>
                 <li><nuxt-link to="/commissions">Commission</nuxt-link></li>
-                <li v-if="isStockist == '1'"><nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link></li>
+                <li v-if="isStockist"><nuxt-link to="/shopping-credit">Shopping Credit</nuxt-link></li>
                 <li><a href="#">Incentive Point Management</a></li>
 <!--                <li v-if="isAdmin"><nuxt-link to="/sales">Stockist Sales</nuxt-link></li>-->
               </ul>
             </div>
           </li>
-          <li v-if="isStockist == '1'" class="sidebar-dropdown">
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-credit-card"></i>
+              <span>Mainstream</span>
+              <!--              <span class="badge badge-pill badge-danger">3</span>-->
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li v-if="isAdmin"><nuxt-link to="/mainstream-categories">Categories</nuxt-link></li>
+                <li v-if="isAdmin"><nuxt-link to="/items">Products</nuxt-link></li>
+                <li v-if="isStockist"><nuxt-link to="/stream-upgrade-order">Upgrade Order</nuxt-link></li>
+              </ul>
+            </div>
+          </li>
+          <li v-if="isStockist" class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-id-card"></i>
               <span>Order Management</span>
