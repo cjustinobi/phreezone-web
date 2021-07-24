@@ -1,10 +1,14 @@
 <template>
   <div>
-    <a-card size="small" title="Product Order" style="width: 300px">
-      <div>Total Order Amount: <span id="sub"></span></div>
-      <div>Total PV: <span id="subpv"></span></div>
-
-    </a-card>
+    <a-page-header sub-title="Stream Upgrade Order"/>
+    <a-row type="flex" justify="end">
+      <a-col :md="{span: 6}">
+        <a-card size="small" title="Product Order" style="width: 230px">
+          <div>Total Order Amount: <span id="sub">0</span></div>
+          <div>Total PV: <span id="subpv">0</span></div>
+        </a-card>
+      </a-col>
+    </a-row>
     <a-tabs default-active-key="1">
       <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">
         <div style="overflow-x: auto">
@@ -88,14 +92,14 @@
 
       },
       addProduct(item, qty) {
-        // Remove item if exist and incoming value is 0
+        // Remove item if exist and incoming value is 0.
         if (qty == 0) {
-          alert('heruie')
-          return this.products.filter(product => product.id === item.id)
+          this.products = this.products.filter(product => product.id != item.id)
+          return
         }
 
         if (qty) {
-          // check if the product has been added before.
+          // Check if the product has been added before.
           const itemIndex = this.products.findIndex(product => product.id == item.id)
           if(itemIndex > -1) {
             this.products[itemIndex].qty = qty
@@ -127,5 +131,8 @@
 
   tr:nth-child(even) {
     background-color: #dddddd;
+  }
+  #subpv, #sub {
+    font-weight: 900;
   }
 </style>
