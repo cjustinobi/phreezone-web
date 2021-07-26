@@ -1,7 +1,12 @@
 <template>
   <div>
     <a-page-header sub-title="Stream Upgrade Order"/>
-    <a-row type="flex" justify="end">
+    <a-row type="flex" justify="space-between">
+      <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
+        <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
+        <a-input v-model="userReferral" @blur="getMember" placeholder="Member code" />
+        <br><br>
+      </a-col>
       <a-col :md="{span: 6}">
         <a-card size="small" title="Product Order" style="width: 230px">
           <div>Total Order Amount: <span id="sub">0</span></div>
@@ -56,12 +61,20 @@
       return {
         columns,
         categories: '',
-        products: []
+        products: [],
+        userReferral: '',
+        upgradeUser: ''
       }
     },
     methods: {
-      callback(key) {
-        console.log(key);
+      async getMember() {
+        try {
+          this.upgradeUser = (await this.$axios.$post(`user/null`, {
+            userReferral: this.userReferral
+          })).data
+        } catch (e) {
+          this.$message.error('Invalid Referral code entered')
+        }
       },
       async getProductCategories() {
         this.categories = (await this.$axios.$get('admin/product-category?active=true')).data
