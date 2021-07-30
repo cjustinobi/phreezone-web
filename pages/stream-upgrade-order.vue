@@ -12,8 +12,13 @@
           <div>Total Order Amount: <span id="sub">0</span></div>
           <div>Total PV: <span id="subpv">0</span></div>
         </a-card>
+        <br>
+        <a-button type="primary" @click.prevent="submitOrder">Submit</a-button>
       </a-col>
     </a-row>
+
+
+
     <a-tabs default-active-key="1">
       <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">
         <div style="overflow-x: auto">
@@ -33,7 +38,7 @@
               <td>{{ product.amount }}</td>
               <td>{{ product.pv }}</td>
               <td>
-                <a-input @change="populateField($event, product)" min="0" style="width: 100px" type="number"/>
+                <a-input class="qty" @change="populateField($event, product)" min="0" style="width: 100px" type="number"/>
               </td>
               <td class="sub" :id="`sub-${product.id}`">0.00</td>
               <td class="subpv" :id="`subpv-${product.id}`">0.00</td>
@@ -67,6 +72,26 @@
       }
     },
     methods: {
+      async submitOrder() {
+        if (!this.products.length || !this.upgradeUser) {
+          return this.$message.error('Enter a product')
+        }
+
+        const res = (await this.$axios.$post(`user/saveOrders`, {
+          soldBy: this.userId,
+          boughtBy: this.upgradeUser.id,
+          items: this.products,
+          totalAmount: document.getElementById('sub').innerText,
+          totalPv: document.getElementById('subpv').innerText
+        }))
+        if (res.success) {
+          this.reset()
+          // this.products = []
+          // document.getElementById('sub').innerHTML = `<b>0</b>`
+          // document.getElementById('subpv').innerHTML = `<b>0</b>`
+          this.$message.success('Added successfully')
+        }
+      },
       async getMember() {
         try {
           this.upgradeUser = (await this.$axios.$post(`user/null`, {
@@ -121,6 +146,22 @@
             this.products.push(item)
           }
         }
+      },
+      reset() {
+        this.products = []
+        this.userReferral = ''
+        this.upgradeUser = ''
+        document.getElementById('sub').innerHTML = `<b>0</b>`
+        document.getElementById('subpv').innerHTML = `<b>0</b>`
+
+        $(function() {
+          $("tr .sub").each(function(index,value){
+            $(this).text(0)
+          })
+          $("tr .subpv").each(function(index,value){
+            $(this).text(0)
+          })
+        })
       }
     },
     beforeMount() {
