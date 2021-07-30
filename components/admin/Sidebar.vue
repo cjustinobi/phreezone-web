@@ -121,7 +121,9 @@
               <ul>
                 <li v-if="isAdmin"><nuxt-link to="/mainstream-categories">Categories</nuxt-link></li>
                 <li v-if="isAdmin"><nuxt-link to="/items">Products</nuxt-link></li>
+                <li><nuxt-link to="/stream-orders">Stream Orders</nuxt-link></li>
                 <li v-if="isStockist"><nuxt-link to="/stream-upgrade-order">Upgrade Order</nuxt-link></li>
+                <li v-if="isAdmin"><nuxt-link to="/implemented-stream">Implement Stream</nuxt-link></li>
               </ul>
             </div>
           </li>
