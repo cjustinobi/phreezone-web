@@ -12,8 +12,7 @@
         <a-button key="back" @click="reset">Cancel</a-button>
         <a-button key="submit" type="primary" :loading="loading" @click="createProduct">Submit</a-button>
       </template>
-      <a-input style="margin-top: 25px;" v-model="item.name" placeholder="Product name" />
-      <a-input style="margin-top: 25px;" v-model="item.code" placeholder="Code" />
+      <a-input style="margin-top: 25px;" v-model="item.name" @change="setCode" placeholder="Product name" />
       <a-select v-model="item.category_id" placeholder="Select category" style="margin-top: 25px; width: 200px" >
         <a-select-option v-for="cat in categories" :value="cat.id">{{ cat.name }}</a-select-option>
       </a-select>
@@ -73,7 +72,7 @@
     },
     methods: {
       async createProduct() {
-        if (!this.item.name || !this.item.code || !this.item.amount || !this.item.pv) {
+        if (!this.item.name || !this.item.amount || !this.item.pv) {
           return this.$message.error('All fields are required')
         }
         this.loading = true
@@ -107,6 +106,15 @@
         this.productId = item.id
         this.productForm = true
         this.editMode = true
+      },
+      setCode(event) {
+        const item = this.item
+        if(item.name.length <= 2) return item.code = ''
+        if (!item.code && item.name.length >= 3) {
+          item.code = item.name.substring(0, 3).toUpperCase()
+          item.code += Math.floor(100 + Math.random() * 900)
+        }
+
       },
       reset() {
         this.item = {}

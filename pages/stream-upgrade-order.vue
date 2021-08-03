@@ -86,9 +86,6 @@
         }))
         if (res.success) {
           this.reset()
-          // this.products = []
-          // document.getElementById('sub').innerHTML = `<b>0</b>`
-          // document.getElementById('subpv').innerHTML = `<b>0</b>`
           this.$message.success('Added successfully')
         }
       },
