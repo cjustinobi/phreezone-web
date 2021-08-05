@@ -107,14 +107,13 @@
         this.productForm = true
         this.editMode = true
       },
-      setCode(event) {
+      setCode() {
         const item = this.item
         if(item.name.length <= 2) return item.code = ''
         if (!item.code && item.name.length >= 3) {
           item.code = item.name.substring(0, 3).toUpperCase()
           item.code += Math.floor(100 + Math.random() * 900)
         }
-
       },
       reset() {
         this.item = {}

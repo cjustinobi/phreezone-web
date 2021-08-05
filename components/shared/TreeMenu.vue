@@ -1,4 +1,4 @@
-<template>
+  <template>
   <li>
     <a-card class="tf-nc"  @click="toggle">
       <span v-if="isFolder">
@@ -17,7 +17,7 @@
       <span v-else class="display-block">No Rank</span>
       <span style="padding: 3px; background: #0a53be;" class="badge badge-pill" v-if="item.package">{{ item.package.name }}</span>
       <span v-else class="display-block">No Package</span>
-<!--      <span class="display-block">{{ getAccumPV(item.id) }}</span>-->
+      <span class="display-block">Stream PV {{ item.total_stream_pv }}</span>
       <span class="display-block">
         Member Under Network {{ item.member_network_count }}
       </span>
