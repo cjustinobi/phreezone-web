@@ -7,6 +7,7 @@
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
       <span slot="rank" slot-scope="rank">None</span>
       <span slot="pv" slot-scope="pv, rec">{{ rec.accumulatedPv ? rec.accumulatedPv : rec.pv }}</span>
+      <span slot="sbp" slot-scope="sbp, rec">{{ rec.sbp }}</span>
       <span slot="pw" slot-scope="pw, rec">{{ rec.prevWeekAccumulatedPv ? rec.prevWeekAccumulatedPv : rec.prevWeekPoint }}</span>
     </a-table>
   </div>
@@ -51,11 +52,15 @@
       scopedSlots: { customRender: 'cw' },
     },
     {
-      title: 'Accumulated Performance',
+      title: 'EPP',
       dataIndex: 'pv',
       scopedSlots: { customRender: 'pv' },
     },
-
+    {
+      title: 'SBP',
+      dataIndex: 'weekly_stream_pv',
+      scopedSlots: { customRender: 'sbp' },
+    },
   ]
   import DateFormat from '../mixins/dateFormat'
   export default {
