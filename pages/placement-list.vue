@@ -6,9 +6,15 @@
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
       <span slot="rank" slot-scope="rank">None</span>
-      <span slot="pv" slot-scope="pv, rec">{{ rec.accumulatedPv ? rec.accumulatedPv : rec.pv }}</span>
-      <span slot="sbp" slot-scope="sbp, rec">{{ rec.sbp }}</span>
-      <span slot="pw" slot-scope="pw, rec">{{ rec.prevWeekAccumulatedPv ? rec.prevWeekAccumulatedPv : rec.prevWeekPoint }}</span>
+      <span slot="pv" slot-scope="pv, rec">
+        {{ rec.accumulatedPv ? rec.accumulatedPv + rec.streamAccumulatedPv : rec.pv }}
+      </span>
+      <span slot="cw" slot-scope="cw, rec">
+        {{ rec.currentWeekPoint + rec.streamCurrentWeekPoint }}
+      </span>
+      <span slot="pw" slot-scope="pw, rec">
+        {{ rec.prevWeekPoint + rec.streamPrevWeekPoint }}
+      </span>
     </a-table>
   </div>
 </template>
@@ -33,7 +39,6 @@
     },
     {
       title: 'Rank',
-      // dataIndex: 'created_at',
       scopedSlots: { customRender: 'rank' },
     },
     {
@@ -42,25 +47,25 @@
       scopedSlots: { customRender: 'depth' }
     },
     {
-      title: 'Previous Week Accumulated Performance',
+      title: 'Previous Week Accumulated EPP SBP',
       dataIndex: 'prevWeekPoint',
       scopedSlots: { customRender: 'pw' },
     },
     {
-      title: 'Current Week Accumulated Performance',
+      title: 'Current Week Accumulated EPP SBP',
       dataIndex: 'currentWeekPoint',
       scopedSlots: { customRender: 'cw' },
     },
     {
-      title: 'EPP',
+      title: 'Total Accumulated EPP SBP',
       dataIndex: 'pv',
       scopedSlots: { customRender: 'pv' },
     },
-    {
-      title: 'SBP',
-      dataIndex: 'weekly_stream_pv',
-      scopedSlots: { customRender: 'sbp' },
-    },
+    // {
+    //   title: 'SBP',
+    //   dataIndex: 'weekly_stream_pv',
+    //   scopedSlots: { customRender: 'sbp' },
+    // },
   ]
   import DateFormat from '../mixins/dateFormat'
   export default {
