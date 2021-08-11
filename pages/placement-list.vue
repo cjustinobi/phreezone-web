@@ -1,20 +1,29 @@
 <template>
   <div>
     <a-page-header sub-title="Placement Activities"/>
-    <a-table v-if="activities" :columns="columns" :data-source="activities" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }">
+    <a-table
+      v-if="activities"
+      :columns="columns"
+      :data-source="activities"
+      :rowKey="record => record.id"
+      bordered
+      :scroll="{ x: 1500, y: 300 }">
+
       <span slot="fullName" slot-scope="fn, rec"><b>{{ rec.referral }}</b>  <br> <span>{{ rec.full_name }}</span></span>
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
-      <span slot="rank" slot-scope="rank">None</span>
+      <span slot="rank" slot-scope="rank, txt">{{ txt.rank | capitalize }}</span>
       <span slot="pv" slot-scope="pv, rec">
         {{ rec.accumulatedPv ? rec.accumulatedPv + rec.streamAccumulatedPv : rec.pv }}
       </span>
-      <span slot="cw" slot-scope="cw, rec">
-        {{ rec.currentWeekPoint + rec.streamCurrentWeekPoint }}
-      </span>
-      <span slot="pw" slot-scope="pw, rec">
-        {{ rec.prevWeekPoint + rec.streamPrevWeekPoint }}
-      </span>
+<!--      <span slot="cw_epp" slot-scope="cw_epp, rec">-->
+<!--        {{ rec.currentWeekPoint }}-->
+<!--&lt;!&ndash;        {{ rec.currentWeekPoint + rec.streamCurrentWeekPoint }}&ndash;&gt;-->
+<!--      </span>-->
+<!--      <span slot="pw_epp" slot-scope="pw_epp, rec">-->
+<!--        {{ rec.prevWeekPoint }}-->
+<!--&lt;!&ndash;        {{ rec.prevWeekPoint + rec.streamPrevWeekPoint }}&ndash;&gt;-->
+<!--      </span>-->
     </a-table>
   </div>
 </template>
@@ -39,6 +48,7 @@
     },
     {
       title: 'Rank',
+      dataIndex: 'Rank',
       scopedSlots: { customRender: 'rank' },
     },
     {
@@ -47,19 +57,41 @@
       scopedSlots: { customRender: 'depth' }
     },
     {
-      title: 'Previous Week Accumulated EPP SBP',
-      dataIndex: 'prevWeekPoint',
-      scopedSlots: { customRender: 'pw' },
+      title: 'Previous Week Accumulated',
+      children: [
+        {
+          title: 'EPP',
+          dataIndex: 'prevWeekPoint',
+          scopedSlots: { customRender: 'pw_epp' }
+        },
+        {
+          title: 'SBP',
+          dataIndex: 'streamPrevWeekPoint',
+          scopedSlots: { customRender: 'pw_sbp' }
+        }
+      ]
     },
     {
-      title: 'Current Week Accumulated EPP SBP',
-      dataIndex: 'currentWeekPoint',
-      scopedSlots: { customRender: 'cw' },
+      title: 'Current Week Accumulated',
+      children: [
+        {
+          title: 'EPP',
+          dataIndex: 'currentWeekPoint',
+          scopedSlots: { customRender: 'cw_epp' }
+        },
+        {
+          title: 'SBP',
+          dataIndex: 'streamCurrentWeekPoint',
+          scopedSlots: { customRender: 'cw_sbp' }
+        }
+      ]
     },
     {
-      title: 'Total Accumulated EPP SBP',
-      dataIndex: 'pv',
-      scopedSlots: { customRender: 'pv' },
+      title: 'Total Accumulated PV',
+      children: [
+        {title: 'EPP', dataIndex: 'accumulatedEpp'},
+        {title: 'SBP', dataIndex: 'accumulatedSbp'}
+      ]
     },
     // {
     //   title: 'SBP',
@@ -72,6 +104,12 @@
     name: 'network-activities',
     layout: 'dashboard',
     mixins: [DateFormat],
+    filters: {
+      capitalize(string) {
+        if (string == 0) return 'None'
+        return string.charAt(0).toUpperCase() + string.slice(1);
+     }
+    },
     data() {
       return {
         columns,
