@@ -5,9 +5,9 @@
       <span slot="fullName" slot-scope="fn, rec"><b>{{ rec.referral }}</b>  <br> <span>{{ rec.full_name }}</span></span>
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
-      <span slot="rank" slot-scope="rank">None</span>
-      <span slot="pv" slot-scope="pv, rec">{{ rec.accumulatedPv }}</span>
-      <span slot="pw" slot-scope="pw, rec">{{ rec.prevWeekAccumulatedPv ? rec.prevWeekAccumulatedPv : rec.prevWeekPoint }}</span>
+      <span slot="rank" slot-scope="rank, txt">{{ txt.rank | capitalize }}</span>
+<!--      <span slot="pv" slot-scope="pv, rec">{{ rec.accumulatedPv }}</span>-->
+<!--      <span slot="pw" slot-scope="pw, rec">{{ rec.prevWeekAccumulatedPv ? rec.prevWeekAccumulatedPv : rec.prevWeekPoint }}</span>-->
 <!--      <span slot="cw" slot-scope="cw, rec">{{ rec.currentWeekAccumulatedPv ? rec.currentWeekAccumulatedPv : rec.currentWeekPoint }}</span>-->
 <!--      <span slot="depth" slot-scope="depth">{{ depth - 1 === 0 ? '' : depth - 1 }}</span>-->
     </a-table>
@@ -34,7 +34,7 @@
     },
     {
       title: 'Rank',
-      // dataIndex: 'created_at',
+      dataIndex: 'rank',
       scopedSlots: { customRender: 'rank' },
     },
     {
@@ -43,19 +43,41 @@
       scopedSlots: { customRender: 'depth' }
     },
     {
-      title: 'Previous Week Accumulated Performance',
-      dataIndex: 'prevWeekPoint',
-      scopedSlots: { customRender: 'pw' },
+      title: 'Previous Week Accumulated',
+      children: [
+        {
+          title: 'EPP',
+          dataIndex: 'prevWeekPoint',
+          scopedSlots: { customRender: 'pw_epp' }
+        },
+        {
+          title: 'SBP',
+          dataIndex: 'streamPrevWeekPoint',
+          scopedSlots: { customRender: 'pw_sbp' }
+        }
+      ]
     },
     {
-      title: 'Current Week Accumulated Performance',
-      dataIndex: 'currentWeekPoint',
-      scopedSlots: { customRender: 'cw' },
+      title: 'Current Week Accumulated',
+      children: [
+        {
+          title: 'EPP',
+          dataIndex: 'currentWeekPoint',
+          scopedSlots: { customRender: 'cw_epp' }
+        },
+        {
+          title: 'SBP',
+          dataIndex: 'streamCurrentWeekPoint',
+          scopedSlots: { customRender: 'cw_sbp' }
+        }
+      ]
     },
     {
-      title: 'Accumulated Performance',
-      dataIndex: 'pv',
-      scopedSlots: { customRender: 'pv' },
+      title: 'Total Accumulated PV',
+      children: [
+        {title: 'EPP', dataIndex: 'accumulatedEpp'},
+        {title: 'SBP', dataIndex: 'accumulatedSbp'}
+      ]
     },
 
   ]
@@ -64,6 +86,12 @@
     name: 'sponsor-list',
     layout: 'dashboard',
     mixins: [DateFormat],
+    filters: {
+      capitalize(string) {
+        if (string == 0) return 'None'
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+    },
     data() {
       return {
         columns,

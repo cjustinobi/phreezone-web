@@ -13,9 +13,9 @@
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
       <span slot="rank" slot-scope="rank, txt">{{ txt.rank | capitalize }}</span>
-      <span slot="pv" slot-scope="pv, rec">
-        {{ rec.accumulatedPv ? rec.accumulatedPv + rec.streamAccumulatedPv : rec.pv }}
-      </span>
+<!--      <span slot="pv" slot-scope="pv, rec">-->
+<!--        {{ rec.accumulatedPv ? rec.accumulatedPv + rec.streamAccumulatedPv : rec.pv }}-->
+<!--      </span>-->
 <!--      <span slot="cw_epp" slot-scope="cw_epp, rec">-->
 <!--        {{ rec.currentWeekPoint }}-->
 <!--&lt;!&ndash;        {{ rec.currentWeekPoint + rec.streamCurrentWeekPoint }}&ndash;&gt;-->
@@ -48,7 +48,7 @@
     },
     {
       title: 'Rank',
-      dataIndex: 'Rank',
+      dataIndex: 'rank',
       scopedSlots: { customRender: 'rank' },
     },
     {
@@ -119,7 +119,9 @@
     },
     methods: {
       async getActivites() {
-        this.activities = (await this.$axios.$post(`user/accumulatedPv/${this.userId}`)).data
+        this.activities = (await this.$axios.$post(`user/accumulatedPv/${this.userId}`, {
+          type: 'placement'
+        })).data
       },
 
     },
