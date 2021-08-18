@@ -122,7 +122,7 @@
     methods: {
       async getActivites() {
         this.activities = (await this.$axios.$post(`user/accumulatedPv/${this.userId}`, {
-          type: 'placement'
+          // type: 'placement'
         })).data
       },
 
