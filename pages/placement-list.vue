@@ -13,8 +13,9 @@
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
       <span slot="rank" slot-scope="rank, txt">{{ txt.rank | capitalize }}</span>
-<!--      <span slot="pv" slot-scope="pv, rec">-->
-<!--        {{ rec.accumulatedPv ? rec.accumulatedPv + rec.streamAccumulatedPv : rec.pv }}-->
+<!--      <span slot="total" slot-scope="total, rec">-->
+
+<!--        {{ rec.accumulatedEpp + rec.accumulatedSbp }}-->
 <!--      </span>-->
 <!--      <span slot="cw_epp" slot-scope="cw_epp, rec">-->
 <!--        {{ rec.currentWeekPoint }}-->
@@ -88,6 +89,7 @@
     },
     {
       title: 'Total Accumulated PV',
+      scopedSlots: { customRender: 'total' },
       children: [
         {title: 'EPP', dataIndex: 'accumulatedEpp'},
         {title: 'SBP', dataIndex: 'accumulatedSbp'}
