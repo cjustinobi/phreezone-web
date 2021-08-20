@@ -62,6 +62,7 @@
   import $ from 'jquery'
   export default {
     layout: 'dashboard',
+    middleware: ['admin'],
     data() {
       return {
         columns,
