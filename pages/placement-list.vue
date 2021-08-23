@@ -88,19 +88,19 @@
       ]
     },
     {
-      title: 'Total Accumulated PV',
-      scopedSlots: { customRender: 'total' },
-      children: [
-        {title: 'EPP', dataIndex: 'accumulatedEpp'},
-        {title: 'SBP', dataIndex: 'accumulatedSbp'}
-      ]
-    },
-    {
       title: 'Personal Accumulated PV',
       scopedSlots: { customRender: 'total' },
       children: [
         {title: 'EPP', dataIndex: 'totalPersonalEpp'},
         {title: 'SBP', dataIndex: 'totalPersonalSbp'}
+      ]
+    },
+    {
+      title: 'Total Accumulated PV',
+      scopedSlots: { customRender: 'total' },
+      children: [
+        {title: 'EPP', dataIndex: 'accumulatedEpp'},
+        {title: 'SBP', dataIndex: 'accumulatedSbp'}
       ]
     },
     // {
