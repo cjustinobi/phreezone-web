@@ -7,6 +7,7 @@
     <DashboardSidebar />
     <main class="page-content">
       <div class="container">
+        {{counter}}
         <Nuxt />
       </div>
     </main>
@@ -26,6 +27,11 @@
       Notification,
       DashboardSidebar
     },
+    data () {
+      return {
+        counter: 0
+      }
+    },
     computed: {
       ...mapGetters(['isAuthenticated', 'loggedInUser'])
     },
@@ -35,6 +41,20 @@
           $(".page-wrapper").removeClass("toggled");
         }
       }
+    },
+    methods: {
+      countUp () {
+        this.counter += 1
+      }
+    },
+    beforeMount() {
+      let result = this.$crontab.addJob({
+        name: 'counter',
+        interval: {
+          seconds: '/1',
+        },
+        job: this.countUp
+      })
     }
   }
 
