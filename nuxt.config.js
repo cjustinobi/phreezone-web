@@ -36,11 +36,14 @@ export default {
     '@/plugins/excel',
     '@/plugins/helper',
     '@/plugins/currency',
-    '@/plugins/ant-design-vue'
+    '@/plugins/ant-design-vue',
+    '@/plugins/crontab'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
+
+  serverMiddleware: ['~/api/index.js'],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
