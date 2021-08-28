@@ -5,9 +5,8 @@ const cron = require('node-cron')
 
 // cron.schedule('* * 23 * Saturday', () => {
 cron.schedule('* * * * *', () => {
-  axios.get('https://phreezone.africinnovate.xyz/resetPvs').then(res => {
+  axios.get('https://phreezone.africinnovate.xyz/api/resetPvs').then(res => {
     console.log(res)
-    console.log(process.isServer)
     console.log('running a task every minute');
   })
 })
