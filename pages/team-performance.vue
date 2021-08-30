@@ -1,6 +1,10 @@
 <template>
   <div>
-    <a-page-header sub-title="Team Performance Activities"/>
+    <a-page-header sub-title="Team Performance Activities">
+      <template slot="extra" v-if="isAdmin">
+        <a-button type="primary" @click="resetWeeklyPv">Reset Weekly Stream</a-button>
+      </template>
+    </a-page-header>
     <div class="tf-tree example">
       <ul id="demo">
         <TreeItem class="item" :item="treeData"/>
@@ -25,6 +29,13 @@
     methods: {
       async getTrees() {
         this.treeData = (await this.$axios.$get(`user/${this.userId}/trees`))
+      },
+      async resetWeeklyPv() {
+        const res = await this.$axios.$get(`resetPvs`)
+        if (res) {
+          this.getTrees()
+          this.$message.success('Stream Pvs resetted')
+        }
       },
     },
     mounted() {
