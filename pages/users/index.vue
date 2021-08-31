@@ -7,7 +7,15 @@
       </a-col>
     </a-row>
     <br>
-    <a-table v-if="users" :columns="columns" :data-source="users" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small" defaultPageSize="50">
+    <a-table
+      v-if="users"
+      :columns="columns"
+      :data-source="users"
+      :rowKey="record => record.id"
+      :scroll="{ x: 1500, y: 300 }"
+      size="small"
+      :pagination="{ pageSize: 50 }"
+    >
       <a-dropdown slot="action" slot-scope="text" href="javascript:;">
         <a-menu slot="overlay">
           <a-menu-item v-if="text.active" key="1">
@@ -56,36 +64,6 @@
           Reset
         </a-button>
       </div>
-      <a-icon
-        slot="filterIcon"
-        slot-scope="filtered"
-        type="search"
-        :style="{ color: filtered ? '#108ee9' : undefined }"
-      />
-      <template slot="fullName" slot-scope="text, record, index, column">
-      <span v-if="searchText && searchedColumn === column.dataIndex">
-      <a-tag v-if="record.isAgent == 1" color="geekblue">Stockist</a-tag>
-        <template
-          v-for="(fragment, i) in text
-            .toString()
-            .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
-        >
-          <mark
-            v-if="fragment.toLowerCase() === searchText.toLowerCase()"
-            :key="i"
-            class="highlight"
-          >{{ fragment }}</mark
-          >
-          <template v-else>{{ fragment }}</template>
-        </template>
-      </span>
-        <template v-else>
-          {{ text }}
-          <!--          <small style="display: inline">{{ record.referral }}</small>-->
-          <a-tag v-if="record.isAgent == 1" color="geekblue">Stockist</a-tag>
-
-        </template>
-      </template>
       <span slot="active" slot-scope="active">
       <a-tag :color="active == '0' ? 'volcano' : 'green'">
         {{ active == '0' ? 'Not Active' : 'Active'}}
@@ -102,6 +80,7 @@
       title: 'Full Name',
       dataIndex: 'full_name',
       fixed: 'left',
+      width: '120',
       scopedSlots: {
         customRender: 'fullName',
         filterDropdown: 'filterDropdown',
@@ -123,22 +102,31 @@
     {
       title: 'Phone',
       dataIndex: 'phone',
+      width: '15%'
     },
     {
       title: 'Package',
       dataIndex: 'package.name',
       scopedSlots: { customRender: 'pkg' },
+      width: '10%'
     },
     {
       title: 'Sponsor ID',
       dataIndex: 'referral',
+      width: '10%'
     },
     {
       title: 'Status',
       dataIndex: 'active',
       scopedSlots: { customRender: 'active' },
+      width: '10%'
     },
-    { title: 'Action', dataIndex: '', scopedSlots: { customRender: 'action' } },
+    {
+      title: 'Action',
+      scopedSlots: { customRender: 'action' },
+      width: '15%'
+    },
+
   ];
   export default {
     name: 'users',
@@ -159,8 +147,6 @@
       },
       handleSearch(selectedKeys, confirm, dataIndex) {
         confirm();
-        this.searchText = selectedKeys[0];
-        this.searchedColumn = dataIndex;
       },
       async disableEnableStockist(userId) {
         const { success } = await this.$axios.$post(`admin/disableEnableStockist/${userId}`)
@@ -171,8 +157,7 @@
         }
       },
       handleReset(clearFilters) {
-        clearFilters();
-        this.searchText = '';
+        clearFilters()
       },
     },
     mounted() {
