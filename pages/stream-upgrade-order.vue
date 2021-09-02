@@ -13,7 +13,7 @@
           <div>Total PV: <span id="subpv">0</span></div>
         </a-card>
         <br>
-        <a-button type="primary" @click.prevent="submitOrder">Submit</a-button>
+        <a-button type="primary" @click.prevent="submitOrder" :loading="loading">Submit</a-button>
       </a-col>
     </a-row>
 
@@ -65,6 +65,7 @@
     middleware: ['admin'],
     data() {
       return {
+        loading: false,
         columns,
         categories: '',
         products: [],
@@ -77,6 +78,8 @@
         if (!this.products.length || !this.upgradeUser) {
           return this.$message.error('Enter a product')
         }
+
+        this.loading = true
 
         const res = (await this.$axios.$post(`user/saveOrders`, {
           soldBy: this.userId,
@@ -146,6 +149,7 @@
         }
       },
       reset() {
+        this.loading = false
         this.products = []
         this.userReferral = ''
         this.upgradeUser = ''

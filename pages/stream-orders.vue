@@ -32,7 +32,7 @@
           type="number"/>
       </a-col>
       <a-col v-if="isAdmin" span="6">
-        <a-button type="primary" @click="implementStream">Implement</a-button>
+        <a-button type="primary" @click="implementStream" :loading="loading">Implement</a-button>
 <!--        <a-input-search-->
 <!--          placeholder="Sponsor ID"-->
 <!--          v-model="userReferral"-->
@@ -101,6 +101,7 @@
         columns2,
         week: '',
         soldItems: '',
+        loading: false,
         showSoldItems: false,
         customer: '',
         userReferral: '',
@@ -125,14 +126,17 @@
       },
       async implementStream() {
         try {
+          this.loading = true
           const res = await this.$axios.$post('user/implementStream', {
             weekNumber: this.week
           })
           if (res.success) {
+            this.loading = false
             this.$message.success('Stream Implemented')
             this.getSales()
           }
         } catch (e) {
+          this.loading = false
           this.$message.error(e.response.data.message)
         }
       },
