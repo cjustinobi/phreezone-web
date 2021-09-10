@@ -62,7 +62,7 @@
   import $ from 'jquery'
   export default {
     layout: 'dashboard',
-    middleware: ['admin'],
+    middleware: ['stockist'],
     data() {
       return {
         loading: false,
