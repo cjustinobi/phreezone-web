@@ -1,6 +1,6 @@
 export default function ({ app, redirect }) {
 
-  if (app.$auth.state.user.userType != 1 || app.$auth.state.user.userType != 2) {
+  if (app.$auth.state.user.isAgent != 1) {
     return redirect('/home')
   }
 }
