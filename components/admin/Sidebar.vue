@@ -111,6 +111,12 @@
               </ul>
             </div>
           </li>
+          <li>
+            <nuxt-link to="/upgrade-packs">
+              <i class="fa fa-folder"></i>
+              <span>Upgrade Packs</span>
+            </nuxt-link>
+          </li>
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-credit-card"></i>
