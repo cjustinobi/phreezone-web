@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-page-header sub-title="Upgrades"/>
+    <a-page-header sub-title="EP Upgrade Series"/>
     <Upgrade />
   </div>
 </template>

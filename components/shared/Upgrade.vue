@@ -24,7 +24,7 @@
       </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'N/P' : pkg }}</span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
-      <span slot="redeem" slot-scope="text" v-if="isStockist && text.redeemed === 0">
+      <span slot="redeem" slot-scope="text" v-if="isStockist == true && text.redeemed == 0">
         <a-popconfirm
           :title="`Sure you want to redeem?`"
           ok-text="Yes"
