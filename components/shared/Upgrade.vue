@@ -16,6 +16,12 @@
           width="50px"
         >
     </span>
+      <span slot="user" slot-scope="txt">
+        <span>{{ txt.full_name }} <br> <b>{{ txt.referral }}</b></span>
+      </span>
+    <span slot="agent" slot-scope="txt">
+        <span>{{ txt.full_name }} <br> <b>{{ txt.referral }}</b></span>
+      </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'N/P' : pkg }}</span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
       <span slot="redeem" slot-scope="text" v-if="isStockist && !text.redeemed">
@@ -35,6 +41,12 @@
 <script>
   const columns = [
     {
+      title: 'Full Name',
+      dataIndex: 'user',
+      scopedSlots: { customRender: 'user' },
+      width: '10%'
+    },
+    {
       title: 'Package',
       dataIndex: 'package.name',
       width: '10%'
@@ -45,8 +57,9 @@
       width: '10%'
     },
     {
-      title: 'Upgraded By',
-      dataIndex: 'agent.full_name',
+      title: 'Stockist',
+      dataIndex: 'agent',
+      scopedSlots: { customRender: 'agent' },
       width: '10%'
     },
     {
