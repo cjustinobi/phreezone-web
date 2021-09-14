@@ -32,7 +32,15 @@
       </a-col>
     </a-row>
 
-    <a-table v-if="bonuses" :columns="columns" :data-source="data" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
+    <a-table
+      v-if="bonuses"
+      :columns="columns"
+      :data-source="data"
+      :rowKey="record => record.id"
+      :scroll="{ x: 1500, y: 300 }"
+      size="small"
+      :pagination="{ pageSize: 50 }"
+    >
       <div
         slot="filterDropdown"
         slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
@@ -99,8 +107,8 @@
       <span slot="agent" slot-scope="agent">{{ agent == null ? 0 : agent }}</span>
       <span slot="accumulative" slot-scope="ac">{{ ac == null ? 0 : ac }}</span>
       <span slot="performance" slot-scope="perf">{{ perf == null ? 0 : perf }}</span>
-      <span slot="shopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
-      <span slot="sponsorShopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
+<!--      <span slot="shopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>-->
+<!--      <span slot="sponsorShopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>-->
       <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
       <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
       <span slot="stream" slot-scope="stream">{{ stream == null ? 0 : stream }}</span>
@@ -166,16 +174,16 @@
       dataIndex: 'leadership_amount',
       scopedSlots: { customRender: 'leadership' }
     },
-    {
-      title: 'Shopping',
-      dataIndex: 'shopping_amount',
-      scopedSlots: { customRender: 'shopping' }
-    },
-    {
-      title: 'Sponsor Shopping',
-      dataIndex: 'sponsor_shopping_amount',
-      scopedSlots: { customRender: 'sponsorShopping' }
-    },
+    // {
+    //   title: 'Shopping',
+    //   dataIndex: 'shopping_amount',
+    //   scopedSlots: { customRender: 'shopping' }
+    // },
+    // {
+    //   title: 'Sponsor Shopping',
+    //   dataIndex: 'sponsor_shopping_amount',
+    //   scopedSlots: { customRender: 'sponsorShopping' }
+    // },
     {
       title: 'Stream',
       dataIndex: 'stream_amount',
