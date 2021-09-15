@@ -6,25 +6,24 @@
         <a-button type="primary" @click="productForm = true">New Products</a-button>
       </a-col>
       <a-col :span="3" :offset="18">
-<!--        <table style="display: none" class="table table-hover table-bordered" id="example">-->
-<!--          <thead>-->
-<!--          <tr>-->
-<!--            <th>Code</th>-->
-<!--            <th>Name</th>-->
-<!--            <th>Amount</th>-->
-<!--            <th>Pv</th>-->
-<!--          </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--          <tr v-if="products.length" v-for="product in products" :key="product.id">-->
-<!--            <td>{{product.code}}</td>-->
-<!--            <td>{{product.name}}</td>-->
-<!--            <td>{{product.amount}}</td>-->
-<!--            <td>{{product.pv}}</td>-->
-<!--          </tr>-->
-
-<!--          </tbody>-->
-<!--        </table>-->
+        <table style="display: none" class="table table-hover table-bordered" id="example">
+          <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Pv</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-if="products.length" v-for="product in products" :key="product.id">
+            <td>{{product.code}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.amount}}</td>
+            <td>{{product.pv}}</td>
+          </tr>
+          </tbody>
+        </table>
       </a-col>
     </a-row>
     <br>
@@ -187,7 +186,7 @@
     beforeMount() {
       this.getProducts()
       this.getProductCategories()
-      // this.initTable()
+      this.initTable()
     }
   }
 </script>
