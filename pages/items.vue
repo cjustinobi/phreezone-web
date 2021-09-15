@@ -16,13 +16,12 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="product in products" :key="product.id">
+          <tr v-if="products.length" v-for="product in products" :key="product.id">
             <td>{{product.code}}</td>
             <td>{{product.name}}</td>
             <td>{{product.amount}}</td>
             <td>{{product.pv}}</td>
           </tr>
-
           </tbody>
         </table>
       </a-col>
@@ -180,7 +179,7 @@
               }
             );
           },
-          1000
+          5000
         );
       }
     },
