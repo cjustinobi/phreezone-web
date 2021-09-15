@@ -36,6 +36,8 @@
             </a-popconfirm>
       </span>
     </a-table>
+
+
 </template>
 
 <script>
@@ -102,7 +104,7 @@
         const { success } = await this.$axios.$post(`user/redeemPack/${upgradeId}`)
         if (success) {
           let upgradeIndex = this.upgrades.findIndex(upgrade => upgrade.id == upgradeId)
-          this.upgrades[upgradeIndex].redeemed = this.upgrades[upgradeIndex].redeemed ? 0 : 1
+          this.upgrades[upgradeIndex].redeemed = this.upgrades[upgradeIndex].redeemed == '1' ? 0 : 1
           this.$message.success('Pack Redeemed')
         }
       }

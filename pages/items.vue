@@ -5,6 +5,27 @@
       <a-col :span="3">
         <a-button type="primary" @click="productForm = true">New Products</a-button>
       </a-col>
+      <a-col :span="3" :offset="18">
+        <table style="display: none" class="table table-hover table-bordered" id="example">
+          <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Pv</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="product in products" :key="product.id">
+            <td>{{product.code}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.amount}}</td>
+            <td>{{product.pv}}</td>
+          </tr>
+
+          </tbody>
+        </table>
+      </a-col>
     </a-row>
     <br>
     <a-modal :visible="productForm">
@@ -40,6 +61,19 @@
 </template>
 
 <script>
+  import 'bootstrap/dist/css/bootstrap.min.css'
+  import 'jquery/dist/jquery.min.js'
+  //Datatable Modules
+  import 'datatables.net-dt/js/dataTables.dataTables'
+  import 'datatables.net-dt/css/jquery.dataTables.min.css'
+  import 'datatables.net-buttons/js/dataTables.buttons.js'
+  import 'datatables.net-buttons/js/buttons.colVis.js'
+  import 'datatables.net-buttons/js/buttons.flash.js'
+  import 'datatables.net-buttons/js/buttons.html5.js'
+  import 'datatables.net-buttons/js/buttons.print.js'
+  import $ from 'jquery'
+
+
   const columns = [
     {title: 'Code', dataIndex: 'code',},
     {title: 'Name', dataIndex: 'name',},
@@ -120,15 +154,63 @@
         this.loading = false
         this.productForm = false
         this.editMode = false
+      },
+      initTable() {
+        setTimeout(function(){
+            $('#example').DataTable(
+              {
+                "paging":   false,
+                "ordering": false,
+                "info":     false,
+                "bFilter": false,
+
+                // pagingType: 'full_numbers',
+                // pageLength: 5,
+                processing: true,
+                dom: 'Bfrtip',
+                buttons: ['print'],
+                // columns: [
+                //   {
+                //     data: 'code',
+                //     render: function(data, type) {
+                //       console.log(data)
+                //     }
+                //   },
+                // ]
+              }
+            );
+          },
+          1000
+        );
       }
     },
     beforeMount() {
       this.getProducts()
       this.getProductCategories()
+      this.initTable()
     }
   }
 </script>
 
-<style scoped>
-
+<style>
+  .buttons-print {
+    background: #0a58ca;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fefefe;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
 </style>
