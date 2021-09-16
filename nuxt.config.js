@@ -21,6 +21,8 @@ export default {
       {  src: 'vendor/venobox/venobox.min.js' },
       {  src: 'vendor/aos/aos.js' },
       {  src: 'vendor/js/main.js' },
+      {  src: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js' },
+      {  src: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js' },
     ]
   },
 

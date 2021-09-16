@@ -108,7 +108,7 @@
       <span slot="accumulative" slot-scope="ac">{{ ac == null ? 0 : ac }}</span>
       <span slot="performance" slot-scope="perf">{{ perf == null ? 0 : perf }}</span>
 <!--      <span slot="shopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>-->
-<!--      <span slot="sponsorShopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>-->
+      <span slot="sponsorShopping" slot-scope="shop">{{ shop == null ? 0 : shop }}</span>
       <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
       <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
       <span slot="stream" slot-scope="stream">{{ stream == null ? 0 : stream }}</span>
@@ -179,11 +179,11 @@
     //   dataIndex: 'shopping_amount',
     //   scopedSlots: { customRender: 'shopping' }
     // },
-    // {
-    //   title: 'Sponsor Shopping',
-    //   dataIndex: 'sponsor_shopping_amount',
-    //   scopedSlots: { customRender: 'sponsorShopping' }
-    // },
+    {
+      title: 'Sponsor Shopping',
+      dataIndex: 'sponsor_shopping_amount',
+      scopedSlots: { customRender: 'sponsorShopping' }
+    },
     {
       title: 'Stream',
       dataIndex: 'stream_amount',

@@ -167,7 +167,7 @@
                 // pageLength: 5,
                 processing: true,
                 dom: 'Bfrtip',
-                buttons: ['print'],
+                buttons: ['print', 'pdf'],
                 // columns: [
                 //   {
                 //     data: 'code',
@@ -192,8 +192,8 @@
 </script>
 
 <style>
-  .buttons-print {
-    background: #0a58ca;
+  .buttons-print, .buttons-pdf {
+    background: #216ad4;
     display: inline-block;
     font-weight: 400;
     line-height: 1.5;
