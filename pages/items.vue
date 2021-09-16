@@ -167,7 +167,7 @@
                 // pageLength: 5,
                 processing: true,
                 dom: 'Bfrtip',
-                buttons: ['print', 'pdf'],
+                buttons: ['pdf'],
                 // columns: [
                 //   {
                 //     data: 'code',
