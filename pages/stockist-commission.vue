@@ -34,7 +34,7 @@
       <span slot="pkg" slot-scope="txt, rec" v-if="rec.package">{{ rec.package.name == null ? 'N/P' : rec.package.name }}</span>
             <span slot="referral" slot-scope="item">{{ item.referral }}</span>
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
-      <span slot="total" slot-scope="total"><b>{{ total }}</b></span>
+      <span slot="total" slot-scope="total, rec"><b>{{ rec.sum + rec.pack_sum }}</b></span>
       <span slot="fn" slot-scope="fn">{{ fn.full_name }}</span>
     </a-table>
   </div>
@@ -59,10 +59,16 @@
       dataIndex: 'shopping_amount',
       scopedSlots: { customRender: 'shopping' }
     },
-
+    {
+      title: 'Sales Amount',
+      dataIndex: 'sum',
+    },
+    {
+      title: 'Pack Amount',
+      dataIndex: 'pack_sum',
+    },
     {
       title: 'Total',
-      dataIndex: 'sum',
       scopedSlots: { customRender: 'total' }
     },
     {

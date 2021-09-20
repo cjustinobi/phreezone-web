@@ -2,7 +2,9 @@
   <div>
     <a-page-header sub-title="Stream Upgrade Order"/>
     <a-row type="flex" justify="space-between">
-      <a-col :md="{ span: 4 }" :xs="{ span: 24 }">
+      <a-col :md="{ span: 6 }" :xs="{ span: 24 }">
+        <h5 v-if="agentWallet"><span style="color: grey;" >Available Amount: </span>{{ agentWallet | currency }}</h5>
+        <h5 v-else>Available Amount: NGN 0.00</h5> <br>
         <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
         <a-input v-model="userReferral" @blur="getMember" placeholder="Member code" />
         <br><br>
@@ -19,9 +21,9 @@
 
 
 
-    <a-tabs default-active-key="1">
-      <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">
-        <div style="overflow-x: auto">
+<!--    <a-tabs default-active-key="1">-->
+<!--      <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">-->
+<!--        <div style="overflow-x: auto">-->
           <table id="table">
             <tr>
               <th>Code</th>
@@ -32,7 +34,7 @@
               <th>Subtotal</th>
               <th>Subtotal PV</th>
             </tr>
-            <tr v-for="product in cat.products">
+            <tr v-for="product in products">
               <td>{{ product.code }}</td>
               <td>{{ product.name }}</td>
               <td>{{ product.amount }}</td>
@@ -44,10 +46,9 @@
               <td class="subpv" :id="`subpv-${product.id}`">0.00</td>
             </tr>
           </table>
-        </div>
-      </a-tab-pane>
-    </a-tabs>
-
+<!--        </div>-->
+<!--      </a-tab-pane>-->
+<!--    </a-tabs>-->
   </div>
 </template>
 <script>
@@ -67,6 +68,7 @@
       return {
         loading: false,
         columns,
+        agentWallet: '',
         categories: '',
         products: [],
         userReferral: '',
@@ -75,8 +77,11 @@
     },
     methods: {
       async submitOrder() {
+        const totalAmount = document.getElementById('sub').innerText
+        if (totalAmount > this.agentWallet) return this.$message.error('Insufficient amount in wallet')
+
         if (!this.products.length || !this.upgradeUser) {
-          return this.$message.error('Enter a product')
+          return this.$message.error('All fields are required')
         }
 
         this.loading = true
@@ -93,6 +98,9 @@
           this.$message.success('Added successfully')
         }
       },
+      async getAgentWallet() {
+        this.agentWallet = (await this.$axios.$get(`admin/agentWallet/${this.userId}`)).data
+      },
       async getMember() {
         try {
           this.upgradeUser = (await this.$axios.$post(`user/null`, {
@@ -102,8 +110,8 @@
           this.$message.error('Invalid Referral code entered')
         }
       },
-      async getProductCategories() {
-        this.categories = (await this.$axios.$get('admin/product-category?active=true')).data
+      async getProducts() {
+        this.products = (await this.$axios.$get('admin/products?active=true')).data
       },
       populateField(event, item) {
         const value = event.target.value
@@ -149,6 +157,7 @@
         }
       },
       reset() {
+        this.agentWallet -= document.getElementById('sub').innerHTML
         this.loading = false
         this.products = []
         this.userReferral = ''
@@ -167,7 +176,8 @@
       }
     },
     beforeMount() {
-      this.getProductCategories()
+      this.getAgentWallet()
+      this.getProducts()
     }
   };
 </script>
