@@ -112,7 +112,7 @@
             </div>
           </li>
           <li>
-            <nuxt-link to="/upgrade-packs">
+            <nuxt-link v-if="isStockist" to="/upgrade-packs">
               <i class="fa fa-folder"></i>
               <span>Upgrade Packs</span>
             </nuxt-link>
@@ -125,8 +125,8 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li v-if="isStockist"><nuxt-link to="/add-product">Add Product</nuxt-link></li>
-                <li v-if="isStockist"><nuxt-link to="/items">Products</nuxt-link></li>
+<!--                <li v-if="isStockist"><nuxt-link to="/add-product">Add Product</nuxt-link></li>-->
+<!--                <li v-if="isStockist"><nuxt-link to="/items">Products</nuxt-link></li>-->
                 <li><nuxt-link to="/stream-orders">Stream Orders</nuxt-link></li>
                 <li v-if="isStockist"><nuxt-link to="/stream-upgrade-order">Upgrade Order</nuxt-link></li>
                 <li v-if="isAdmin"><nuxt-link to="/implemented-stream">Implement Stream</nuxt-link></li>

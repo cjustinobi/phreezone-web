@@ -224,10 +224,10 @@
           error = true
           this.$message.error("Select Local Government")
         }
-        // if (this.details.password == '') {
-        //   error = true
-        //   this.$message.error("Password is required")
-        // }
+        if (this.details.parent_id == '') {
+          error = true
+          this.$message.error("Placement is required")
+        }
         // if (this.details.password.length < 6) {
         //   error = true
         //   this.$message.error("Password must be at least 6 characters")
@@ -304,8 +304,8 @@
         return this.referralNotFound = true
       },
       async getPlacement() {
-        let res = await this.$axios.$post('/user/referral', {'referral': this.placement})
-        if (res.success) {
+        let res = await this.$axios.$post('/user/validPlacement', {'referral': this.placement})
+        if (res.success && res.data === 1) {
           return this.details.parent_id = res.data
         }
         document.querySelector('#placement').classList.add('is-invalid')

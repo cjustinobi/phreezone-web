@@ -127,6 +127,9 @@
       },
     },
     mounted() {
+      if (!this.isStockist) {
+        this.$router.push('/home')
+      }
       this.getUpgrades()
     },
     watch: {

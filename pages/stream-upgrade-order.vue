@@ -1,86 +1,145 @@
 <template>
   <div>
-    <a-page-header sub-title="Stream Upgrade Order"/>
-    <a-row type="flex" justify="space-between">
-      <a-col :md="{ span: 6 }" :xs="{ span: 24 }">
-        <h5 v-if="agentWallet"><span style="color: grey;" >Available Amount: </span>{{ agentWallet | currency }}</h5>
-        <h5 v-else>Available Amount: NGN 0.00</h5> <br>
-        <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
-        <a-input v-model="userReferral" @blur="getMember" placeholder="Member code" />
-        <br><br>
-      </a-col>
-      <a-col :md="{span: 6}">
-        <a-card size="small" title="Product Order" style="width: 230px">
-          <div>Total Order Amount: <span id="sub">0</span></div>
-          <div>Total PV: <span id="subpv">0</span></div>
-        </a-card>
-        <br>
-        <a-button type="primary" @click.prevent="submitOrder" :loading="loading">Submit</a-button>
-      </a-col>
-    </a-row>
+    <a-page-header sub-title="Products">
+      <template slot="extra">
+        <span><b>Product Order</b></span><br>
+        <span style="margin: 0;">Total Order Amount: <b>{{ totalOrder }}</b></span><br>
+        <span style="margin: 0;">Total PV: <b>{{ totalPv }}</b></span>
+      </template>
+    </a-page-header>
+    <h5 v-if="agentWallet"><span style="color: grey; margin-bottom: 0;" >
+      Available Amount: </span>{{ agentWallet | currency }}
+    </h5>
+    <h5 v-else>Available Amount: NGN 0.00</h5> <br>
+    <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
+    <a-input v-model="userReferral" @blur="getMember" class="user-ref" placeholder="Member code" />
 
+      <a-form-model
+        ref="dynamicValidateForm"
+        :model="dynamicValidateForm"
+        v-bind="formItemLayoutWithOutLabel"
+      >
+        <a-form-model-item
+          v-for="(item, index) in dynamicValidateForm.data"
+          :key="index"
+          v-bind="index === 0 ? formItemLayout : {}"
+          :label="index === 0 ? 'Items to Purchase' : ''"
+          :prop="'data.' + index + '.item'"
+          :rules="{
+        required: true,
+        message: 'Field is empty',
+        trigger: 'blur',
+      }"
+        >
+          <a-row gutter="2">
+            <a-col :xs="23">
+              <a-input v-model="item.name" placeholder="Enter Product name" style="margin-right: 8px"/>
+            </a-col>
+            <a-col :xs="1">
+              <a-icon
+                v-if="dynamicValidateForm.data.length > 1"
+                class="dynamic-delete-button"
+                type="minus-circle-o"
+                :disabled="dynamicValidateForm.data.length === 1"
+                @click="removeItem(item)"
+              />
+            </a-col>
+          </a-row>
+          <a-row gutter="2">
+            <a-col :xs="10">
+              <a-input
+                v-model="item.price"
+                @change="setPv(item, index)"
+                type="number"
+                placeholder="Amount"
+                style="margin-right: 8px"
+              />
+            </a-col>
+            <a-col :xs="4">
+              <a-input v-model="item.pv" disabled placeholder="PV" style="margin-right: 8px"/>
+            </a-col>
+            <a-col :xs="10">
+              <a-input v-model="item.amount" disabled placeholder="Actual Amount" style="margin-right: 8px"/>
+            </a-col>
+          </a-row>
+          <a-row gutter="2">
+            <a-col :xs="10">
+              <a-input v-model="item.qty" @change="setSubDetail(item, index)" min="1" type="number" placeholder="Quantity" style="margin-right: 8px"/>
+            </a-col>
+<!--            <a-col :xs="4">-->
+<!--              <a-input v-model="subPv" disabled placeholder="PV" style="margin-right: 8px"/>-->
+<!--            </a-col>-->
+<!--            <a-col :xs="10">-->
+<!--              <a-input v-model="subAmount" disabled placeholder="Actual Amount" style="margin-right: 8px"/>-->
+<!--            </a-col>-->
+          </a-row>
+        </a-form-model-item>
+        <a-form-model-item v-bind="formItemLayoutWithOutLabel">
+          <a-button type="dashed" @click="addItem"><a-icon type="plus" /> Add field</a-button>
+        </a-form-model-item>
+        <a-form-model-item v-if="dynamicValidateForm.data.length" v-bind="formItemLayoutWithOutLabel">
+          <a-button type="primary" :loading="loading" html-type="submit" @click="submitForm('dynamicValidateForm')">
+            Submit
+          </a-button>
+<!--          <a-button style="margin-left: 10px" @click="resetForm('dynamicValidateForm')">Reset</a-button>-->
+        </a-form-model-item>
+      </a-form-model>
 
-
-<!--    <a-tabs default-active-key="1">-->
-<!--      <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">-->
-<!--        <div style="overflow-x: auto">-->
-          <table id="table">
-            <tr>
-              <th>Code</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>PV</th>
-              <th>Quantity</th>
-              <th>Subtotal</th>
-              <th>Subtotal PV</th>
-            </tr>
-            <tr v-for="product in products">
-              <td>{{ product.code }}</td>
-              <td>{{ product.name }}</td>
-              <td>{{ product.amount }}</td>
-              <td>{{ product.pv }}</td>
-              <td>
-                <a-input class="qty" @change="populateField($event, product)" min="0" style="width: 100px" type="number"/>
-              </td>
-              <td class="sub" :id="`sub-${product.id}`">0.00</td>
-              <td class="subpv" :id="`subpv-${product.id}`">0.00</td>
-            </tr>
-          </table>
-<!--        </div>-->
-<!--      </a-tab-pane>-->
-<!--    </a-tabs>-->
   </div>
 </template>
+
 <script>
-  const columns = [
-    {title: 'Code', dataIndex: 'code'},
-    {title: 'Name', dataIndex: 'name'},
-    {title: 'Price', dataIndex: 'amount'},
-    {title: 'PV', dataIndex: 'pv'},
-    {title: 'Quantity', scopedSlots: { customRender: 'qty' }},
-    {title: 'Subtotal', scopedSlots: { customRender: 'sub' }},
-  ]
-  import $ from 'jquery'
   export default {
+    name: 'add-product',
     layout: 'dashboard',
-    middleware: ['stockist'],
     data() {
       return {
-        loading: false,
-        columns,
         agentWallet: '',
-        categories: '',
-        products: [],
-        userReferral: '',
-        upgradeUser: ''
+        upgradeUser: '',
+        loading: false,
+        editMode: false,
+        productForm: false,
+        productId: '',
+        formItemLayout: {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 4 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 20 },
+          },
+        },
+        formItemLayoutWithOutLabel: {
+          wrapperCol: {
+            xs: { span: 24, offset: 0 },
+            sm: { span: 20, offset: 4 },
+          },
+        },
+        dynamicValidateForm: {
+          data: [
+            {
+              code: '',
+              name: '',
+              price: '',
+              pv: '',
+              qty: '',
+              amount: '',
+              subPv: '',
+              subAmount: ''
+            }
+          ],
+        },
+        totalOrder: '',
+        totalPv: ''
+
       }
     },
     methods: {
-      async submitOrder() {
-        const totalAmount = document.getElementById('sub').innerText
-        if (totalAmount > this.agentWallet) return this.$message.error('Insufficient amount in wallet')
-
-        if (!this.products.length || !this.upgradeUser) {
+      async submitForm() {
+        if (!this.upgradeUser) return this.$message.error('No member code entered')
+        if (this.totalOrder > this.agentWallet) return this.$message.error('Insufficient amount in wallet')
+        if (!this.validForm()) {
           return this.$message.error('All fields are required')
         }
 
@@ -89,14 +148,109 @@
         const res = (await this.$axios.$post(`user/saveOrders`, {
           soldBy: this.userId,
           boughtBy: this.upgradeUser.id,
-          items: this.products,
-          totalAmount: document.getElementById('sub').innerText,
-          totalPv: document.getElementById('subpv').innerText
+          items: this.dynamicValidateForm.data,
+          totalAmount: this.totalOrder,
+          totalPv: this.totalPv,
         }))
         if (res.success) {
-          this.reset()
+          this.resetForm()
           this.$message.success('Added successfully')
         }
+      },
+
+      editProduct(item) {
+        this.item = item
+        this.productId = item.id
+        this.productForm = true
+        this.editMode = true
+      },
+      setCode(item) {
+        if(item.name.length <= 2) return item.code = ''
+        if (!item.code && item.name.length >= 3) {
+          item.code = item.name.substring(0, 3).toUpperCase()
+          item.code += Math.floor(100 + Math.random() * 900)
+        }
+        return item
+      },
+
+      resetForm(formName) {
+        this.dynamicValidateForm.data = [
+          {
+            code: '',
+            name: '',
+            price: '',
+            pv: '',
+            qty: '',
+            amount: '',
+            subPv: '',
+            subAmount: ''
+          }
+        ]
+        this.loading = false
+        this.productForm = false
+        this.editMode = false
+      },
+      removeItem(item) {
+        let index = this.dynamicValidateForm.data.indexOf(item);
+        if (index !== -1) {
+          this.dynamicValidateForm.data.splice(index, 1);
+
+          this.totalOrder -= item.subAmount
+          this.totalPv -= item.subPv
+
+        }
+      },
+      addItem() {
+        // if (this.canSubmit) {
+        this.dynamicValidateForm.data.push({
+          code: '',
+          name: '',
+          amount: '',
+          price: '',
+          pv: '',
+          qty: '',
+          subPv: '',
+          subAmount: ''
+        })
+        // }
+      },
+      resetPrice(item, index) {
+        if (item.price < 125) return this.dynamicValidateForm.data[index].price = ''
+      },
+      setPv(item, index) {
+        if (item.price < 125) return
+        item.user_id = this.userId
+        item.code = this.setCode(item).code
+        item.pv = item.qty ? ((+item.price / 125) * 0.25).toFixed(2) * +item.qty :  ((+item.price / 125) * 0.25).toFixed(2)// Formula product PV
+        item.amount = item.qty ? (+item.price + (0.2 * item.price)) * +item.qty : +item.price + (0.2 * item.price)
+        this.dynamicValidateForm.data[index] = item
+
+        this.setSubDetail(item, index)
+      },
+      setSubDetail(item, index) {
+        if (item.amount) {
+
+          item.subPv = +item.pv * +item.qty
+          item.subAmount = +item.amount * +item.qty
+
+            this.totalOrder = this.dynamicValidateForm.data.reduce((prev, cur) => {
+              return (+prev + +cur.subAmount).toFixed(2)
+            }, 0)
+            this.totalPv = this.dynamicValidateForm.data.reduce((prev, cur) => {
+              return (+prev + +cur.subPv).toFixed(2)
+            }, 0)
+
+          if (item.price < 125) return
+          item.user_id = this.userId
+          item.code = this.setCode(item).code
+          item.pv = item.qty ? ((+item.price / 125) * 0.25).toFixed(2) * +item.qty :  ((+item.price / 125) * 0.25).toFixed(2)// Formula product PV
+          item.amount = item.qty ? (+item.price + (0.2 * item.price)) * +item.qty : +item.price + (0.2 * item.price)
+          this.dynamicValidateForm.data[index] = item
+
+        }
+      },
+      validForm() {
+        return this.dynamicValidateForm.data.every(i => Object.values(i).every(v => v))
       },
       async getAgentWallet() {
         this.agentWallet = (await this.$axios.$get(`admin/agentWallet/${this.userId}`)).data
@@ -110,95 +264,23 @@
           this.$message.error('Invalid Referral code entered')
         }
       },
-      async getProducts() {
-        this.products = (await this.$axios.$get('admin/products?active=true')).data
+      reset(formName) {
+        this.$refs[formName].resetFields();
       },
-      populateField(event, item) {
-        const value = event.target.value
-        document.getElementById(`sub-${item.id}`).innerText = value * item.amount
-        document.getElementById(`subpv-${item.id}`).innerText = value * item.pv
-
-        $(function() {
-
-          let sub = 0, subpv = 0;
-
-          $("tr .sub").each(function(index,value){
-            let currentRow = parseFloat($(this).text());
-            sub += currentRow
-          })
-          $("tr .subpv").each(function(index,value){
-            let currentRow = parseFloat($(this).text());
-            subpv += currentRow
-          })
-
-          document.getElementById('sub').innerHTML = `<b>${sub}</b>`
-          document.getElementById('subpv').innerHTML = `<b>${subpv}</b>`
-        })
-
-        this.addProduct(item, value)
-
-      },
-      addProduct(item, qty) {
-        // Remove item if exist and incoming value is 0.
-        if (qty == 0) {
-          this.products = this.products.filter(product => product.id != item.id)
-          return
-        }
-
-        if (qty) {
-          // Check if the product has been added before.
-          const itemIndex = this.products.findIndex(product => product.id == item.id)
-          if(itemIndex > -1) {
-            this.products[itemIndex].qty = qty
-          } else {
-            item.qty = qty
-            this.products.push(item)
-          }
-        }
-      },
-      reset() {
-        this.agentWallet -= document.getElementById('sub').innerHTML
-        this.loading = false
-        this.products = []
-        this.userReferral = ''
-        this.upgradeUser = ''
-        document.getElementById('sub').innerHTML = `<b>0</b>`
-        document.getElementById('subpv').innerHTML = `<b>0</b>`
-
-        $(function() {
-          $("tr .sub").each(function(index,value){
-            $(this).text(0)
-          })
-          $("tr .subpv").each(function(index,value){
-            $(this).text(0)
-          })
-        })
-      }
     },
     beforeMount() {
       this.getAgentWallet()
-      this.getProducts()
-    }
-  };
+      if(!this.isStockist) {
+        this.$router.push('/home')
+      }
+    },
+  }
 </script>
 
-<style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-  #subpv, #sub {
-    font-weight: 900;
+<style scoped>
+  .user-ref {
+    margin-bottom: 10px;
+    margin-top: 0;
+    width: 150px;
   }
 </style>
