@@ -189,6 +189,9 @@
         this.loading = false
         this.productForm = false
         this.editMode = false
+        this.totalOrder = ''
+        this.totalPv = ''
+        this.upgradeUser = ''
       },
       removeItem(item) {
         let index = this.dynamicValidateForm.data.indexOf(item);
@@ -263,9 +266,6 @@
         } catch (e) {
           this.$message.error('Invalid Referral code entered')
         }
-      },
-      reset(formName) {
-        this.$refs[formName].resetFields();
       },
     },
     beforeMount() {
