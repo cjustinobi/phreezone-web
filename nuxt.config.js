@@ -82,12 +82,12 @@ export default {
   axios: {
     baseURL: process.env.NODE_ENV === 'dev'
       ? 'http://localhost:8000/api/'
-      : 'https://phreezone.africinnovate.xyz/api/'
+      : 'https://phreezone-staging.africinnovate.xyz/api/'
   },
   publicRuntimeConfig: {
     imagePath: process.env.NODE_ENV === 'dev'
       ? 'http://localhost:8000'
-      : 'https://phreezone.africinnovate.xyz',
+      : 'https://phreezone-staging.africinnovate.xyz',
   },
   router: {
     middleware: ['auth']
