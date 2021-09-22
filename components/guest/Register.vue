@@ -296,6 +296,7 @@
         }
       },
       async getReferral() {
+        if (this.referralId == '') return
         let res = await this.$axios.$post('/user/referral', {'referral': this.referralId})
         if (res.success) {
           return this.details.brought_by = res.data
@@ -304,8 +305,9 @@
         return this.referralNotFound = true
       },
       async getPlacement() {
+        if (this.placement == '') return
         let res = await this.$axios.$post('/user/validPlacement', {'referral': this.placement})
-        if (res.success && res.data === 1) {
+        if (res.success && res.data !== 2) {
           return this.details.parent_id = res.data
         }
         document.querySelector('#placement').classList.add('is-invalid')
