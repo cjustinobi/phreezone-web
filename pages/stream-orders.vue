@@ -58,7 +58,7 @@
       <span slot="seller" slot-scope="txt, rec">
         {{txt}} <br><a-tag color="green">{{ rec.sold_by.referral }}</a-tag>
       </span>
-       <span slot="paid" slot-scope="paid">
+       <span slot="paid" slot-scope="paid">{{paid}}
         <a-tag :color="paid == '1' ? 'green' : 'volcano'">
           {{ paid === 1 ? 'Implemented' : 'Not Implemented' }}
         </a-tag>
