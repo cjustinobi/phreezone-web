@@ -307,7 +307,7 @@
       async getPlacement() {
         if (this.placement == '') return
         let res = await this.$axios.$post('/user/validPlacement', {'referral': this.placement})
-        if (res.success && res.data !== 2) {
+        if (res.success) {
           return this.details.parent_id = res.data
         }
         document.querySelector('#placement').classList.add('is-invalid')
