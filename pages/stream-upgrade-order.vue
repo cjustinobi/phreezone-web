@@ -230,7 +230,7 @@
         item.user_id = this.userId
         item.code = this.setCode(item).code
         item.pv = item.qty ? ((+item.price / 125) * 0.25).toFixed(2) * +item.qty :  ((+item.price / 125) * 0.25).toFixed(2)// Formula product PV
-        item.amount = item.qty ? (+item.price + (0.2 * item.price)) * +item.qty : +item.price + (0.2 * item.price)
+        item.amount = item.qty ? (+item.price + (0.4 * item.price)) * +item.qty : +item.price + (0.4 * item.price)
         this.dynamicValidateForm.data[index] = item
 
         this.setSubDetail(item, index)
@@ -256,7 +256,7 @@
           item.user_id = this.userId
           item.code = this.setCode(item).code
           item.pv = item.qty ? ((+item.price / 125) * 0.25).toFixed(2) * +item.qty :  ((+item.price / 125) * 0.25).toFixed(2)// Formula product PV
-          item.amount = item.qty ? (+item.price + (0.2 * item.price)) * +item.qty : +item.price + (0.2 * item.price)
+          item.amount = item.qty ? (+item.price + (0.4 * item.price)) * +item.qty : +item.price + (0.4 * item.price)
           this.dynamicValidateForm.data[index] = item
 
         }

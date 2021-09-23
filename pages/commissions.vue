@@ -112,7 +112,7 @@
       <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
       <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
       <span slot="stream" slot-scope="stream">{{ stream == null ? 0 : stream }}</span>
-      <span slot="agent_stream" slot-scope="agent_stream">{{ agent_stream == null ? 0 : agent_stream }}</span>
+<!--      <span slot="agent_stream" slot-scope="agent_stream">{{ agent_stream == null ? 0 : agent_stream }}</span>-->
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
       <span slot="total" slot-scope="total"><b>{{ total }}</b></span>
       <span slot="actualAmount" slot-scope="actualAmount"><b>{{ actualAmount }}</b></span>
@@ -189,11 +189,11 @@
       dataIndex: 'stream_amount',
       scopedSlots: { customRender: 'stream' }
     },
-    {
-      title: 'SSPB',
-      dataIndex: 'agent_stream_amount',
-      scopedSlots: { customRender: 'agent_stream' }
-    },
+    // {
+    //   title: 'SSPB',
+    //   dataIndex: 'agent_stream_amount',
+    //   scopedSlots: { customRender: 'agent_stream' }
+    // },
     {
       title: 'Total',
       dataIndex: 'total',
