@@ -12,15 +12,18 @@
 
     <a-spin v-if="loading"/>
 
-    <a-row :gutter="16" v-if="sales">
+    <a-row :gutter="16" v-if="!noSales">
       <a-col :md="6">
-        <a-card title="Sales Price">{{ sales.normalAmount | currency }}</a-card>
+        <a-card v-if="sales.normalAmount" title="Sales Price">{{ sales.normalAmount | currency }}</a-card>
+        <a-card v-else>0.00</a-card>
       </a-col>
       <a-col :md="6">
-        <a-card title="Real Sales Price">{{ sales.amount | currency }}</a-card>
+        <a-card v-if="sales.amount" title="Real Sales Price">{{ sales.amount | currency }}</a-card>
+        <a-card v-else>0.00</a-card>
       </a-col>
       <a-col :md="6">
-        <a-card title="Total Weekly Payout">{{ sales.streams | currency }}</a-card>
+        <a-card v-if="sales.streams" title="Total Weekly Payout">{{ sales.streams | currency }}</a-card>
+        <a-card v-else>0.00</a-card>
       </a-col>
     </a-row>
     <a-empty v-else />
@@ -68,7 +71,12 @@
         }
       }
     },
+    computed: {
+      noSales() {
+        return !this.sales.amount && !this.sales.normalAmount && !this.sales.streams
 
+      }
+    },
     beforeMount() {
       if (!this.isAdmin) {
         this.$router.push('/home')

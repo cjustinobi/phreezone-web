@@ -125,11 +125,13 @@
               pv: '',
               qty: '',
               amount: '',
+              subNormalAmount: '',
               subPv: '',
               subAmount: ''
             }
           ],
         },
+        totalNormalOrder: '',
         totalOrder: '',
         totalPv: ''
 
@@ -149,6 +151,7 @@
           soldBy: this.userId,
           boughtBy: this.upgradeUser.id,
           items: this.dynamicValidateForm.data,
+          totalNormalAmount: this.totalNormalOrder,
           totalAmount: this.totalOrder,
           totalPv: this.totalPv,
         }))
@@ -182,6 +185,7 @@
             pv: '',
             qty: '',
             amount: '',
+            subNormalAmount: '',
             subPv: '',
             subAmount: ''
           }
@@ -189,6 +193,7 @@
         this.loading = false
         this.productForm = false
         this.editMode = false
+        this.totalNormalOrder = ''
         this.totalOrder = ''
         this.totalPv = ''
         this.upgradeUser = ''
@@ -198,6 +203,7 @@
         if (index !== -1) {
           this.dynamicValidateForm.data.splice(index, 1);
 
+          this.totalNormalOrder -= item.subNormalAmount
           this.totalOrder -= item.subAmount
           this.totalPv -= item.subPv
 
@@ -212,14 +218,13 @@
           price: '',
           pv: '',
           qty: '',
+          subNormalAmount: '',
           subPv: '',
           subAmount: ''
         })
         // }
       },
-      resetPrice(item, index) {
-        if (item.price < 125) return this.dynamicValidateForm.data[index].price = ''
-      },
+
       setPv(item, index) {
         if (item.price < 125) return
         item.user_id = this.userId
@@ -235,7 +240,11 @@
 
           item.subPv = +item.pv * +item.qty
           item.subAmount = +item.amount * +item.qty
+          item.subNormalAmount = +item.price * +item.qty
 
+          this.totalNormalOrder = this.dynamicValidateForm.data.reduce((prev, cur) => {
+            return (+prev + +cur.subNormalAmount).toFixed(2)
+          }, 0)
             this.totalOrder = this.dynamicValidateForm.data.reduce((prev, cur) => {
               return (+prev + +cur.subAmount).toFixed(2)
             }, 0)
