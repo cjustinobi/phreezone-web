@@ -6,7 +6,7 @@
     <br><br>
     <a-table
       v-if="upgrades"
-      :columns="columns"
+      :columns="filteredCol"
       :data-source="upgrades"
       :rowKey="record => record.id"
       :scroll="{ x: 1500, y: 300 }"
@@ -26,6 +26,9 @@
       </span>
       <span slot="agent" slot-scope="txt">
         <span>{{ txt.full_name }} <br> <b>{{ txt.referral }}</b></span>
+      </span>
+      <span slot="redeemedBy" slot-scope="txt">
+        <span v-if="txt">{{ txt.full_name }} <br> <b>{{ txt.referral }}</b></span>
       </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'N/P' : pkg }}</span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
@@ -77,6 +80,12 @@
       width: '10%'
     },
     {
+      title: 'Redeemed By',
+      dataIndex: 'redeemedBy',
+      scopedSlots: { customRender: 'redeemedBy' },
+      width: '10%'
+    },
+    {
       title: 'Upgrade Date',
       dataIndex: 'created_at',
       scopedSlots: { customRender: 'created' },
@@ -109,7 +118,9 @@
         this.upgrades = (await this.$axios.$get(`user/upgradePacks/${this.upgradeUser ? this.upgradeUser.id : this.userId}`)).data
       },
       async redeem(upgradeId) {
-        const { success } = await this.$axios.$post(`user/redeemPack/${upgradeId}`)
+        const { success } = await this.$axios.$post(`user/redeemPack/${upgradeId}`, {
+          redeemedBy: this.userId
+        })
         if (success) {
           let upgradeIndex = this.upgrades.findIndex(upgrade => upgrade.id == upgradeId)
           this.upgrades[upgradeIndex].redeemed = this.upgrades[upgradeIndex].redeemed == '1' ? 0 : 1
@@ -126,10 +137,22 @@
         }
       },
     },
-    mounted() {
-      if (!this.isStockist) {
-        this.$router.push('/home')
+    computed: {
+      filteredCol() {
+        if (this.isStockist) {
+          return this.columns
+        }
+
+        let arr = []
+        for (let i = 0; i < this.columns.length; i++) {
+          if (i === 2) { continue }
+          if (i === 5) { continue }
+          arr.push(this.columns[i])
+        }
+        return arr
       }
+    },
+    mounted() {
       this.getUpgrades()
     },
     watch: {

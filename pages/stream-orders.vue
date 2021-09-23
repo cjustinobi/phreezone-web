@@ -51,7 +51,7 @@
       </a-table>
     </a-modal>
 
-    <a-table v-if="sales" :columns="columns" :data-source="sales" :rowKey="record => record.id" size="small">
+    <a-table v-if="sales" :columns="filteredCol" :data-source="sales" :rowKey="record => record.id" size="small">
       <span slot="buyer" slot-scope="txt, rec">
         {{txt}} <br><a-tag color="green">{{ rec.user.referral }}</a-tag>
       </span>
@@ -160,6 +160,20 @@
     mounted() {
       this.setWeek()
       this.getSales()
+    },
+    computed: {
+      filteredCol() {
+        if (this.isStockist) {
+          return this.columns
+        }
+
+        let arr = []
+        for (let i = 0; i < this.columns.length; i++) {
+          if (i === 3) { continue }
+          arr.push(this.columns[i])
+        }
+        return arr
+      }
     },
     watch: {
       sales: {

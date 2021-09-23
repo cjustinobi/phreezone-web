@@ -112,7 +112,7 @@
             </div>
           </li>
           <li>
-            <nuxt-link v-if="isStockist" to="/upgrade-packs">
+            <nuxt-link to="/upgrade-packs">
               <i class="fa fa-folder"></i>
               <span>Upgrade Packs</span>
             </nuxt-link>

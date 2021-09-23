@@ -8,7 +8,7 @@
       </template>
     </a-page-header>
     <h5 v-if="agentWallet"><span style="color: grey; margin-bottom: 0;" >
-      Available Amount: </span>{{ agentWallet | currency }}
+      Available Amount: </span>{{ agentBalance | currency }}
     </h5>
     <h5 v-else>Available Amount: NGN 0.00</h5> <br>
     <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
@@ -75,10 +75,10 @@
           </a-row>
         </a-form-model-item>
         <a-form-model-item v-bind="formItemLayoutWithOutLabel">
-          <a-button type="dashed" @click="addItem"><a-icon type="plus" /> Add field</a-button>
+          <a-button :disabled="noBalance" type="dashed" @click="addItem"><a-icon type="plus" /> Add field</a-button>
         </a-form-model-item>
         <a-form-model-item v-if="dynamicValidateForm.data.length" v-bind="formItemLayoutWithOutLabel">
-          <a-button type="primary" :loading="loading" html-type="submit" @click="submitForm('dynamicValidateForm')">
+          <a-button type="primary" :disabled="noBalance" :loading="loading" html-type="submit" @click="submitForm('dynamicValidateForm')">
             Submit
           </a-button>
 <!--          <a-button style="margin-left: 10px" @click="resetForm('dynamicValidateForm')">Reset</a-button>-->
@@ -276,6 +276,14 @@
           this.$message.error('Invalid Referral code entered')
         }
       },
+    },
+    computed: {
+      agentBalance() {
+        return this.agentWallet - this.totalOrder
+      },
+      noBalance() {
+        return this.agentBalance <= 0
+      }
     },
     beforeMount() {
       this.getAgentWallet()
