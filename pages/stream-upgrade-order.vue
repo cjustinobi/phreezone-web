@@ -140,7 +140,7 @@
     methods: {
       async submitForm() {
         if (!this.upgradeUser) return this.$message.error('No member code entered')
-        if (this.totalOrder > this.agentWallet) return this.$message.error('Insufficient amount in wallet')
+        if (this.agentBalance <= 0) return this.$message.error('Insufficient amount in wallet')
         if (!this.validForm()) {
           return this.$message.error('All fields are required')
         }
@@ -210,7 +210,7 @@
         }
       },
       addItem() {
-        // if (this.canSubmit) {
+
         this.dynamicValidateForm.data.push({
           code: '',
           name: '',
@@ -222,7 +222,6 @@
           subPv: '',
           subAmount: ''
         })
-        // }
       },
 
       setPv(item, index) {
@@ -291,6 +290,19 @@
         this.$router.push('/home')
       }
     },
+    watch: {
+      totalOrder: {
+        handler: function (val) {
+          if (val) {
+            const bal = this.agentWallet - this.totalOrder
+            if (bal >= 0) {
+              return this.agentBalance = val
+            }
+            return this.agentBalance = 0
+          }
+        }
+      }
+    }
   }
 </script>
 

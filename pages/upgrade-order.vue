@@ -23,7 +23,7 @@
                 @confirm="upgrade"
                 @cancel="visible = false"
               >
-                <a-button type="primary" :disabled="canUpgrade == false">{{ loading ? 'Upgrading ...' : 'Upgrade' }}</a-button>
+                <a-button type="primary" :loading="loading" :disabled="canUpgrade == false">Upgrade</a-button>
               </a-popconfirm>
 
       </a-col>
