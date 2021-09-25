@@ -1,8 +1,8 @@
 <template>
   <div>
     <a-page-header sub-title="EP Upgrade Series"/>
-    <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
-    <a-input-search v-model="userReferral" @blur="getMember" style="width: 150px;" placeholder="Member code" />
+    <h6 v-if="isStockist && upgradeUser">{{ upgradeUser.full_name }}</h6>
+    <a-input-search v-if="isStockist" v-model="userReferral" @blur="getMember" style="width: 150px;" placeholder="Member code" />
     <br><br>
     <a-table
       v-if="upgrades"
