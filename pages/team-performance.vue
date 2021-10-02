@@ -44,10 +44,7 @@
             <strong class="detail">Member Under {{ treeData[0].member_network_count }}</strong>
           </div>
           <div class="stream">
-            <a-space>
-              <img src="~/assets/img/arrow_back.svg" @click="getTrees(treeData[0].parent_id)"/>
-              <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[0].id)"/>
-            </a-space>
+            <img src="~/assets/img/arrow_back.svg" @click="getTrees(treeData[0].parent_id)"/>
           </div>
         </div>
       </a-col>
@@ -92,9 +89,7 @@
             <strong class="detail">Member Under {{ treeData[1].member_network_count }}</strong>
           </div>
           <div class="stream">
-            <a-space>
-              <img src="~/assets/img/arrow_back.svg" @click="getTrees(treeData[1].parent_id)"/>
-              <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[1].id)"/>
+            <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[1].id)"/>
             </a-space>
           </div>
         </div>
@@ -136,10 +131,7 @@
             <strong class="detail">Member Under {{ treeData[2].member_network_count }}</strong>
           </div><i type="arrow-right" />
           <div class="stream">
-            <a-space>
-              <img src="~/assets/img/arrow_back.svg" @click="getTrees(treeData[2].parent_id)"/>
-              <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[2].id)"/>
-            </a-space>
+            <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[2].id)"/>
           </div>
         </div>
       </a-col>
