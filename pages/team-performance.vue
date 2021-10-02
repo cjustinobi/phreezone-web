@@ -43,7 +43,7 @@
           <div class="stream">
             <strong class="detail">Member Under {{ treeData[0].member_network_count }}</strong>
           </div>
-          <div class="stream">
+          <div class="stream" v-if="treeData[0].id != '1'">
             <img src="~/assets/img/arrow_back.svg" @click="getTrees(treeData[0].parent_id)"/>
           </div>
         </div>
