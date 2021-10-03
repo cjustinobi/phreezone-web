@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-page-header :sub-title="`All Stockist Commissions for week ${week}`"/>
+    <a-page-header :sub-title="`All Stockist Sales for week ${week}`"/>
     <a-row>
       <a-col span="6">
         <a-input
@@ -24,7 +24,7 @@
       </a-col>
     </a-row>
 
-    <a-table v-if="bonuses" :columns="columns" :data-source="data" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
+    <a-table v-if="bonuses" :columns="columns" :data-source="bonuses" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
 
       <span slot="paid" slot-scope="paid">
       <a-tag :color="paid ? 'green' : 'volcano'">
@@ -32,9 +32,9 @@
       </a-tag>
     </span>
       <span slot="pkg" slot-scope="txt, rec" v-if="rec.package">{{ rec.package.name == null ? 'N/P' : rec.package.name }}</span>
-            <span slot="referral" slot-scope="item">{{ item.referral }}</span>
+<!--            <span slot="referral" slot-scope="item">{{ ref }}</span>-->
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
-      <span slot="total" slot-scope="total, rec"><b>{{ rec.sum + rec.pack_sum }}</b></span>
+      <span slot="total" slot-scope="total, rec"><b>{{ rec.shopping_sum + rec.pack_sum + rec.stream_sum }}</b></span>
       <span slot="fn" slot-scope="fn">{{ fn.full_name }}</span>
     </a-table>
   </div>
@@ -51,20 +51,20 @@
     },
     {
       title: 'Stockist Code',
-      dataIndex: 'user',
+      dataIndex: 'user.referral',
       scopedSlots: { customRender: 'referral' }
     },
     {
       title: 'Shopping',
-      dataIndex: 'shopping_amount',
+      dataIndex: 'shopping_sum',
       scopedSlots: { customRender: 'shopping' }
     },
     {
-      title: 'Sales Amount',
-      dataIndex: 'sum',
+      title: 'Stream Sales',
+      dataIndex: 'stream_sum',
     },
     {
-      title: 'Pack Amount',
+      title: 'Upgrade Pack',
       dataIndex: 'pack_sum',
     },
     {
@@ -85,6 +85,7 @@
     layout: 'dashboard',
     data() {
       return {
+        columns,
         bonuses: '',
         week: '',
         userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral
@@ -107,21 +108,21 @@
         this.week = this.$dateFns.getWeek(new Date()) - 1
       }
     },
-    computed: {
-      columns() {
-        return this.isAdmin ? columns : columns.filter(column => column.dataIndex !== 'sponsor_shopping_amount')
-      },
-      data() {
-        let commissions = this.bonuses
-        if (this.isAdmin) {
-          return commissions
-        }
-        for (let com of commissions) {
-          com['shopping_amount'] = com.sponsor_shopping_amount + com.shopping_amount
-        }
-        return commissions
-      }
-    },
+    // computed: {
+    //   columns() {
+    //     return this.isAdmin ? columns : columns.filter(column => column.dataIndex !== 'sponsor_shopping_amount')
+    //   },
+    //   data() {
+    //     let commissions = this.bonuses
+    //     if (this.isAdmin) {
+    //       return commissions
+    //     }
+    //     for (let com of commissions) {
+    //       com['shopping_amount'] = com.sponsor_shopping_amount + com.shopping_amount
+    //     }
+    //     return commissions
+    //   }
+    // },
     mounted() {
       this.getCommissions()
       this.setWeek()

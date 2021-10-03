@@ -32,13 +32,13 @@
             </a-col>
             <a-col class="col" :xs="12">
               <div class="detail">
-                <strong  v-if="treeData[1].package">{{ treeData[1].package.name }}</strong>
+                <strong  v-if="treeData[0].package">{{ treeData[0].package.name }}</strong>
                 <strong v-else >No Package</strong>
               </div>
             </a-col>
           </a-row>
           <div class="stream">
-            <strong class="detail">Stream PV <span class="spv">{{ treeData[1].downlines_stream_pv }}</span></strong>
+            <strong class="detail">Stream PV <span class="spv">{{ treeData[0].downlines_stream_pv }}</span></strong>
           </div>
           <div class="stream">
             <strong class="detail">Member Under {{ treeData[0].member_network_count }}</strong>
@@ -86,11 +86,10 @@
             <strong class="detail">Stream PV <span class="spv">{{ treeData[1].downlines_stream_pv }}</span></strong>
           </div>
           <div class="stream">
-            <strong class="detail">Member Under {{ treeData[1].member_network_count }}</strong>
+            <strong class="detail">Member Under Network{{ treeData[1].member_network_count }}</strong>
           </div>
           <div class="stream">
             <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[1].id)"/>
-            </a-space>
           </div>
         </div>
       </a-col>
@@ -128,7 +127,7 @@
             <strong class="detail">Stream PV <span class="spv">{{ treeData[2].downlines_stream_pv }}</span></strong>
           </div>
           <div class="stream">
-            <strong class="detail">Member Under {{ treeData[2].member_network_count }}</strong>
+            <strong class="detail">Member Under Network {{ treeData[2].member_network_count }}</strong>
           </div><i type="arrow-right" />
           <div class="stream">
             <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[2].id)"/>
@@ -192,6 +191,7 @@
 
 <style scoped>
   img {
+    margin-top: 16px;
     margin-bottom: 12px;
   }
 
@@ -200,10 +200,11 @@
   }
 
   .item {
-    background: #d48f10;
+    background: #F8964B;
     border-radius: 10px;
     font-size: 0.5rem;
     padding: 5px;
+    height: 255px;
   }
 
   .detail {

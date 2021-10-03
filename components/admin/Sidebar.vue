@@ -152,7 +152,7 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li v-if="isAdmin"><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
+                <li v-if="isStockist"><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
                 <li><nuxt-link to="/stockist-sales">Stockist Sales</nuxt-link></li>
               </ul>
             </div>

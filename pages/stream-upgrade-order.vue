@@ -190,6 +190,7 @@
             subAmount: ''
           }
         ]
+        this.getAgentWallet()
         this.loading = false
         this.productForm = false
         this.editMode = false

@@ -146,6 +146,7 @@
               this.$axios.$post('user/spendShoppingBonus', this.dynamicValidateForm).then(res => {
                 this.loading = false
                 this.dynamicValidateForm.data = []
+                this.userReferral = ''
                 this.getShoppingBonus()
                 this.$message.success('Added successfully')
               })
