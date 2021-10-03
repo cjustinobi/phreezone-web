@@ -35,7 +35,7 @@
     <a-table
       v-if="bonuses"
       :columns="columns"
-      :data-source="data"
+      :data-source="bonuses"
       :rowKey="record => record.id"
       :scroll="{ x: 1500, y: 300 }"
       size="small"
@@ -164,11 +164,11 @@
       dataIndex: 'agent_amount',
       scopedSlots: { customRender: 'agent' }
     },
-    {
-      title: 'Accumulative',
-      dataIndex: 'accumulative_amount',
-      scopedSlots: { customRender: 'accumulative' }
-    },
+    // {
+    //   title: 'Accumulative',
+    //   dataIndex: 'accumulative_amount',
+    //   scopedSlots: { customRender: 'accumulative' }
+    // },
     {
       title: 'Leadership',
       dataIndex: 'leadership_amount',
@@ -218,6 +218,7 @@
     layout: 'dashboard',
     data() {
       return {
+        columns,
         bonuses: '',
         week: '',
         userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral,
@@ -275,19 +276,20 @@
       }
     },
     computed: {
-      columns() {
-        return this.isAdmin ? columns : columns.filter(column => column.dataIndex !== 'sponsor_shopping_amount')
-      },
-      data() {
-        let commissions = this.bonuses
-        if (this.isAdmin) {
-          return commissions
-        }
-        for (let com of commissions) {
-          com['shopping_amount'] = com.sponsor_shopping_amount + com.shopping_amount
-        }
-        return commissions
-      }
+      // columns() {
+      //   return columns
+        // return this.isAdmin ? columns : columns.filter(column => column.dataIndex !== 'sponsor_shopping_amount')
+      // },
+      // data() {
+      //   let commissions = this.bonuses
+      //   if (this.isAdmin) {
+      //     return commissions
+      //   }
+      //   for (let com of commissions) {
+      //     com['shopping_amount'] = com.sponsor_shopping_amount + com.shopping_amount
+      //   }
+      //   return commissions
+      // }
     },
     mounted() {
       this.setWeek()
