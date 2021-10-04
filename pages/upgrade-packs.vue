@@ -81,7 +81,7 @@
     },
     {
       title: 'Redeemed By',
-      dataIndex: 'redeemedBy',
+      dataIndex: 'redeemed_by',
       scopedSlots: { customRender: 'redeemedBy' },
       width: '10%'
     },
