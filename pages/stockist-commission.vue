@@ -34,7 +34,7 @@
       <span slot="pkg" slot-scope="txt, rec" v-if="rec.package">{{ rec.package.name == null ? 'N/P' : rec.package.name }}</span>
 <!--            <span slot="referral" slot-scope="item">{{ ref }}</span>-->
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
-      <span slot="total" slot-scope="total, rec"><b>{{ +rec.shopping_sum + +rec.pack_sum + +rec.stream_sum }}</b></span>
+      <span slot="total" slot-scope="total, rec"><b>{{(+rec.shopping_sum + +rec.pack_sum + +rec.stream_sum) | currency }}</b></span>
       <span slot="fn" slot-scope="fn">{{ fn.full_name }}</span>
     </a-table>
   </div>
