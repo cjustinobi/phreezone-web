@@ -27,8 +27,8 @@
     <a-table v-if="bonuses" :columns="columns" :data-source="bonuses" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
 
       <span slot="paid" slot-scope="paid">
-      <a-tag :color="paid ? 'green' : 'volcano'">
-        {{ paid == null ? 'Paid' : 'Not Paid' }}
+      <a-tag :color="paid == '0' ? 'volcano' : 'green'">
+        {{ paid == '0' ? 'Not Paid' : 'Paid' }}
       </a-tag>
     </span>
       <span slot="pkg" slot-scope="txt, rec" v-if="rec.package">{{ rec.package.name == null ? 'N/P' : rec.package.name }}</span>
