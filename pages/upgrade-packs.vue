@@ -145,8 +145,10 @@
 
         let arr = []
         for (let i = 0; i < this.columns.length; i++) {
+          // Remove columns from members.
           if (i === 2) { continue }
           if (i === 5) { continue }
+          if (i === 7) { continue }
           arr.push(this.columns[i])
         }
         return arr
