@@ -160,6 +160,30 @@
           case 'd4':
             r = 'Diamond 4'
             break;
+          case 'd5':
+            r = 'Diamond 5'
+            break;
+          case 'd6':
+            r = 'Diamond 6'
+            break;
+          case 'd7':
+            r = 'Diamond 7'
+            break;
+          case 's1':
+            r = 'Star 1'
+            break;
+          case 's2':
+            r = 'Star 2'
+            break;
+          case 's3':
+            r = 'Star 3'
+            break;
+          case 's4':
+            r = 'Star 4'
+            break;
+          case 's5':
+            r = 'Star 5'
+            break;
           default:
             r = 'No rank'
         }
