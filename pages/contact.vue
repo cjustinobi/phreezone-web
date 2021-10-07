@@ -7,14 +7,14 @@
         <p>We would be glad to hear from you concerning our different offers or any complaint. Our team are ready to be of help.</p>
       </div>
 
-      <div>
-        <iframe
-          style="border:0; width: 100%; height: 270px;"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15491.588360933903!2d7.367567014697706!3d5.111249291660531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104299308f30fbf3%3A0x98345ebf0c8cbca1!2sAba!5e0!3m2!1sen!2sng!4v1616089938573!5m2!1sen!2sng"
-          allowfullscreen=""
-          loading="lazy"
-        />
-      </div>
+<!--      <div>-->
+<!--        <iframe-->
+<!--          style="border:0; width: 100%; height: 270px;"-->
+<!--          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15491.588360933903!2d7.367567014697706!3d5.111249291660531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104299308f30fbf3%3A0x98345ebf0c8cbca1!2sAba!5e0!3m2!1sen!2sng!4v1616089938573!5m2!1sen!2sng"-->
+<!--          allowfullscreen=""-->
+<!--          loading="lazy"-->
+<!--        />-->
+<!--      </div>-->
 
       <div class="row mt-5">
 
