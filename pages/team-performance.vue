@@ -41,7 +41,7 @@
             <strong class="detail">Stream PV <span class="spv">{{ treeData[0].downlines_stream_pv }}</span></strong>
           </div>
           <div class="stream">
-            <strong class="detail">Member Under {{ treeData[0].member_network_count }}</strong>
+            <strong class="detail">Member Under Network {{ treeData[0].member_network_count }}</strong>
           </div>
           <div class="stream" v-if="treeData[0].id != '1'">
             <img src="~/assets/img/arrow_back.svg" @click="getTrees(treeData[0].parent_id)"/>
@@ -86,7 +86,7 @@
             <strong class="detail">Stream PV <span class="spv">{{ treeData[1].downlines_stream_pv }}</span></strong>
           </div>
           <div class="stream">
-            <strong class="detail">Member Under Network{{ treeData[1].member_network_count }}</strong>
+            <strong class="detail">Member Under Network {{ treeData[1].member_network_count }}</strong>
           </div>
           <div class="stream">
             <img src="~/assets/img/arrow.svg" @click="getTrees(treeData[1].id)"/>
