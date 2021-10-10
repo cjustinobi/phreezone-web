@@ -11,7 +11,7 @@
       Available Amount: </span>{{ agentBalance | currency }}
     </h5>
     <h5 v-else>Available Amount: NGN 0.00</h5> <br>
-    <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
+    <h6 v-if="upgradeMember">{{ upgradeMember.full_name }}</h6>
     <a-input v-model="userReferral" @blur="getMember" class="user-ref" placeholder="Member code" />
 
       <a-form-model
@@ -95,7 +95,7 @@
     data() {
       return {
         agentWallet: '',
-        upgradeUser: '',
+        upgradeMember: '',
         loading: false,
         editMode: false,
         productForm: false,
@@ -139,7 +139,7 @@
     },
     methods: {
       async submitForm() {
-        if (!this.upgradeUser) return this.$message.error('No member code entered')
+        if (!this.upgradeMember) return this.$message.error('No member code entered')
         if (this.agentBalance <= 0) return this.$message.error('Insufficient amount in wallet')
         if (!this.validForm()) {
           return this.$message.error('All fields are required')
@@ -149,7 +149,7 @@
 
         const res = (await this.$axios.$post(`user/saveOrders`, {
           soldBy: this.userId,
-          boughtBy: this.upgradeUser.id,
+          boughtBy: this.upgradeMember.id,
           items: this.dynamicValidateForm.data,
           totalNormalAmount: this.totalNormalOrder,
           totalAmount: this.totalOrder,
@@ -176,7 +176,7 @@
         return item
       },
 
-      resetForm(formName) {
+      resetForm() {
         this.dynamicValidateForm.data = [
           {
             code: '',
@@ -197,7 +197,7 @@
         this.totalNormalOrder = ''
         this.totalOrder = ''
         this.totalPv = ''
-        this.upgradeUser = ''
+        this.upgradeMember = ''
       },
       removeItem(item) {
         let index = this.dynamicValidateForm.data.indexOf(item);
@@ -230,7 +230,7 @@
         item.user_id = this.userId
         item.code = this.setCode(item).code
         item.pv = item.qty ? ((+item.price / 125) * 0.25).toFixed(2) * +item.qty :  ((+item.price / 125) * 0.25).toFixed(2)// Formula product PV
-        item.amount = item.qty ? (+item.price + (0.4 * item.price)) * +item.qty : +item.price + (0.4 * item.price)
+        item.amount = item.qty ? (+item.price + (0.25 * item.price)) * +item.qty : +item.price + (0.25 * item.price) // 0.25 = sales price.
         this.dynamicValidateForm.data[index] = item
 
         this.setSubDetail(item, index)
@@ -269,7 +269,7 @@
       },
       async getMember() {
         try {
-          this.upgradeUser = (await this.$axios.$post(`user/null`, {
+          this.upgradeMember = (await this.$axios.$post(`user/null`, {
             userReferral: this.userReferral
           })).data
         } catch (e) {
