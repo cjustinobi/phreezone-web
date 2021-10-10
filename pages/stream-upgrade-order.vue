@@ -78,7 +78,7 @@
           <a-button :disabled="noBalance" type="dashed" @click="addItem"><a-icon type="plus" /> Add field</a-button>
         </a-form-model-item>
         <a-form-model-item v-if="dynamicValidateForm.data.length" v-bind="formItemLayoutWithOutLabel">
-          <a-button type="primary" :disabled="noBalance" :loading="loading" html-type="submit" @click="submitForm('dynamicValidateForm')">
+          <a-button type="primary" :disabled="noBalance" :loading="loading" html-type="submit" @click="submitForm()">
             Submit
           </a-button>
 <!--          <a-button style="margin-left: 10px" @click="resetForm('dynamicValidateForm')">Reset</a-button>-->
