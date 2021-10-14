@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="form-group">
-      <a-button @click.prevent="changePass" :loading="loading" class="btn btn-success btn-sm float-right" type="submit">
+      <a-button @click.prevent="changePass" :loading="loading" class="float-right" type="primary">
         Change Password
       </a-button>
     </div>
