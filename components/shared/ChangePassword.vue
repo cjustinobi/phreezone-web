@@ -12,7 +12,9 @@
       </div>
     </div>
     <div class="form-group">
-      <button @click.prevent="changePass" class="btn btn-success btn-sm float-right" type="submit">Change Password</button>
+      <a-button @click.prevent="changePass" :loading="loading" class="btn btn-success btn-sm float-right" type="submit">
+        Change Password
+      </a-button>
     </div>
   </form>
 </template>
@@ -23,16 +25,19 @@
     data() {
       return {
         oldPass: '',
-        newPass: ''
+        newPass: '',
+        loading: false
       }
     },
     methods: {
       async changePass() {
+        this.loading = true
         let { success } = await this.$axios.$post(`changePass/${this.$auth.user.id}`, {
           newPass: this.newPass,
           oldPass: this.oldPass,
         })
         if (success) {
+          this.loading = false
           this.oldPass = ''
           this.newPass = ''
           return this.$store.dispatch('notification/setStatus', {
@@ -41,6 +46,7 @@
           })
         }
         this.$store.dispatch('notification/setStatus', {
+          this.loading = false
           success: false,
           messages: ['Password not changed']
         })
