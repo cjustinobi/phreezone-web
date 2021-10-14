@@ -45,8 +45,8 @@
             messages: ['Password changed successfully']
           })
         }
+        this.loading = false
         this.$store.dispatch('notification/setStatus', {
-          this.loading = false
           success: false,
           messages: ['Password not changed']
         })
