@@ -65,10 +65,14 @@
         </a-button>
       </div>
       <span slot="active" slot-scope="active">
-      <a-tag :color="active == '0' ? 'volcano' : 'green'">
-        {{ active == '0' ? 'Not Active' : 'Active'}}
-      </a-tag>
-    </span>
+        <a-tag :color="active == '0' ? 'volcano' : 'green'">
+          {{ active == '0' ? 'Not Active' : 'Active'}}
+        </a-tag>
+      </span>
+      <span slot="fullName" slot-scope="fullName, rec">
+        <span>{{ fullName }}</span> <br>
+        <a-tag v-if="rec.isAgent == '1'" color="green">Agent</a-tag>
+      </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'N/P' : pkg }}</span>
     </a-table>
   </div>
@@ -80,7 +84,6 @@
       title: 'Full Name',
       dataIndex: 'full_name',
       fixed: 'left',
-      width: '120',
       scopedSlots: {
         customRender: 'fullName',
         filterDropdown: 'filterDropdown',
