@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="form-group">
-      <a-button @click.prevent="changePass" :loading="loading" class="btn btn-success btn-sm float-right" type="submit">
+      <a-button @click.prevent="changePass" :loading="loading" class="float-right" type="primary">
         Change Password
       </a-button>
     </div>
@@ -40,16 +40,10 @@
           this.loading = false
           this.oldPass = ''
           this.newPass = ''
-          return this.$store.dispatch('notification/setStatus', {
-            success: true,
-            messages: ['Password changed successfully']
-          })
+          return this.$message.success('Password changed successfully')
         }
         this.loading = false
-        this.$store.dispatch('notification/setStatus', {
-          success: false,
-          messages: ['Password not changed']
-        })
+        return this.$message.error('Error occurred')
       }
     }
   }
