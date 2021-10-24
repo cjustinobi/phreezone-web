@@ -93,9 +93,10 @@ body {
   position: fixed;
   left: 30px;
   top: 10px;
-  border-radius: 0 4px 4px 0px;
+  border-radius: 0 4px 4px 0;
   width: 35px;
   transition-delay: 0.3s;
+  z-index: 99999;
 }
 .page-wrapper.toggled #show-sidebar {
   left: -40px;

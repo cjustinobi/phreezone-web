@@ -38,7 +38,8 @@ export default {
     '@/plugins/excel',
     '@/plugins/helper',
     '@/plugins/currency',
-    '@/plugins/ant-design-vue'
+    '@/plugins/ant-design-vue',
+    '@/plugins/vue-quill-editor'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -55,8 +56,16 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxtjs/cloudinary'
   ],
+
+  cloudinary: {
+    cloudName: 'africinnovate-technology',
+    apiKey: process.env.CLOUDINARY_KEY,
+    apiSecret: process.env.CLOUDINARY_SECRET
+  },
+
   auth: {
     strategies: {
       local: {

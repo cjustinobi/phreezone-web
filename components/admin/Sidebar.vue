@@ -165,6 +165,18 @@
           </li>
           <li class="sidebar-dropdown">
             <a href="#">
+              <i class="fa fa-id-card"></i>
+              <span>Promotions</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li v-if="isAdmin"><nuxt-link to="/add-promo">Add Promo</nuxt-link></li>
+                <li><nuxt-link to="/promos">All Promos</nuxt-link></li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
               <i class="far fa-envelope"></i>
               <span>Message Control</span>
             </a>

@@ -2,7 +2,7 @@
   <div>
     <a-page-header :sub-title="`All Stockist Sales for week ${week}`"/>
     <a-row>
-      <a-col span="6">
+      <a-col :lg="6" :xs="4">
         <a-input
           placeholder="Enter week number"
           v-model="week"
@@ -11,7 +11,7 @@
           min="1"
           type="number"/>
       </a-col>
-      <a-col span="6">
+      <a-col :lg="6" :xs="8">
         <a-input
           placeholder="Sponsor ID"
           v-model="userReferral"
@@ -19,8 +19,17 @@
           @change="getWeekCommissions"
         />
       </a-col>
-      <a-col span="6">
-        <a-button @click="downloadBonus">Download</a-button>
+      <a-col :lg="6" :xs="8">
+        <download-excel
+          class="btn btn-primary"
+          :data="bonuses"
+          :fields="excelFields"
+          worksheet="My Worksheet"
+          :name="`week-${week}.xls`"
+        >
+          Download
+        </download-excel>
+        <br><br>
       </a-col>
     </a-row>
 
@@ -41,6 +50,18 @@
 </template>
 
 <script>
+  // import 'bootstrap/dist/css/bootstrap.min.css'
+  // import 'jquery/dist/jquery.min.js'
+  // // Datatable Modules
+  // import 'datatables.net-dt/js/dataTables.dataTables'
+  // import 'datatables.net-dt/css/jquery.dataTables.min.css'
+  // import 'datatables.net-buttons/js/dataTables.buttons.js'
+  // import 'datatables.net-buttons/js/buttons.colVis.js'
+  // import 'datatables.net-buttons/js/buttons.flash.js'
+  // import 'datatables.net-buttons/js/buttons.html5.js'
+  // import 'datatables.net-buttons/js/buttons.print.js'
+  // import $ from 'jquery'
+
   let columns = [
     {
       title: 'Full Name',
@@ -88,7 +109,19 @@
         columns,
         bonuses: '',
         week: '',
-        userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral
+        userReferral: this.$auth.user.userType == 1 ? '' : this.$auth.user.referral,
+        excelFields: {
+          FullName: 'user.full_name',
+          StockistCode: 'user.referral',
+          Shopping: 'shopping_sum',
+          StreamSales: 'stream_sum',
+          UpgradePack: 'pack_sum',
+          Total: {
+            callback: data => {
+              return +data.shopping_sum + +data.stream_sum + +data.pack_sum
+            }
+          }
+        }
       }
     },
     methods: {
@@ -97,9 +130,6 @@
           referral: this.userReferral ,
           setWeek: this.week
         })).data
-      },
-      downloadBonus() {
-        return window.open(`${this.$axios.defaults.baseURL}exportBonuses?referral=${this.userReferral}&week=${this.week}`)
       },
       getWeekCommissions() {
         this.getCommissions()

@@ -1,12 +1,11 @@
 <template>
   <div>
-    <a-page-header sub-title="All Users"/>
-    <a-row>
-      <a-col :span="3">
-      <a-button type="primary" @click="() => $router.push('/register')">Add New Member</a-button>
-      </a-col>
-    </a-row>
-    <br>
+    <a-page-header sub-title="All Users">
+      <template slot="extra">
+        <a-button type="primary" @click="() => $router.push('/register')">Add New Member</a-button>
+      </template>
+    </a-page-header>
+
     <a-table
       v-if="users"
       :columns="columns"
@@ -155,7 +154,7 @@
         const { success } = await this.$axios.$post(`admin/disableEnableStockist/${userId}`)
         if (success) {
           let userIndex = this.users.findIndex(user => user.id == userId)
-          this.users[userIndex].isAgent = this.users[userIndex].isAgent ? 0 : 1
+          this.users[userIndex].isAgent = !this.users[userIndex].isAgent
           this.$message.success('User updated')
         }
       },
