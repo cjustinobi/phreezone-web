@@ -163,6 +163,18 @@
               <span>Bought Items</span>
             </nuxt-link>
           </li>
+          <li v-if="isStockist" class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-id-card"></i>
+              <span>Promotions</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li><nuxt-link to="/add-promo">Add Promo</nuxt-link></li>
+                <li><nuxt-link to="/promos">All Promos</nuxt-link></li>
+              </ul>
+            </div>
+          </li>
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="far fa-envelope"></i>
