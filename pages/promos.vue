@@ -1,13 +1,14 @@
 <template>
   <div>
     <a-page-header sub-title="Promos">
-      <template slot="extra">
+      <template v-if="isAdmin" slot="extra">
         <a-button type="primary" @click="() => $router.push('/add-promo')">Add Promo</a-button>
       </template>
     </a-page-header>
 
     <a-modal v-model="showQualifiers" :title="`Members`" :footer="null">
       <a-table
+        v-if="qualifiers.length"
         :columns="qualifierColumns"
         :data-source="qualifiers"
         :rowKey="record => record.id"
@@ -25,7 +26,11 @@
           {{ status.point >= benchmark ? 'Qualified' : 'Not Qualified' }}
           </a-tag>
         </span>
+<!--        <span slot="action">-->
+<!--          <a-button>Confirm</a-button>-->
+<!--        </span>-->
       </a-table>
+      <a-empty v-else />
     </a-modal>
 
     <a-table
@@ -37,7 +42,7 @@
       size="small"
       :pagination="{ pageSize: 50 }"
     >
-      <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec.id)">
+      <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec.id, rec.pv)">
         {{ promoTitle }}
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
@@ -95,7 +100,7 @@
     { title: 'Full Name', dataIndex: 'user', scopedSlots: { customRender: 'name' }, fixed: 'left'},
     { title: 'Points', dataIndex: 'point', scopedSlots: { customRender: 'point' }},
     { title: 'Status', scopedSlots: { customRender: 'status' }},
-    { title: 'Action', scopedSlots: { customRender: 'action' }},
+    // { title: 'Action', scopedSlots: { customRender: 'action' }},
   ]
 
   import dateFormat from '@/mixins/dateFormat'
@@ -120,10 +125,15 @@
         this.promos = (await this.$axios.$get('admin/promos')).data
       },
       async deletePromo(id) {
-        alert(id)
+        const res = await this.$axios.$delete(`admin/promos/${id}`)
+        if (res.success) {
+          this.$message.success('Promo Deleted')
+          this.promos = this.promos.filter(promo => promo.id != id)
+        }
       },
       async getQualifiers(i, benchmark) {
-        this.qualifiers = (await this.$axios.$post(`admin/promo-qualifiers/${i}`)).data
+        const res = (await this.$axios.$post(`admin/promo-qualifiers/${i}`)).data
+        this.qualifiers = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
         this.showQualifiers = true
         this.benchmark = benchmark
       }
