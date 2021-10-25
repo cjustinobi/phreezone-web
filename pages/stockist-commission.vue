@@ -116,6 +116,13 @@
           Shopping: 'shopping_sum',
           StreamSales: 'stream_sum',
           UpgradePack: 'pack_sum',
+          AccountNumber: {
+            field: 'user.account_number',
+            callback: val => {
+              return JSON.stringify(val)
+            }
+          },
+          BankName: 'user.bank_name',
           Total: {
             callback: data => {
               return +data.shopping_sum + +data.stream_sum + +data.pack_sum
