@@ -9,12 +9,12 @@
       </a-col>
       <a-col :lg="6" v-if="isAdmin">
         <a-form-model>
-          <a-date-picker class="form-control" @change="startDate" />
+          <a-date-picker class="form-control" @change="startDate" placeholder="Start" />
         </a-form-model>
       </a-col>
       <a-col :lg="6" v-if="isAdmin">
         <a-form-model>
-          <a-date-picker :disabled="disableEndDate" class="form-control" @change="endDate"/>
+          <a-date-picker :disabled="disableEndDate" class="form-control" @change="endDate" placeholder="End" />
         </a-form-model>
       </a-col>
     </a-row>
