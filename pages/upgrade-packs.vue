@@ -2,7 +2,22 @@
   <div>
     <a-page-header sub-title="EP Upgrade Series"/>
     <h6 v-if="isStockist && upgradeUser">{{ upgradeUser.full_name }}</h6>
-    <a-input-search v-if="isStockist" v-model="userReferral" @blur="getMember" style="width: 150px;" placeholder="Member code" />
+
+    <a-row :gutter="12">
+      <a-col :lg="4">
+        <a-input-search v-if="isStockist" v-model="userReferral" @blur="getMember" style="width: 150px;" placeholder="Member code" />
+      </a-col>
+      <a-col :lg="6" v-if="isAdmin">
+        <a-form-model>
+          <a-date-picker class="form-control" @change="startDate" />
+        </a-form-model>
+      </a-col>
+      <a-col :lg="6" v-if="isAdmin">
+        <a-form-model>
+          <a-date-picker :disabled="disableEndDate" class="form-control" @change="endDate"/>
+        </a-form-model>
+      </a-col>
+    </a-row>
     <br><br>
     <a-table
       v-if="upgrades"
@@ -32,6 +47,7 @@
       </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'N/P' : pkg }}</span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
+      <span slot="updated" slot-scope="updated, rec" v-if="rec.redeemed">{{ formatDate(updated) }}</span>
       <span slot="redeem" slot-scope="text" v-if="$auth.user.isAgent == '1' && text.redeemed == '0'">
         <a-popconfirm
           :title="`Sure you want to redeem?`"
@@ -50,6 +66,7 @@
 </template>
 
 <script>
+
   const columns = [
     {
       title: 'Full Name',
@@ -92,12 +109,19 @@
       width: '10%'
     },
     {
+      title: 'Redeemed Date',
+      dataIndex: 'updated_at',
+      scopedSlots: { customRender: 'updated' },
+      width: '10%'
+    },
+    {
       title: 'Redeem',
       scopedSlots: { customRender: 'redeem' },
       width: '10%'
     },
   ]
   import dateFormat from '@/mixins/dateFormat'
+  import moment from 'moment'
 
   export default {
     name: 'upgrade-pack',
@@ -110,12 +134,18 @@
         visible: false,
         columns,
         userReferral: '',
-        upgradeUser: ''
+        upgradeUser: '',
+        start: '',
+        end: ''
       }
     },
     methods: {
+      moment,
       async getUpgrades() {
-        this.upgrades = (await this.$axios.$get(`user/upgradePacks/${this.upgradeUser ? this.upgradeUser.id : this.userId}`)).data
+        this.upgrades = (await this.$axios.$post(`user/upgradePacks/${this.upgradeUser ? this.upgradeUser.id : this.userId}`, {
+          start: this.start,
+          end: this.end,
+        })).data
       },
       async redeem(upgradeId) {
         const { success } = await this.$axios.$post(`user/redeemPack/${upgradeId}`, {
@@ -136,6 +166,16 @@
           this.$message.error('Invalid Referral code entered')
         }
       },
+      disabledDate(current) {
+        // Can not select days before today and today
+        return this.start && this.start < moment().endOf('day')
+      },
+      startDate(date, dateString) {
+        this.start = dateString
+      },
+      endDate(date, dateString) {
+        this.end = dateString
+      },
     },
     computed: {
       filteredCol() {
@@ -152,6 +192,9 @@
           arr.push(this.columns[i])
         }
         return arr
+      },
+      disableEndDate() {
+        return !this.start
       }
     },
     mounted() {
@@ -160,6 +203,20 @@
     watch: {
       upgradeUser(val) {
         if (val) {
+          this.getUpgrades()
+        }
+      },
+      end(val) {
+        if (val && this.start) {
+          this.getUpgrades()
+        } else {
+          this.getUpgrades()
+        }
+      },
+      start(val) {
+        if (val && this.end) {
+          this.getUpgrades()
+        } else {
           this.getUpgrades()
         }
       }
