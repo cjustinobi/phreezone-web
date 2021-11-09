@@ -5,16 +5,16 @@
 
     <a-row :gutter="12">
       <a-col :lg="4">
-        <a-input-search v-if="isStockist" v-model="userReferral" @blur="getMember" style="width: 150px;" placeholder="Member code" />
+        <a-input-search v-if="isStockist" v-model="userReferral" @blur="getMember" style="width: 150px; margin-bottom: 10px;" placeholder="Member code" />
       </a-col>
       <a-col :lg="6" v-if="isAdmin">
         <a-form-model>
-          <a-date-picker class="form-control" @change="startDate" placeholder="Start" />
+          <a-date-picker class="form-control md" @change="startDate" placeholder="Start" />
         </a-form-model>
       </a-col>
       <a-col :lg="6" v-if="isAdmin">
         <a-form-model>
-          <a-date-picker :disabled="disableEndDate" class="form-control" @change="endDate" placeholder="End" />
+          <a-date-picker :disabled="disableEndDate" class="form-control md" @change="endDate" placeholder="End" />
         </a-form-model>
       </a-col>
     </a-row>
@@ -47,7 +47,7 @@
       </span>
       <span slot="pkg" slot-scope="pkg">{{ pkg == null ? 'N/P' : pkg }}</span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
-      <span slot="updated" slot-scope="updated, rec" v-if="rec.redeemed">{{ formatDate(updated) }}</span>
+      <span slot="updated" slot-scope="updated, rec" v-if="rec.redeemed == '1'">{{ formatDate(updated) }}</span>
       <span slot="redeem" slot-scope="text" v-if="$auth.user.isAgent == '1' && text.redeemed == '0'">
         <a-popconfirm
           :title="`Sure you want to redeem?`"
@@ -223,3 +223,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .md {
+    margin-bottom: 10px;
+  }
+</style>
