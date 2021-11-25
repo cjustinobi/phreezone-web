@@ -21,9 +21,14 @@
             {{ name.referral }}
           </a-tag>
         </span>
-        <span slot="status" slot-scope="status">
-          <a-tag :color="status.point >= benchmark ? 'green' : 'volcano'">
-          {{ status.point >= benchmark ? 'Qualified' : 'Not Qualified' }}
+        <span v-if="selectedPromo.balanced_leg" slot="status" slot-scope="status, rec">
+          <a-tag :color="rec.point >= selectedPromo.pv && rec.right_downline_points >= rec.leg_pv ? 'green' : 'volcano'">
+          {{ rec.point >= selectedPromo.pv && rec.right_downline_points >= rec.leg_pv ? 'Qualified' : 'Not Qualified' }}
+          </a-tag>
+        </span>
+        <span v-else slot="status" slot-scope="status">
+          <a-tag :color="status.point >= selectedPromo.pv ? 'green' : 'volcano'">
+          {{ status.point >= selectedPromo.pv ? 'Qualified' : 'Not Qualified' }}
           </a-tag>
         </span>
 <!--        <span slot="action">-->
@@ -42,7 +47,7 @@
       size="small"
       :pagination="{ pageSize: 50 }"
     >
-      <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec.id, rec.pv)">
+      <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec)">
         {{ promoTitle }}
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
@@ -116,7 +121,7 @@
         columns,
         qualifiers: '',
         promos: '',
-        benchmark: '',
+        selectedPromo: '',
         dateFormat: 'd MMM, Y',
       }
     },
@@ -131,11 +136,11 @@
           this.promos = this.promos.filter(promo => promo.id != id)
         }
       },
-      async getQualifiers(i, benchmark) {
-        const res = (await this.$axios.$post(`admin/promo-qualifiers/${i}`)).data
+      async getQualifiers(promo) {
+        const res = (await this.$axios.$post(`admin/promo-qualifiers/${promo.id}`)).data
         this.qualifiers = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
         this.showQualifiers = true
-        this.benchmark = benchmark
+        this.selectedPromo = promo
       }
     },
     beforeMount() {
