@@ -54,6 +54,11 @@
             </a-radio>
           </a-radio-group>
         </a-form-model-item>
+
+        <a-form-model-item v-if="details.balanced_leg == '1'" prop="balanced_leg_value">
+          <a-input v-model="details.leg_pv" size="large" placeholder="Enter point for each leg " style="margin-top:5px;"/>
+        </a-form-model-item>
+
         <a-row type="flex" justify="space-around">
           <a-col>
             <a-form-model>
@@ -92,9 +97,14 @@
     mixins: [upload],
     data() {
       let validateBalancedLeg = (rule, value, callback) => {
-        debugger
         if (value == '') {
           return callback(new Error('Leg balancing not specified'));
+        }
+        callback()
+      }
+      let validateBalancedLegValue = (rule, value, callback) => {
+        if (this.details.balanced_leg == '1' && value == '') {
+          return callback(new Error('Downline point not specified'));
         }
         callback()
       }
@@ -105,6 +115,7 @@
         details: {
           title: '',
           pv: '',
+          leg_pv: '',
           description: '',
           balanced_leg: '',
           personal_points: '',
@@ -116,6 +127,7 @@
           title: [{required: true, message: 'Name is required', trigger: 'change'}],
           pv: [{required: true, message: 'Point is required', trigger: 'change'}],
           balanced_leg: [{ validator: validateBalancedLeg, trigger: 'change' }],
+          balanced_leg_value: [{ validator: validateBalancedLegValue, trigger: 'change' }],
           personal_points: [{required: true, message: 'Type of point is required', trigger: 'change'}],
         }
       }
