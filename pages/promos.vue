@@ -51,6 +51,10 @@
         {{ promoTitle }}
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
+      <span slot="point" slot-scope="point, rec">
+        Personal Point: <b>{{ point }}</b> <br>
+        <span v-if="rec.balanced_leg">Each leg point: <b>{{ rec.leg_pv }}</b></span>
+      </span>
       <span slot="pp" slot-scope="pp">{{ pp == '0' ? 'No' : 'Yes' }}</span>
       <span slot="bl" slot-scope="bl">{{ bl == '0' ? 'No' : 'Yes' }}</span>
       <span slot="start" slot-scope="start">{{ formatDate(start) }}</span>
@@ -94,6 +98,7 @@
   const columns = [
     { title: 'Image', dataIndex: 'image_path', scopedSlots: { customRender: 'image' }},
     { title: 'Title', dataIndex: 'title', scopedSlots: { customRender: 'promoTitle' }},
+    { title: 'Point', dataIndex: 'pv', scopedSlots: { customRender: 'point' }},
     { title: 'Personal Point', dataIndex: 'personal_points', scopedSlots: { customRender: 'pp' }},
     { title: 'Balanced Leg', dataIndex: 'balanced_leg', scopedSlots: { customRender: 'bl' }},
     { title: 'Start', dataIndex: 'start_date', scopedSlots: { customRender: 'start' } },
