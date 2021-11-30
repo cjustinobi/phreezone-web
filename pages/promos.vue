@@ -63,7 +63,7 @@
 <!--      <a-dropdown slot="action" slot-scope="text" href="javascript:;">-->
 <!--        <a-menu slot="overlay">-->
 <!--          <a-menu-item v-if="text.active" key="1">-->
-      <span slot="action" slot-scope="text">
+      <span v-if="isAdmin" slot="action" slot-scope="text">
         <a-popconfirm
           :title="`Sure you want to delete Promo?`"
           ok-text="Yes"
