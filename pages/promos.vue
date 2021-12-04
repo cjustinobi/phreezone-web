@@ -23,20 +23,20 @@
         </span>
         <span v-if="selectedPromo.balanced_leg" slot="tp" slot-scope="tp, rec">
           <span v-if="rec.hasOwnProperty('left_downline_points')">
-            LL {{ rec.left_downline_points ? rec.left_downline_points + '/' + selectedPromo.pv : '0/' + selectedPromo.pv }}
-            <a-tag :color="rec.left_downline_points >= selectedPromo.pv ? 'green' : 'volcano'">
-            {{ rec.left_downline_points >= selectedPromo.pv ? 'Qualified' : 'Not Qualified' }}
+            LL {{ rec.left_downline_points ? rec.left_downline_points + '/' + rec.leg_pv : '0/' + rec.leg_pv }}
+            <a-tag :color="rec.left_downline_points >= rec.leg_pv ? 'green' : 'volcano'">
+            {{ rec.left_downline_points >= rec.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
-           <span v-else>LL 0/{{ selectedPromo.pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
+           <span v-else>LL 0/{{ rec.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
 
           <span v-if="rec.hasOwnProperty('right_downline_points')">
-            RL {{ rec.right_downline_points ? rec.right_downline_points + '/' + selectedPromo.pv : '0/' + selectedPromo.pv }}
-            <a-tag :color="rec.right_downline_points >= selectedPromo.pv ? 'green' : 'volcano'">
-            {{ rec.right_downline_points >= selectedPromo.pv ? 'Qualified' : 'Not Qualified' }}
+            RL {{ rec.right_downline_points ? rec.right_downline_points + '/' + rec.leg_pv : '0/' + rec.leg_pv }}
+            <a-tag :color="rec.right_downline_points >= rec.leg_pv ? 'green' : 'volcano'">
+            {{ rec.right_downline_points >= rec.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
-          <span v-else>RL 0/{{ selectedPromo.pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span>
+          <span v-else>RL 0/{{ rec.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span>
         </span>
 <!--        <span v-else slot="tp" slot-scope="tp">-->
 <!--          <a-tag :color="status.point >= selectedPromo.pv ? 'green' : 'volcano'">-->
