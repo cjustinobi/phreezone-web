@@ -5,7 +5,15 @@
         <a-button type="primary" @click="() => $router.push('/add-promo')">Add Promo</a-button>
       </template>
     </a-page-header>
-
+<!--      <download-excel-->
+<!--        class="btn btn-primary"-->
+<!--        :data="qualifiers"-->
+<!--        :fields="excelFields"-->
+<!--        worksheet="My Worksheet"-->
+<!--        :name="`${selectedPromo.title}.xls`"-->
+<!--      >-->
+<!--        Download-->
+<!--      </download-excel>-->
     <a-modal v-model="showQualifiers" :title="`Members`" :footer="null">
       <a-table
         v-if="qualifiers.length"
@@ -22,18 +30,18 @@
           </a-tag>
         </span>
         <span v-if="selectedPromo.balanced_leg" slot="tp" slot-scope="tp, rec">
-          <span v-if="rec.hasOwnProperty('left_downline_points')">
-            LL {{ rec.left_downline_points ? rec.left_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
-            <a-tag :color="rec.left_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
-            {{ rec.left_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
+          <span v-if="rec.hasOwnProperty('sibling_point')">
+            LL {{ rec.sibling_point ? rec.sibling_point + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            <a-tag :color="rec.sibling_point >= selectedPromo.leg_pv ? 'green' : 'volcano'">
+            {{ rec.sibling_point >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
            <span v-else>LL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
 
-          <span v-if="rec.hasOwnProperty('right_downline_points')">
-            RL {{ rec.right_downline_points ? rec.right_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
-            <a-tag :color="rec.right_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
-            {{ rec.right_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
+          <span v-if="rec.hasOwnProperty('point')">
+            RL {{ rec.point ? rec.point + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            <a-tag :color="rec.point >= selectedPromo.leg_pv ? 'green' : 'volcano'">
+            {{ rec.point >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
           <span v-else>RL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span>
@@ -122,8 +130,8 @@
   ]
 
   const qualifierColumns = [
-    { title: 'Full Name', dataIndex: 'user', scopedSlots: { customRender: 'name' }, fixed: 'left'},
-    { title: 'PP', dataIndex: 'point', scopedSlots: { customRender: 'pp' }},
+    { title: 'Full Name', dataIndex: 'parent', scopedSlots: { customRender: 'name' }, fixed: 'left'},
+    { title: 'PP', dataIndex: 'parent_point', scopedSlots: { customRender: 'pp' }},
     { title: 'Total PV', scopedSlots: { customRender: 'tp' }},
     // { title: 'Action', scopedSlots: { customRender: 'action' }},
   ]
@@ -143,6 +151,17 @@
         promos: '',
         selectedPromo: '',
         dateFormat: 'd MMM, Y',
+        excelFields: {
+          Fullname: 'user.full_name',
+          PP: 'point',
+          'Total PV': {
+            field: 'user',
+            callback: val => {
+              console.log(val)
+              return JSON.stringify(val)
+            }
+          }
+        }
       }
     },
     methods: {
@@ -158,9 +177,25 @@
       },
       async getQualifiers(promo) {
         const res = (await this.$axios.$post(`admin/promo-qualifiers/${promo.id}`)).data
-        this.qualifiers = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
+        const result = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
+        // this.qualifiers = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
+
+        this.qualifiers = returnUnique(result)
         this.showQualifiers = true
         this.selectedPromo = promo
+
+        function returnUnique(data) {
+          let parentIds = []
+          let newArr = []
+            data.forEach(item => {
+              if (!parentIds.includes(item['parent']['id'])) {
+                parentIds.push(item['parent']['id'])
+                newArr.push(item)
+              }
+            })
+
+            return newArr
+        }
       }
     },
     beforeMount() {
