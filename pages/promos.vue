@@ -39,7 +39,7 @@
            <span v-else>LL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
 
           <span v-if="rec.hasOwnProperty('right_downline_points')">
-            RL {{ rec.right_downline_points ? rec.point + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            RL {{ rec.right_downline_points ? rec.right_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
             <a-tag :color="rec.right_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
             {{ rec.right_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
