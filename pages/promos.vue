@@ -30,18 +30,18 @@
           </a-tag>
         </span>
         <span v-if="selectedPromo.balanced_leg" slot="tp" slot-scope="tp, rec">
-          <span v-if="rec.hasOwnProperty('sibling_point')">
-            LL {{ rec.sibling_point ? rec.sibling_point + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
-            <a-tag :color="rec.sibling_point >= selectedPromo.leg_pv ? 'green' : 'volcano'">
-            {{ rec.sibling_point >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
+          <span v-if="rec.hasOwnProperty('left_downline_points')">
+            LL {{ rec.left_downline_points ? rec.left_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            <a-tag :color="rec.left_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
+            {{ rec.left_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
            <span v-else>LL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
 
-          <span v-if="rec.hasOwnProperty('point')">
-            RL {{ rec.point ? rec.point + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
-            <a-tag :color="rec.point >= selectedPromo.leg_pv ? 'green' : 'volcano'">
-            {{ rec.point >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
+          <span v-if="rec.hasOwnProperty('right_downline_points')">
+            RL {{ rec.right_downline_points ? rec.point + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            <a-tag :color="rec.right_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
+            {{ rec.right_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
           <span v-else>RL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span>
@@ -71,7 +71,8 @@
       :pagination="{ pageSize: 50 }"
     >
       <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec)">
-        {{ promoTitle }}
+        <span v-if="!loading">{{ promoTitle }}</span>
+        <a-spin v-else :indicator="indicator" />
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
       <span slot="point" slot-scope="point, rec">
@@ -131,7 +132,7 @@
 
   const qualifierColumns = [
     { title: 'Full Name', dataIndex: 'parent', scopedSlots: { customRender: 'name' }, fixed: 'left'},
-    { title: 'PP', dataIndex: 'parent_point', scopedSlots: { customRender: 'pp' }},
+    { title: 'PP', dataIndex: 'point', scopedSlots: { customRender: 'pp' }},
     { title: 'Total PV', scopedSlots: { customRender: 'tp' }},
     // { title: 'Action', scopedSlots: { customRender: 'action' }},
   ]
@@ -144,6 +145,7 @@
     mixins: [dateFormat],
     data() {
       return {
+        loading: false,
         showQualifiers: false,
         qualifierColumns,
         columns,
@@ -176,25 +178,25 @@
         }
       },
       async getQualifiers(promo) {
+        this.loading = true
         const res = (await this.$axios.$post(`admin/promo-qualifiers/${promo.id}`)).data
-        const result = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
-        // this.qualifiers = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
 
-        this.qualifiers = returnUnique(result)
-        this.showQualifiers = true
-        this.selectedPromo = promo
+        if (res) {
+          this.loading = false
+          const result = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
 
-        function returnUnique(data) {
-          let parentIds = []
-          let newArr = []
-            data.forEach(item => {
-              if (!parentIds.includes(item['parent']['id'])) {
-                parentIds.push(item['parent']['id'])
-                newArr.push(item)
-              }
+          this.qualifiers = sortData(result)
+          this.showQualifiers = true
+          this.selectedPromo = promo
+
+          function sortData (data){
+            let sortedData;
+            sortedData = data.sort(function(a,b){
+              return a.id - b.id;
             })
+            return sortedData;
+          }
 
-            return newArr
         }
       }
     },
