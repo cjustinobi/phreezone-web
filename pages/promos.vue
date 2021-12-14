@@ -72,7 +72,7 @@
     >
       <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec)">
         <span v-if="!loading">{{ promoTitle }}</span>
-        <a-spin v-else :indicator="indicator" />
+        <a-spin v-else-if="rec.id == selectedPromo.id" :indicator="indicator" />
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
       <span slot="point" slot-scope="point, rec">
@@ -178,25 +178,29 @@
         }
       },
       async getQualifiers(promo) {
-        this.loading = true
-        const res = (await this.$axios.$post(`admin/promo-qualifiers/${promo.id}`)).data
+        try {
+          this.loading = true
+          const res = (await this.$axios.$post(`admin/promo-qualifiers/${promo.id}`)).data
 
-        if (res) {
-          this.loading = false
-          const result = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
+          if (res) {
+            this.loading = false
+            const result = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
 
-          this.qualifiers = sortData(result)
-          this.showQualifiers = true
-          this.selectedPromo = promo
+            this.qualifiers = sortData(result)
+            this.showQualifiers = true
+            this.selectedPromo = promo
 
-          function sortData (data){
-            let sortedData;
-            sortedData = data.sort(function(a,b){
-              return a.id - b.id;
-            })
-            return sortedData;
+            function sortData (data){
+              let sortedData;
+              sortedData = data.sort(function(a,b){
+                return a.id - b.id;
+              })
+              return sortedData;
+            }
+
           }
-
+        } catch (e) {
+          this.loading = false
         }
       }
     },
