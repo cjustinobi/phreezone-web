@@ -5,7 +5,15 @@
         <a-button type="primary" @click="() => $router.push('/add-promo')">Add Promo</a-button>
       </template>
     </a-page-header>
-
+    <!--      <download-excel-->
+    <!--        class="btn btn-primary"-->
+    <!--        :data="qualifiers"-->
+    <!--        :fields="excelFields"-->
+    <!--        worksheet="My Worksheet"-->
+    <!--        :name="`${selectedPromo.title}.xls`"-->
+    <!--      >-->
+    <!--        Download-->
+    <!--      </download-excel>-->
     <a-modal v-model="showQualifiers" :title="`Members`" :footer="null">
       <a-table
         v-if="qualifiers.length"
@@ -23,26 +31,26 @@
         </span>
         <span v-if="selectedPromo.balanced_leg" slot="tp" slot-scope="tp, rec">
           <span v-if="rec.hasOwnProperty('left_downline_points')">
-            LL {{ rec.left_downline_points ? rec.left_downline_points + '/' + rec.leg_pv : '0/' + rec.leg_pv }}
-            <a-tag :color="rec.left_downline_points >= rec.leg_pv ? 'green' : 'volcano'">
-            {{ rec.left_downline_points >= rec.leg_pv ? 'Qualified' : 'Not Qualified' }}
+            LL {{ rec.left_downline_points ? rec.left_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            <a-tag :color="rec.left_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
+            {{ rec.left_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
-           <span v-else>LL 0/{{ rec.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
+           <span v-else>LL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
 
           <span v-if="rec.hasOwnProperty('right_downline_points')">
-            RL {{ rec.right_downline_points ? rec.right_downline_points + '/' + rec.leg_pv : '0/' + rec.leg_pv }}
-            <a-tag :color="rec.right_downline_points >= rec.leg_pv ? 'green' : 'volcano'">
-            {{ rec.right_downline_points >= rec.leg_pv ? 'Qualified' : 'Not Qualified' }}
+            RL {{ rec.right_downline_points ? rec.right_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            <a-tag :color="rec.right_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
+            {{ rec.right_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
           </span>
-          <span v-else>RL 0/{{ rec.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span>
+          <span v-else>RL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span>
         </span>
-<!--        <span v-else slot="tp" slot-scope="tp">-->
-<!--          <a-tag :color="status.point >= selectedPromo.pv ? 'green' : 'volcano'">-->
-<!--          {{ status.point >= selectedPromo.pv ? 'Qualified' : 'Not Qualified' }}-->
-<!--          </a-tag>-->
-<!--        </span>-->
+        <!--        <span v-else slot="tp" slot-scope="tp">-->
+        <!--          <a-tag :color="status.point >= selectedPromo.pv ? 'green' : 'volcano'">-->
+        <!--          {{ status.point >= selectedPromo.pv ? 'Qualified' : 'Not Qualified' }}-->
+        <!--          </a-tag>-->
+        <!--        </span>-->
         <span v-if="selectedPromo.balanced_leg" slot="pp" slot-scope="pp, rec">
           {{ pp }}/{{ selectedPromo.pv }}
           <a-tag :color="pp >= selectedPromo.pv ? 'green' : 'volcano'">
@@ -63,7 +71,8 @@
       :pagination="{ pageSize: 50 }"
     >
       <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec)">
-        {{ promoTitle }}
+        <span v-if="!loading">{{ promoTitle }}</span>
+        <a-spin v-else-if="rec.id == selectedPromo.id" :indicator="indicator" />
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
       <span slot="point" slot-scope="point, rec">
@@ -75,9 +84,9 @@
       <span slot="start" slot-scope="start">{{ formatDate(start) }}</span>
       <span slot="end" slot-scope="end">{{ formatDate(end) }}</span>
 
-<!--      <a-dropdown slot="action" slot-scope="text" href="javascript:;">-->
-<!--        <a-menu slot="overlay">-->
-<!--          <a-menu-item v-if="text.active" key="1">-->
+      <!--      <a-dropdown slot="action" slot-scope="text" href="javascript:;">-->
+      <!--        <a-menu slot="overlay">-->
+      <!--          <a-menu-item v-if="text.active" key="1">-->
       <span v-if="isAdmin" slot="action" slot-scope="text">
         <a-popconfirm
           :title="`Sure you want to delete Promo?`"
@@ -89,16 +98,16 @@
           <a href="#">Delete</a>
         </a-popconfirm>
       </span>
-<!--          </a-menu-item>-->
-<!--          <a-menu-item key="2">-->
-<!--            <nuxt-link :to="{ name: 'users-id', params: { id: text.id , user: text }}">Edit</nuxt-link>-->
-<!--          </a-menu-item>-->
-<!--          <a-menu-item key="3">-->
-<!--            Delete-->
-<!--          </a-menu-item>-->
-<!--        </a-menu>-->
-<!--        <a-button> Actions <a-icon type="down" /> </a-button>-->
-<!--      </a-dropdown>-->
+      <!--          </a-menu-item>-->
+      <!--          <a-menu-item key="2">-->
+      <!--            <nuxt-link :to="{ name: 'users-id', params: { id: text.id , user: text }}">Edit</nuxt-link>-->
+      <!--          </a-menu-item>-->
+      <!--          <a-menu-item key="3">-->
+      <!--            Delete-->
+      <!--          </a-menu-item>-->
+      <!--        </a-menu>-->
+      <!--        <a-button> Actions <a-icon type="down" /> </a-button>-->
+      <!--      </a-dropdown>-->
 
       <span slot="active" slot-scope="active">
         <a-tag :color="active == '0' ? 'volcano' : 'green'">
@@ -122,7 +131,7 @@
   ]
 
   const qualifierColumns = [
-    { title: 'Full Name', dataIndex: 'user', scopedSlots: { customRender: 'name' }, fixed: 'left'},
+    { title: 'Full Name', dataIndex: 'parent', scopedSlots: { customRender: 'name' }, fixed: 'left'},
     { title: 'PP', dataIndex: 'point', scopedSlots: { customRender: 'pp' }},
     { title: 'Total PV', scopedSlots: { customRender: 'tp' }},
     // { title: 'Action', scopedSlots: { customRender: 'action' }},
@@ -136,6 +145,7 @@
     mixins: [dateFormat],
     data() {
       return {
+        loading: false,
         showQualifiers: false,
         qualifierColumns,
         columns,
@@ -143,6 +153,17 @@
         promos: '',
         selectedPromo: '',
         dateFormat: 'd MMM, Y',
+        excelFields: {
+          Fullname: 'user.full_name',
+          PP: 'point',
+          'Total PV': {
+            field: 'user',
+            callback: val => {
+              console.log(val)
+              return JSON.stringify(val)
+            }
+          }
+        }
       }
     },
     methods: {
@@ -157,10 +178,30 @@
         }
       },
       async getQualifiers(promo) {
-        const res = (await this.$axios.$post(`admin/promo-qualifiers/${promo.id}`)).data
-        this.qualifiers = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
-        this.showQualifiers = true
-        this.selectedPromo = promo
+        try {
+          this.loading = true
+          const res = (await this.$axios.$post(`admin/promo-qualifiers/${promo.id}`)).data
+
+          if (res) {
+            this.loading = false
+            const result = this.isAdmin ? res : res.filter(item => item.user_id == this.userId)
+
+            this.qualifiers = sortData(result)
+            this.showQualifiers = true
+            this.selectedPromo = promo
+
+            function sortData (data){
+              let sortedData;
+              sortedData = data.sort(function(a,b){
+                return a.id - b.id;
+              })
+              return sortedData;
+            }
+
+          }
+        } catch (e) {
+          this.loading = false
+        }
       }
     },
     beforeMount() {
