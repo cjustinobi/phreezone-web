@@ -66,12 +66,6 @@
             <a-col :xs="10">
               <a-input v-model="item.qty" @change="setSubDetail(item, index)" min="1" type="number" placeholder="Quantity" style="margin-right: 8px"/>
             </a-col>
-<!--            <a-col :xs="4">-->
-<!--              <a-input v-model="subPv" disabled placeholder="PV" style="margin-right: 8px"/>-->
-<!--            </a-col>-->
-<!--            <a-col :xs="10">-->
-<!--              <a-input v-model="subAmount" disabled placeholder="Actual Amount" style="margin-right: 8px"/>-->
-<!--            </a-col>-->
           </a-row>
         </a-form-model-item>
         <a-form-model-item v-bind="formItemLayoutWithOutLabel">
@@ -81,7 +75,6 @@
           <a-button type="primary" :disabled="noBalance" :loading="loading" html-type="submit" @click="submitForm()">
             Submit
           </a-button>
-<!--          <a-button style="margin-left: 10px" @click="resetForm('dynamicValidateForm')">Reset</a-button>-->
         </a-form-model-item>
       </a-form-model>
 
@@ -94,7 +87,7 @@
     layout: 'dashboard',
     data() {
       return {
-        basePv: 137.5,
+        basePv: 100,
         percentageRate: '',
         agentWallet: '',
         upgradeMember: '',
