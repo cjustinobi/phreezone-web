@@ -31,6 +31,9 @@
         <a href="javascript:;" @click="readMessage(rec)">{{ txt }}</a>
       </span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
+      <span slot="delete" slot-scope="rec">
+        <a-button type="link" @click="deleteMessage(rec.id)">Delete</a-button>
+      </span>
     </a-table>
   </div>
 </template>
@@ -47,6 +50,10 @@
       title: 'Release Time',
       dataIndex: 'created_at',
       scopedSlots: { customRender: 'created' },
+    },
+    {
+      title: 'Delete',
+      scopedSlots: { customRender: 'delete' }
     }
   ]
 
@@ -84,6 +91,13 @@
         }
         this.$message.error('Message not saved')
         this.loading = false
+      },
+      async deleteMessage(id) {
+        const { success } = await this.$axios.$delete(`admin/message/${id}`)
+        if (success) {
+          this.getMessages()
+          this.$message.success('Message deleted')
+        }
       },
       handleFile(event) {
         this.file = event.target.files[0]

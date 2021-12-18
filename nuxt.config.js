@@ -96,7 +96,7 @@ export default {
   publicRuntimeConfig: {
     imagePath: process.env.NODE_ENV === 'dev'
       ? 'http://localhost:8000'
-      : 'https://phreezone-staging.africinnovate.xyz',
+      : 'https://phreezon4e-staging.africinnovate.xyz',
   },
   router: {
     middleware: ['auth']
