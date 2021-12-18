@@ -94,6 +94,7 @@
     layout: 'dashboard',
     data() {
       return {
+        basePv: 137.5,
         percentageRate: '',
         agentWallet: '',
         upgradeMember: '',
@@ -227,10 +228,10 @@
       },
 
       setPv(item, index) {
-        if (item.price < 125) return
+        if (item.price < this.basePv) return
         item.user_id = this.userId
         item.code = this.setCode(item).code
-        item.pv = item.qty ? ((+item.price / 125) * this.percentageRate).toFixed(2) * +item.qty :  ((+item.price / 125) * this.percentageRate).toFixed(2)// Formula product PV
+        item.pv = item.qty ? ((+item.price / this.basePv) * this.percentageRate).toFixed(2) * +item.qty :  ((+item.price / this.basePv) * this.percentageRate).toFixed(2)// Formula product PV
         item.amount = item.qty ? (+item.price + (this.percentageRate * item.price)) * +item.qty : +item.price + (this.percentageRate * item.price) // 0.25 = sales price.
         this.dynamicValidateForm.data[index] = item
 
@@ -253,10 +254,10 @@
               return (+prev + +cur.subPv).toFixed(2)
             }, 0)
 
-          if (item.price < 125) return
+          if (item.price < this.basePv) return
           item.user_id = this.userId
           item.code = this.setCode(item).code
-          item.pv = item.qty ? ((+item.price / 125) * this.percentageRate).toFixed(2) * +item.qty :  ((+item.price / 125) * this.percentageRate).toFixed(2)// Formula product PV
+          item.pv = item.qty ? ((+item.price / this.basePv) * this.percentageRate).toFixed(2) * +item.qty :  ((+item.price / this.basePv) * this.percentageRate).toFixed(2)// Formula product PV
           item.amount = item.qty ? (+item.price + (this.percentageRate * item.price)) * +item.qty : +item.price + (this.percentageRate * item.price) // 0.25 == sales price %
           this.dynamicValidateForm.data[index] = item
 
