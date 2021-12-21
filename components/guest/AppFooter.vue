@@ -47,7 +47,7 @@
               <li><i class="bx bx-chevron-right"></i> <a href="#">Silver</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Silver Star</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Gold</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Platinum</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Emerald</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">VIP Royal</a></li>
             </ul>
           </div>

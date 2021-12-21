@@ -1,6 +1,10 @@
 <template>
   <div>
-    <a-page-header sub-title="Upgrade Order"/>
+    <a-page-header sub-title="Upgrade Order">
+      <template slot="extra">
+        <a-button type="primary" @click="() => $router.push('/stream-upgrade-order')">Or Stream Upgrade</a-button>
+      </template>
+    </a-page-header>
     <h5 v-if="agentWallet">Available Amount: {{ agentWallet | currency }}</h5>
     <h5 v-else>Available Amount: NGN 0.00</h5> <br>
     <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
