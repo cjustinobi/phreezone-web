@@ -31,7 +31,7 @@
             <span class="badge badge-pill badge-primary">{{ pckLevel.nextPackage.name }}</span>
           </span>
           <h2>
-            <a-progress class="ant-progress-status-success" :percent="pckLevel.packageLevel"/>
+            <a-progress class="ant-progress-status-success" :percent="parseInt(pckLevel.packageLevel)"/>
           </h2>
         </div>
         <div v-else class="pl-3 pr-3">
