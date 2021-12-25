@@ -3,15 +3,17 @@
     <a-page-header sub-title="Settings"/>
     <ChangePassword />
 
-    <p>Dollar Rate: <b>{{ dollar }}</b></p>
-    <div class="mb">
-      <a-input v-model="dollarRate" type="number" style="width: 200px" placeholder="Update dollar rate"/>
-      <a-button @click="updateDollarRate" type="primary">Update</a-button>
-    </div>
-    <p>Percentage Rate: <b>{{ percentage }}</b></p>
-    <div class="mb">
-      <a-input v-model="percentageRate" type="number" style="width: 200px" placeholder="Percentage rate"/>
-      <a-button @click="updatePercentageRate" type="primary">Update</a-button>
+    <div v-if="isAdmin">
+      <p>Dollar Rate: <b>{{ dollar }}</b></p>
+      <div class="mb">
+        <a-input v-model="dollarRate" type="number" style="width: 200px" placeholder="Update dollar rate"/>
+        <a-button @click="updateDollarRate" type="primary">Update</a-button>
+      </div>
+      <p>Percentage Rate: <b>{{ percentage }}</b></p>
+      <div class="mb">
+        <a-input v-model="percentageRate" type="number" style="width: 200px" placeholder="Percentage rate"/>
+        <a-button @click="updatePercentageRate" type="primary">Update</a-button>
+      </div>
     </div>
   </div>
 </template>
