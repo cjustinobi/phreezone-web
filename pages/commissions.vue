@@ -256,7 +256,6 @@
       },
       async setWeek() {
         this.week = await this.$axios.$get('date')
-        // this.week = this.$dateFns.getWeek(new Date()) - 1
       }
     },
     computed: {
