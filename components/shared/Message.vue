@@ -31,7 +31,7 @@
         <a href="javascript:;" @click="readMessage(rec)">{{ txt }}</a>
       </span>
       <span slot="created" slot-scope="created">{{ formatDate(created) }}</span>
-      <span slot="delete" slot-scope="rec">
+      <span v-if="isAdmin" slot="delete" slot-scope="rec">
         <a-button type="link" @click="deleteMessage(rec.id)">Delete</a-button>
       </span>
     </a-table>
