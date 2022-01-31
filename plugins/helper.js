@@ -11,7 +11,7 @@ Vue.mixin({
         { title: 'Silver', amount: 50000 },
         { title: 'Silver Star', amount: 150000 },
         { title: 'Gold', amount: 300000 },
-        { title: 'Platinum', amount: 600000 },
+        { title: 'Emerald', amount: 600000 },
         { title: 'Vip Royal', amount: 1200000 }
       ]
     }
