@@ -14,6 +14,18 @@
       <a-form-model-item label="Email">
         <a-input v-model="user.email" placeholder="Email" />
       </a-form-model-item>
+      <a-form-model-item label="State">
+        <a-input v-model="user.state" placeholder="State" />
+      </a-form-model-item>
+      <a-form-model-item label="LGA">
+        <a-input v-model="user.lga" placeholder="LGA" />
+      </a-form-model-item>
+      <a-form-model-item label="Bank Name">
+        <a-input v-model="user.bank_name" placeholder="Bank Name" />
+      </a-form-model-item>
+      <a-form-model-item label="Account Number">
+        <a-input v-model="user.account_number" placeholder="Account Number" />
+      </a-form-model-item>
       <a-form-model-item label="Package" v-if="user && user.package">
         <a-input :value="user.package.name" disabled/>
       </a-form-model-item>
@@ -45,11 +57,7 @@
     },
     methods: {
       async getUser() {
-        if (this.$route.params.user) {
-          this.user = this.$route.params.user
-        } else {
-          this.user = (await this.$axios.$post(`user/${this.$route.params.id}`)).data
-        }
+        this.user = (await this.$axios.$post(`user/${this.$route.params.id}`)).data
       },
       async getPackages() {
         this.pkgs = (await this.$axios.$get('getPackages')).data
@@ -68,6 +76,28 @@
           let res = await this.$axios.$post(`user/${this.$route.params.id}`, formData)
           res.success ? this.$message.success(res.message) : this.$message.error(res.message)
           this.$router.push('/users')
+        }
+      },
+
+      async getAccountName() {
+        if (
+
+          this.banks.length
+        ) {
+          const bank = this.banks.find(bank => bank.name == this.details.bank_name)
+
+          if (bank) {
+            const bank_code = bank.code
+            const res = await this.$axios.$post('/banks', {
+              account_number: this.details.account_number,
+              bank_code
+            })
+            if (res.status) {
+              this.details.account_name = res.data.account_name
+            } else {
+              this.details.account_name = ''
+            }
+          }
         }
       },
       isValidFields() {

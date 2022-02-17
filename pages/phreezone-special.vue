@@ -169,7 +169,7 @@
           this.$message.error('Invalid Referral code entered')
         }
       },
-      async getProducts(catId = 1) {
+      async getProducts(catId = true) {
         this.products = (await this.$axios.$get(`admin/products?active=true&category=${catId}`)).data
       },
       async getPercentageRate() {
