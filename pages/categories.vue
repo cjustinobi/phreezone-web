@@ -7,7 +7,7 @@
       </a-col>
     </a-row>
     <br>
-    <a-modal :visible="categoryForm">
+    <a-modal :visible="categoryForm" @click="categoryForm = false">
       <template slot="footer">
         <a-button key="back" @click="reset">Cancel</a-button>
         <a-button key="submit" type="primary" :loading="loading" @click="createCategory">Submit</a-button>
