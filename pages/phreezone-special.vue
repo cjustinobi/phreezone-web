@@ -61,13 +61,16 @@
       <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">
         <div class="items">
           <div class="item" v-for="prod in products">
-<!--            <img :src="prod.image_path" alt="">-->
-            <div>{{ prod.name }}</div>
-            <p>{{ prod.price | currency }}</p>
-            <div class="apart">
+            <div style="height: 190px"><img :src="prod.image_path" alt=""></div>
+            <div style="margin-top: 10px; margin-bottom: 10px;">
+              <span style="font-weight: bolder; ">{{ prod.name }}</span><br>
               {{ prod.code }}
-              <i @click="addProduct(prod, 1)" class="fa fa-cart-plus fa-2x"></i></div>
-            <span>PV: {{ prod.pv }}</span>
+            </div>
+            <p class="apart">
+              <span>{{ prod.price | currency }}<br><span>PV: {{ prod.pv }}</span></span>
+              <i @click="addProduct(prod, 1)" class="fa fa-cart-plus fa-2x"></i>
+            </p>
+
           </div>
         </div>
 <!--        <div style="overflow-x: auto">-->

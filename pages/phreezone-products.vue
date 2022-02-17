@@ -69,6 +69,9 @@
       <span slot="image" slot-scope="image">
         <img width="70" :src="image" alt="">
       </span>
+      <span slot="price" slot-scope="price">
+        <span>{{ price | currency }}</span>
+      </span>
     </a-table>
 
   </div>
@@ -94,7 +97,7 @@
     {title: 'Image', dataIndex: 'image_path',scopedSlots: {customRender: 'image'}},
     {title: 'Code', dataIndex: 'code',},
     {title: 'Name', dataIndex: 'name',},
-    {title: 'Amount', dataIndex: 'amount',},
+    {title: 'Amount', dataIndex: 'price',scopedSlots: {customRender: 'price'}},
     {title: 'PV', dataIndex: 'pv',},
     {title: 'Status', dataIndex: 'status', scopedSlots: { customRender: 'status' }},
     {title: 'Action', scopedSlots: { customRender: 'action' }},
