@@ -2,7 +2,7 @@
   <div>
     <a-page-header sub-title="Products">
       <template slot="extra">
-        <a-button type="primary" @click="$router.push('/add-product')">New Products</a-button>
+        <a-button type="primary" @click="productForm = true">New Products</a-button>
       </template>
     </a-page-header>
     <a-row>
@@ -10,6 +10,7 @@
         <table style="display: none" class="table table-hover table-bordered" id="example">
           <thead>
           <tr>
+            <th>Image</th>
             <th>Code</th>
             <th>Name</th>
             <th>Amount</th>
@@ -18,6 +19,7 @@
           </thead>
           <tbody>
           <tr v-if="products.length" v-for="product in products" :key="product.id">
+            <td><img :src="product.image_path" /></td>
             <td>{{product.code}}</td>
             <td>{{product.name}}</td>
             <td>{{product.amount}}</td>
@@ -28,68 +30,25 @@
       </a-col>
     </a-row>
     <br>
-    <a-modal :visible="productForm">
+    <a-modal :visible="productForm" @cancel="productForm = false">
       <template slot="footer">
         <a-button key="back" @click="reset">Cancel</a-button>
         <a-button key="submit" type="primary" :loading="loading" @click="createProduct">Submit</a-button>
       </template>
 
-      <a-form-model
-        ref="dynamicValidateForm"
-        :model="dynamicValidateForm"
-        v-bind="formItemLayoutWithOutLabel"
-      >
-        <a-form-model-item
-          v-for="(item, index) in dynamicValidateForm.data"
-          :key="index"
-          v-bind="index === 0 ? formItemLayout : {}"
-          :label="index === 0 ? 'Items to Purchase' : ''"
-          :prop="'data.' + index + '.item'"
-          :rules="{
-        required: true,
-        message: 'Field is empty',
-        trigger: 'blur',
-      }"
-        >
-          <a-row gutter="2">
-            <a-col :xs="20" :md="8">
-              <a-input v-model="item.item" placeholder="Enter Product name" style="margin-right: 8px"/>
-            </a-col>
-            <a-col :xs="4" :md="2">
-              <a-icon
-                v-if="dynamicValidateForm.data.length > 1"
-                class="dynamic-delete-button"
-                type="minus-circle-o"
-                :disabled="dynamicValidateForm.data.length === 1"
-                @click="removeItem(item)"
-              />
-            </a-col>
-          </a-row>
-          <a-row gutter="2">
-            <a-col :xs="10">
-              <a-input v-model="item.item" placeholder="Enter Product name" style="margin-right: 8px"/>
-            </a-col>
-            <a-col :xs="4">
-              <a-input v-model="item.amount" type="number" placeholder="Enter Amount" style="margin-right: 8px"/>
-            </a-col>
-            <a-col :xs="10">
-              <a-input v-model="item.amount" type="number" placeholder="Enter Amount" style="margin-right: 8px"/>
-            </a-col>
-          </a-row>
-        </a-form-model-item>
-        <a-form-model-item v-bind="formItemLayoutWithOutLabel">
-          <a-button type="dashed" @click="addItem"><a-icon type="plus" /> Add field</a-button>
-        </a-form-model-item>
-        <a-form-model-item v-if="dynamicValidateForm.data.length" v-bind="formItemLayoutWithOutLabel">
-          <a-button type="primary" :loading="loading" html-type="submit" @click="submitForm('dynamicValidateForm')">
-            Submit
-          </a-button>
-          <a-button style="margin-left: 10px" @click="resetForm('dynamicValidateForm')">Reset</a-button>
-        </a-form-model-item>
-      </a-form-model>
+      <a-input style="margin-top: 25px;" v-model="item.name" @change="setCode" placeholder="Product name" />
+      <a-input style="margin-top: 25px;" v-model="item.pv" @change="setCode" placeholder="PV" />
+      <a-input type="number" style="margin-top: 25px;" v-model="item.amount" placeholder="Amount" />
+      <a-select style="margin-top: 25px; width: 100%; display: block" v-model="item.category_id" placeholder="Select Category">
+        <a-select-option v-for="cat in categories" :key="cat.id">{{ cat.name }}</a-select-option>
+      </a-select>
 
-<!--      <a-input style="margin-top: 25px;" v-model="item.name" @change="setCode" placeholder="Product name" />-->
-<!--      <a-input type="number" style="margin-top: 25px;" v-model="item.amount" placeholder="Amount" />-->
+      <a-upload list-type="picture" :default-file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
+        <a-button style="margin-top: 25px;">
+          <a-icon type="upload"/>
+          Upload Product Image
+        </a-button>
+      </a-upload>
     </a-modal>
     <a-table v-if="products" :columns="columns" :data-source="products" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
       <span slot="action" slot-scope="text">
@@ -107,44 +66,32 @@
       <span slot="status" slot-scope="status">
          <a-tag :color="status ? 'green' : 'volcano'">{{ status ? 'Enabled' : 'Disabled'}}</a-tag>
       </span>
+      <span slot="image" slot-scope="image">
+        <img width="70" :src="image" alt="">
+      </span>
     </a-table>
 
-<!--    <table class="table table-hover table-bordered" id="example1">-->
-<!--      <thead>-->
-<!--      <tr>-->
-<!--        <th>Code</th>-->
-<!--        <th>Name</th>-->
-<!--        <th>Amount</th>-->
-<!--        <th>Pv</th>-->
-<!--      </tr>-->
-<!--      </thead>-->
-<!--      <tbody>-->
-<!--      <tr v-if="products.length" v-for="product in products" :key="product.id">-->
-<!--        <td>{{product.code}}</td>-->
-<!--        <td>{{product.name}}</td>-->
-<!--        <td>{{product.amount}}</td>-->
-<!--        <td>{{product.pv}}</td>-->
-<!--      </tr>-->
-<!--      </tbody>-->
-<!--    </table>-->
   </div>
 </template>
 
 <script>
-  import 'bootstrap/dist/css/bootstrap.min.css'
-  import 'jquery/dist/jquery.min.js'
+  // import 'bootstrap/dist/css/bootstrap.min.css'
+  // import 'jquery/dist/jquery.min.js'
   //Datatable Modules
-  import 'datatables.net-dt/js/dataTables.dataTables'
-  import 'datatables.net-dt/css/jquery.dataTables.min.css'
-  import 'datatables.net-buttons/js/dataTables.buttons.js'
-  import 'datatables.net-buttons/js/buttons.colVis.js'
-  import 'datatables.net-buttons/js/buttons.flash.js'
-  import 'datatables.net-buttons/js/buttons.html5.js'
-  import 'datatables.net-buttons/js/buttons.print.js'
-  import $ from 'jquery'
+  // import 'datatables.net-dt/js/dataTables.dataTables'
+  // import 'datatables.net-dt/css/jquery.dataTables.min.css'
+  // import 'datatables.net-buttons/js/dataTables.buttons.js'
+  // import 'datatables.net-buttons/js/buttons.colVis.js'
+  // import 'datatables.net-buttons/js/buttons.flash.js'
+  // import 'datatables.net-buttons/js/buttons.html5.js'
+  // import 'datatables.net-buttons/js/buttons.print.js'
+  // import $ from 'jquery'
+
+  import upload from '../mixins/upload'
 
 
   const columns = [
+    {title: 'Image', dataIndex: 'image_path',scopedSlots: {customRender: 'image'}},
     {title: 'Code', dataIndex: 'code',},
     {title: 'Name', dataIndex: 'name',},
     {title: 'Amount', dataIndex: 'amount',},
@@ -154,8 +101,9 @@
   ]
 
   export default {
-    name: 'items',
+    name: 'phreezone-products',
     layout: 'dashboard',
+    mixins: [upload],
     data() {
       return {
         loading: false,
@@ -163,26 +111,7 @@
         productForm: false,
         productId: '',
         columns,
-        formItemLayout: {
-          labelCol: {
-            xs: { span: 24 },
-            sm: { span: 4 },
-          },
-          wrapperCol: {
-            xs: { span: 24 },
-            sm: { span: 20 },
-          },
-        },
-        formItemLayoutWithOutLabel: {
-          wrapperCol: {
-            xs: { span: 24, offset: 0 },
-            sm: { span: 20, offset: 4 },
-          },
-        },
-        dynamicValidateForm: {
-          data: [],
-          stockistId: this.$auth.user.id
-        },
+        fileList: '',
         item: {
           name: '',
           code: '',
@@ -191,7 +120,7 @@
           category_id: ''
         },
         products: '',
-        // categories: ''
+        categories: ''
       }
     },
     methods: {
@@ -200,13 +129,14 @@
           return this.$message.error('All fields are required')
         }
         this.loading = true
+        this.item.image_path = (await this.saveFile(this.fileList[0])).secure_url
         const res = this.editMode ?
           await this.$axios.$put(`admin/products/${this.productId}`, this.item) :
           await this.$axios.$post('admin/products', this.item)
         if (res.success) {
           await this.getProducts()
           this.$message.success('Successfully updated')
-          this.resetForm()
+          this.reset()
         }
       },
       async disableEnableProduct(item) {
@@ -222,9 +152,9 @@
       async getProducts() {
         this.products = (await this.$axios.$get('admin/products')).data
       },
-      // async getProductCategories() {
-      //   this.categories = (await this.$axios.$get('admin/product-category')).data
-      // },
+      async getProductCategories() {
+        this.categories = (await this.$axios.$get('admin/product-category')).data
+      },
       editProduct(item) {
         this.item = item
         this.productId = item.id
@@ -239,32 +169,21 @@
           item.code += Math.floor(100 + Math.random() * 900)
         }
       },
-      // reset() {
-      //   this.item = {}
-      //   this.loading = false
-      //   this.productForm = false
-      //   this.editMode = false
-      // },
-      resetForm(formName) {
-        this.$refs[formName].resetFields()
+      reset() {
+        this.item = {}
         this.loading = false
         this.productForm = false
         this.editMode = false
       },
-      removeItem(item) {
-        let index = this.dynamicValidateForm.data.indexOf(item);
-        if (index !== -1) {
-          this.dynamicValidateForm.data.splice(index, 1);
-        }
+      handleRemove(file) {
+        const index = this.fileList.indexOf(file)
+        const newFileList = this.fileList.slice()
+        newFileList.splice(index, 1)
+        this.fileList = newFileList
       },
-      addItem() {
-        // if (this.canSubmit) {
-          this.dynamicValidateForm.data.push({
-            item: '',
-            amount: '',
-            user_id: this.userBonus.user.id
-          })
-        // }
+      beforeUpload(file) {
+        this.fileList = [...this.fileList, file]
+        return false
       },
       initTable() {
         setTimeout(function(){
@@ -297,8 +216,8 @@
     },
     beforeMount() {
       this.getProducts()
-      // this.getProductCategories()
-      this.initTable()
+      this.getProductCategories()
+      // this.initTable()
     }
   }
 </script>

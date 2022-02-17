@@ -21,9 +21,9 @@
 
 
 
-<!--    <a-tabs default-active-key="1">-->
-<!--      <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">-->
-<!--        <div style="overflow-x: auto">-->
+    <a-tabs default-active-key="1" @change="setTabProducts">
+      <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">
+        <div style="overflow-x: auto">
           <table id="table">
             <tr>
               <th>Code</th>
@@ -34,7 +34,7 @@
               <th>Subtotal</th>
               <th>Subtotal PV</th>
             </tr>
-            <tr v-for="product in products">
+            <tr v-for="product in tabProducts">
               <td>{{ product.code }}</td>
               <td>{{ product.name }}</td>
               <td>{{ product.amount }}</td>
@@ -42,13 +42,13 @@
               <td>
                 <a-input class="qty" @change="populateField($event, product)" min="0" style="width: 100px" type="number"/>
               </td>
-              <td class="sub" :id="`sub-${product.id}`">0.00</td>
-              <td class="subpv" :id="`subpv-${product.id}`">0.00</td>
+              <td class="sub" :id="`sub-${product.id}`" :ref="`sub-${product.id}`">0.00</td>
+              <td class="subpv" :id="`subpv-${product.id}`" :ref="`subpv-${product.id}`">0.00</td>
             </tr>
           </table>
-<!--        </div>-->
-<!--      </a-tab-pane>-->
-<!--    </a-tabs>-->
+        </div>
+      </a-tab-pane>
+    </a-tabs>
   </div>
 </template>
 <script>
@@ -62,6 +62,7 @@
   ]
   import $ from 'jquery'
   export default {
+    name: 'phreezone-special',
     layout: 'dashboard',
     middleware: ['stockist'],
     data() {
@@ -71,8 +72,11 @@
         agentWallet: '',
         categories: '',
         products: [],
+        tabProducts: [],
+        selectedProducts: [],
         userReferral: '',
-        upgradeUser: ''
+        upgradeUser: '',
+        percentageRate: ''
       }
     },
     methods: {
@@ -110,13 +114,27 @@
           this.$message.error('Invalid Referral code entered')
         }
       },
-      async getProducts() {
-        this.products = (await this.$axios.$get('admin/products?active=true')).data
+      async getProducts(catId = 1) {
+        this.products = (await this.$axios.$get(`admin/products?active=true`)).data
+      },
+      setTabProducts(catId = 1) {
+        debugger
+        this.tabProducts = this.products.filter(prod => prod.category_id == catId)
+        console.log(this.tabProducts)
+      },
+      async getPercentageRate() {
+        this.percentageRate = (await this.$axios.$get('admin/percentageRate')).data
       },
       populateField(event, item) {
+        // debugger
+        const self = this
         const value = event.target.value
-        document.getElementById(`sub-${item.id}`).innerText = value * item.amount
-        document.getElementById(`subpv-${item.id}`).innerText = value * item.pv
+
+        let children = document.querySelectorAll(`table #sub-${item.id}`);
+
+        // const table = document.querySelector('table')
+        // table.querySelector(`#sub-${item.id}`).innerText = value * item.amount
+
 
         $(function() {
 
@@ -124,6 +142,7 @@
 
           $("tr .sub").each(function(index,value){
             let currentRow = parseFloat($(this).text());
+            // console.log(currentRow)
             sub += currentRow
           })
           $("tr .subpv").each(function(index,value){
@@ -131,28 +150,41 @@
             subpv += currentRow
           })
 
-          document.getElementById('sub').innerHTML = `<b>${sub}</b>`
+
+          // document.getElementById('sub').innerHTML = `<b>${sub} * ${self.percentageRate} </b>`
+          document.getElementById('sub').innerHTML = `<b>${self.calcSubtotal(sub)}</b>`
           document.getElementById('subpv').innerHTML = `<b>${subpv}</b>`
+
         })
+
+        document.getElementById(`sub-${item.id}`).innerText = value * item.amount
+        document.getElementById(`subpv-${item.id}`).innerText = value * item.pv
 
         this.addProduct(item, value)
 
+
+      },
+      calcSubtotal(sub) {
+        return sub + sub * this.percentageRate
+      },
+      async getProductCategories() {
+        this.categories = (await this.$axios.$get('admin/product-category')).data
       },
       addProduct(item, qty) {
         // Remove item if exist and incoming value is 0.
         if (qty == 0) {
-          this.products = this.products.filter(product => product.id != item.id)
+          this.selectedProducts = this.selectedProducts.filter(product => product.id != item.id)
           return
         }
 
         if (qty) {
           // Check if the product has been added before.
-          const itemIndex = this.products.findIndex(product => product.id == item.id)
+          const itemIndex = this.selectedProducts.findIndex(product => product.id == item.id)
           if(itemIndex > -1) {
-            this.products[itemIndex].qty = qty
+            this.selectedProducts[itemIndex].qty = qty
           } else {
             item.qty = qty
-            this.products.push(item)
+            this.selectedProducts.push(item)
           }
         }
       },
@@ -178,6 +210,8 @@
     beforeMount() {
       this.getAgentWallet()
       this.getProducts()
+      this.getProductCategories()
+      this.getPercentageRate()
     }
   };
 </script>

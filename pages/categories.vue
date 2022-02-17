@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-page-header sub-title="Mainstream Categories"/>
+    <a-page-header sub-title="Categories"/>
     <a-row>
       <a-col :span="3">
         <a-button type="primary" @click="categoryForm = true">New Category</a-button>

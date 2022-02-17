@@ -94,7 +94,7 @@
     name: 'add-promo',
     layout: 'dashboard',
     components: { quillEditor },
-    mixins: [upload],
+      mixins: [upload],
     data() {
       let validateBalancedLeg = (rule, value, callback) => {
         if (value == '') {
