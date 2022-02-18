@@ -22,7 +22,7 @@
             <td><img :src="product.image_path" /></td>
             <td>{{product.code}}</td>
             <td>{{product.name}}</td>
-            <td>{{product.amount}}</td>
+            <td>{{product.price}}</td>
             <td>{{product.pv}}</td>
           </tr>
           </tbody>
@@ -38,7 +38,7 @@
 
       <a-input style="margin-top: 25px;" v-model="item.name" @change="setCode" placeholder="Product name" />
       <a-input style="margin-top: 25px;" v-model="item.pv" @change="setCode" placeholder="PV" />
-      <a-input type="number" style="margin-top: 25px;" v-model="item.amount" placeholder="Amount" />
+      <a-input type="number" style="margin-top: 25px;" v-model="item.price" placeholder="Amount" />
       <a-select style="margin-top: 25px; width: 100%; display: block" v-model="item.category_id" placeholder="Select Category">
         <a-select-option v-for="cat in categories" :key="cat.id">{{ cat.name }}</a-select-option>
       </a-select>
@@ -118,7 +118,7 @@
         item: {
           name: '',
           code: '',
-          amount: '',
+          price: '',
           pv: '',
           category_id: ''
         },
@@ -128,11 +128,15 @@
     },
     methods: {
       async createProduct() {
-        if (!this.item.name || !this.item.amount || !this.item.pv) {
+        if (!this.item.name || !this.item.price || !this.item.pv) {
           return this.$message.error('All fields are required')
         }
         this.loading = true
-        this.item.image_path = (await this.saveFile(this.fileList[0])).secure_url
+        try {
+          this.item.image_path = (await this.saveFile(this.fileList[0])).secure_url
+        } catch (e) {
+          this.$message.error(e)
+        }
         const res = this.editMode ?
           await this.$axios.$put(`admin/products/${this.productId}`, this.item) :
           await this.$axios.$post('admin/products', this.item)
