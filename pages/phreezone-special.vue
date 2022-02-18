@@ -294,7 +294,7 @@
   /*  font-weight: 900;*/
   /*}*/
   img {
-    height: 200px;
+    height: 100px;
   }
   .items {
     display: grid;
