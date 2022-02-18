@@ -14,6 +14,25 @@
       <a-form-model-item label="Email">
         <a-input v-model="user.email" placeholder="Email" />
       </a-form-model-item>
+      <a-form-model-item label="State">
+        <a-input v-model="user.state" placeholder="State" />
+      </a-form-model-item>
+      <a-form-model-item label="LGA">
+        <a-input v-model="user.lga" placeholder="LGA" />
+      </a-form-model-item>
+      <a-form-model-item label="Bank Name">
+        <select v-model="user.bank_name" class="form-control" id="bank" @change="getAccountName">
+          <option>Select Bank</option>
+          <option v-for="(bank, i) in banks" :key="i">{{ bank.name }}</option>
+        </select>
+<!--        <a-input v-model="user.bank_name" placeholder="Bank Name" />-->
+      </a-form-model-item>
+      <a-form-model-item label="Account Number">
+        <a-input v-model="user.account_number" @change="getAccountName" placeholder="Account Number" />
+      </a-form-model-item>
+      <a-form-model-item label="Account Name">
+        <a-input v-model="user.account_name" placeholder="Account Name" disabled />
+      </a-form-model-item>
       <a-form-model-item label="Package" v-if="user && user.package">
         <a-input :value="user.package.name" disabled/>
       </a-form-model-item>
@@ -40,16 +59,13 @@
       return {
         user: '',
         pkgs: '',
-        selectedPkgId: ''
+        selectedPkgId: '',
+        banks: ''
       }
     },
     methods: {
       async getUser() {
-        if (this.$route.params.user) {
-          this.user = this.$route.params.user
-        } else {
-          this.user = (await this.$axios.$post(`user/${this.$route.params.id}`)).data
-        }
+        this.user = (await this.$axios.$post(`user/${this.$route.params.id}`)).data
       },
       async getPackages() {
         this.pkgs = (await this.$axios.$get('getPackages')).data
@@ -57,18 +73,32 @@
       async updateUser() {
         if (this.isValidFields() == true) {
 
-          let formData = new FormData();
-          formData.append('id', this.user.id)
-          formData.append('first_name', this.user.first_name)
-          formData.append('last_name', this.user.last_name)
-          formData.append('phone', this.user.phone)
-          formData.append('email', this.user.email)
-          formData.append('_method', 'PUT')
-
-          let res = await this.$axios.$post(`user/${this.$route.params.id}`, formData)
+          let res = await this.$axios.$put(`user/${this.$route.params.id}`, this.user)
           res.success ? this.$message.success(res.message) : this.$message.error(res.message)
-          this.$router.push('/users')
+          this.$router.push(`/users/${this.$route.params.id}`)
         }
+      },
+
+      getAccountName() {
+        if (this.banks.length) {
+          setTimeout(async function () {
+            const bank = this.banks.find(bank => bank.name == this.user.bank_name)
+
+            if (bank) {
+              const bank_code = bank.code
+              const res = await this.$axios.$post('/banks', {
+                account_number: this.user.account_number,
+                bank_code
+              })
+              if (res.status) {
+                this.user.account_name = res.data.account_name
+              } else {
+                this.user.account_name = ''
+              }
+            }
+          }, 5000)
+        }
+
       },
       isValidFields() {
         let valid = true
@@ -85,13 +115,20 @@
           valid = false
           msgs.push('Phone is required')
         }
+        if (this.user.bank_name == '') {
+          valid = false
+          msgs.push('Bank name is required')
+        }
         if (!valid) {
           this.$store.dispatch('notification/setStatus', {
             messages: msgs, success: false
           })
         }
         return valid
-      }
+      },
+      async getBanks() {
+        this.banks = (await this.$axios.$get('/banks')).data
+      },
     },
     computed: {
       formItemLayout() {
@@ -107,6 +144,7 @@
     beforeMount() {
       this.getUser()
       this.getPackages()
+      this.getBanks()
     },
     watch: {
       user: {
