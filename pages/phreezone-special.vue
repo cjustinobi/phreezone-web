@@ -61,7 +61,7 @@
       <a-tab-pane v-for="cat in categories" :key="cat.id" :tab="cat.name">
         <div class="items">
           <div class="item" v-for="prod in products">
-            <div style="height: 190px"><img :src="prod.image_path" alt=""></div>
+            <img :src="prod.image_path" alt="">
             <div style="margin-top: 10px; margin-bottom: 10px;">
               <span style="font-weight: bolder; ">{{ prod.name }}</span><br>
               {{ prod.code }}
@@ -294,8 +294,7 @@
   /*  font-weight: 900;*/
   /*}*/
   img {
-    width: 100%;
-    height: auto;
+    height: 200px;
   }
   .items {
     display: grid;
