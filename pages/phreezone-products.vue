@@ -62,6 +62,7 @@
           <a href="#">{{ text.status ? 'Disable Product' : 'Enable Product' }}</a>
         </a-popconfirm>
         <a-button v-if="text.status" type="link" @click="editProduct(text)">Edit</a-button>
+        <a-icon @click="deleteProduct(text.id)" type="delete" />
       </span>
       <span slot="status" slot-scope="status">
          <a-tag :color="status ? 'green' : 'volcano'">{{ status ? 'Enabled' : 'Disabled'}}</a-tag>
@@ -167,6 +168,13 @@
         this.productId = item.id
         this.productForm = true
         this.editMode = true
+      },
+      async deleteProduct(id) {
+        const { success } = await this.$axios.$delete(`admin/products/${id}`)
+        if (success) {
+          this.getProducts()
+          this.$message.success('Successfully deleted')
+        }
       },
       setCode() {
         const item = this.item
