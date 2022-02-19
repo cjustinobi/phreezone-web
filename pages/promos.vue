@@ -14,6 +14,12 @@
     <!--      >-->
     <!--        Download-->
     <!--      </download-excel>-->
+    <a-modal v-model="loading" :footer="null">
+      <div class="spin">
+        <p>This might take a while</p>
+        <a-spin :indicator="true"/>
+      </div>
+    </a-modal>
     <a-modal v-model="showQualifiers" :title="`Members`" :footer="null">
       <a-table
         v-if="qualifiers.length"
@@ -71,8 +77,7 @@
       :pagination="{ pageSize: 50 }"
     >
       <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec)">
-        <span v-if="!loading">{{ promoTitle }}</span>
-        <a-spin v-else-if="rec.id == selectedPromo.id" :indicator="indicator" />
+        {{ promoTitle }}
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
       <span slot="point" slot-scope="point, rec">
@@ -213,5 +218,10 @@
 <style scoped>
   img {
     width: 120px;
+  }
+  .spin {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
   }
 </style>
