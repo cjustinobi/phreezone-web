@@ -3,9 +3,9 @@
     <a-page-header sub-title="Stockist POPs"/>
 
     <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id" size="small">
-      <span slot="agent" slot-scope="user">
-        <p style="margin-bottom: 0">{{ user.full_name}}</p>
-        <a-tag color="green">{{ user.referral }}</a-tag>
+      <span slot="agent" slot-scope="agent">
+        <p style="margin-bottom: 0">{{ agent.full_name}}</p>
+        <a-tag color="green">{{ agent.referral }}</a-tag>
       </span>
       <span slot="date" slot-scope="date">{{ getTime(date) }}</span>
 <!--      <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>-->
@@ -16,7 +16,9 @@
         <a-tag color="red" v-if="status == 'rejected'">{{ status }}</a-tag><br>
         <small v-if="status == 'rejected'">{{ rec.reject_reason }}</small>
       </span>
-      <span slot="image" slot-scope="image"><img :src="`${$config.imagePath}/${image}`"></span>
+      <span slot="image" slot-scope="image">
+        <img width="100px" :src="`${$config.imagePath}/${image}`">
+      </span>
     </a-table>
   </div>
 </template>
