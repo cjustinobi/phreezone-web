@@ -1,5 +1,4 @@
 
-import getTime from 'date-fns/getUnixTime'
 import format from 'date-fns/format'
 
 export default {
