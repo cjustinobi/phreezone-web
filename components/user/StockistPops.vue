@@ -26,7 +26,7 @@
 <script>
   const columns = [
     {title: 'Date Uploaded', dataIndex: 'created_at', scopedSlots: { customRender: 'date' }},
-    {title: 'Name', dataIndex: 'agent', scopedSlots: { customRender: 'user' }},
+    {title: 'Name', dataIndex: 'agent', scopedSlots: { customRender: 'agent' }},
     {title: 'Image', dataIndex: 'pop_path', scopedSlots: { customRender: 'image' }},
     {title: 'Ref', dataIndex: 'ref'},
     {title: 'Amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount' }},
