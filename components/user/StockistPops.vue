@@ -7,7 +7,8 @@
         <p style="margin-bottom: 0">{{ user.full_name}}</p>
         <a-tag color="green">{{ user.referral }}</a-tag>
       </span>
-      <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>
+      <span slot="date" slot-scope="date">{{ getTime(date) }}</span>
+<!--      <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>-->
       <span slot="amount" slot-scope="amount">{{ amount | currency }}</span>
       <span slot="status" slot-scope="status, rec">
         <a-tag color="green" v-if="status == 'approved'">{{ status }}</a-tag>
@@ -28,9 +29,9 @@
     {title: 'Ref', dataIndex: 'ref'},
     {title: 'Amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount' }},
     {title: 'Status', dataIndex: 'status', scopedSlots: { customRender: 'status' }},
-    {title: 'Date Uploaded', dataIndex: 'created_at', scopedSlots: { customRender: 'date' }},
   ]
 
+  import getTime from 'date-fns/getTime'
   import DateFormat from '@/mixins/dateFormat'
   export default {
     name: 'sales-pop',
@@ -41,6 +42,7 @@
         pops: '',
         columns,
         dateFormat: 'd MMM, Y',
+        dateFormat2: 'PPpp',
       }
     },
     methods: {
