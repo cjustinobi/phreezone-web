@@ -166,7 +166,6 @@
               <ul>
                 <li><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
                 <li><nuxt-link to="/stockist-sales">Stockist Sales</nuxt-link></li>
-                <li><nuxt-link to="/stockist-pops">Stockist POPs</nuxt-link></li>
               </ul>
             </div>
           </li>

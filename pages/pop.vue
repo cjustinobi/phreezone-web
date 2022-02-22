@@ -1,12 +1,14 @@
 <template>
   <div class="container">
-    <component @togglePop="togglePop" :popState="listPop" :is="createList"></component>
+    <StockistPops v-if="listPop" />
+    <component @togglePop="togglePop" :popState="listPop" :is="createList" />
   </div>
 </template>
 
 <script>
 
   import Create from '@/components/user/Pop'
+  import StockistPops from '@/components/user/StockistPops'
   import List from '@/components/admin/Pop'
 
   export default {
@@ -14,7 +16,8 @@
     layout: 'dashboard',
     components: {
       Create,
-      List
+      List,
+      StockistPops
     },
     data() {
       return {
