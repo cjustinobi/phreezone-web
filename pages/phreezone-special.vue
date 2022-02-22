@@ -193,7 +193,8 @@
           const itemIndex = this.selectedProducts.findIndex(prod => prod.id == item.id)
           if(itemIndex > -1) {
             item.qty = this.selectedProducts[itemIndex].qty - qty
-            item.amount = item.qty * (+item.price + (+item.price * this.percentageRate))
+            // item.amount = item.qty * (+item.price + (+item.price * this.percentageRate))
+            item.amount = item.qty * item.actual_amount
             item.normalAmount = item.qty * +item.price
             this.$set(this.selectedProducts, itemIndex, item)
           }
@@ -215,12 +216,14 @@
           const itemIndex = this.selectedProducts.findIndex(prod => prod.id == item.id)
           if(itemIndex > -1) {
             item.qty = this.selectedProducts[itemIndex].qty + qty
-            item.amount = item.qty * (+item.price + (+item.price * this.percentageRate))
+            // item.amount = item.qty * (+item.price + (+item.price * this.percentageRate))
+            item.amount = item.qty * item.actual_amount
             item.normalAmount = item.qty * +item.price
             this.$set(this.selectedProducts, itemIndex, item)
           } else {
             item.qty = qty
-            item.amount = item.qty * (+item.price + (+item.price * this.percentageRate))
+            // item.amount = item.qty * (+item.price + (+item.price * this.percentageRate))
+            item.amount = item.qty * item.actual_amount
             item.normalAmount = item.qty * +item.price
             this.selectedProducts.push(item)
           }
@@ -239,17 +242,6 @@
         this.upgradeUser = ''
         this.totalOrder = 0
         this.totalPv = 0
-        // document.getElementById('sub').innerHTML = `<b>0</b>`
-        // document.getElementById('subpv').innerHTML = `<b>0</b>`
-        //
-        // $(function() {
-        //   $("tr .sub").each(function(index,value){
-        //     $(this).text(0)
-        //   })
-        //   $("tr .subpv").each(function(index,value){
-        //     $(this).text(0)
-        //   })
-        // })
       }
     },
     beforeMount() {
@@ -275,24 +267,7 @@
 </script>
 
 <style>
-  /*table {*/
-  /*  font-family: arial, sans-serif;*/
-  /*  border-collapse: collapse;*/
-  /*  width: 100%;*/
-  /*}*/
 
-  /*td, th {*/
-  /*  border: 1px solid #dddddd;*/
-  /*  text-align: left;*/
-  /*  padding: 8px;*/
-  /*}*/
-
-  /*tr:nth-child(even) {*/
-  /*  background-color: #dddddd;*/
-  /*}*/
-  /*#subpv, #sub {*/
-  /*  font-weight: 900;*/
-  /*}*/
   img {
     height: 100px;
   }

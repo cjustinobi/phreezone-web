@@ -39,6 +39,7 @@
       <a-input style="margin-top: 25px;" v-model="item.name" @change="setCode" placeholder="Product name" />
       <a-input style="margin-top: 25px;" v-model="item.pv" @change="setCode" placeholder="PV" />
       <a-input type="number" style="margin-top: 25px;" v-model="item.price" placeholder="Amount" />
+      <a-input type="number" style="margin-top: 25px;" v-model="item.actual_amount" placeholder="Actual Amount" />
       <a-select style="margin-top: 25px; width: 100%; display: block" v-model="item.category_id" placeholder="Select Category">
         <a-select-option v-for="cat in categories" :key="cat.id">{{ cat.name }}</a-select-option>
       </a-select>
@@ -70,9 +71,8 @@
       <span slot="image" slot-scope="image">
         <img width="70" :src="image" alt="">
       </span>
-      <span slot="price" slot-scope="price">
-        <span>{{ price | currency }}</span>
-      </span>
+      <span slot="price" slot-scope="price"><span>{{ price | currency }}</span></span>
+      <span slot="amount" slot-scope="amount"><span>{{ amount | currency }}</span></span>
     </a-table>
 
   </div>
@@ -99,6 +99,7 @@
     {title: 'Code', dataIndex: 'code',},
     {title: 'Name', dataIndex: 'name',},
     {title: 'Amount', dataIndex: 'price',scopedSlots: {customRender: 'price'}},
+    {title: 'Actual Amount', dataIndex: 'actual_amount',scopedSlots: {customRender: 'amount'}},
     {title: 'PV', dataIndex: 'pv',},
     {title: 'Status', dataIndex: 'status', scopedSlots: { customRender: 'status' }},
     {title: 'Action', scopedSlots: { customRender: 'action' }},
@@ -120,6 +121,7 @@
           name: '',
           code: '',
           price: '',
+          actual_amount: '',
           pv: '',
           category_id: ''
         },
@@ -129,7 +131,12 @@
     },
     methods: {
       async createProduct() {
-        if (!this.item.name || !this.item.price || !this.item.pv) {
+        if (
+          !this.item.name ||
+          !this.item.price ||
+          !this.item.actual_amount ||
+          !this.item.pv
+        ) {
           return this.$message.error('All fields are required')
         }
         this.loading = true
