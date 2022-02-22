@@ -3,7 +3,7 @@
     <a-page-header sub-title="Stockist POPs"/>
 
     <a-table v-if="pops" :columns="columns" :data-source="pops" :rowKey="record => record.id" size="small">
-      <span slot="user" slot-scope="user">
+      <span slot="agent" slot-scope="user">
         <p style="margin-bottom: 0">{{ user.full_name}}</p>
         <a-tag color="green">{{ user.referral }}</a-tag>
       </span>
@@ -24,7 +24,7 @@
 <script>
   const columns = [
     {title: 'Date Uploaded', dataIndex: 'created_at', scopedSlots: { customRender: 'date' }},
-    {title: 'Name', dataIndex: 'user', scopedSlots: { customRender: 'user' }},
+    {title: 'Name', dataIndex: 'agent', scopedSlots: { customRender: 'user' }},
     {title: 'Image', dataIndex: 'pop_path', scopedSlots: { customRender: 'image' }},
     {title: 'Ref', dataIndex: 'ref'},
     {title: 'Amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount' }},
