@@ -16,5 +16,12 @@ export default {
       }
       return formattedDates
     },
+    getTime(dirtyDate) {
+      let formattedDates = ''
+      if(dirtyDate) {
+        formattedDates = format(new Date(dirtyDate), this.dateFormat2)
+      }
+      return formattedDates
+    }
   }
 }
