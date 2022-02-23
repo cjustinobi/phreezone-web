@@ -14,6 +14,12 @@
     <!--      >-->
     <!--        Download-->
     <!--      </download-excel>-->
+    <a-modal v-model="loading" :footer="null">
+      <div class="spin">
+        <p>This might take a while</p>
+        <a-spin :indicator="true"/>
+      </div>
+    </a-modal>
     <a-modal v-model="showQualifiers" :title="`Members`" :footer="null">
       <a-table
         v-if="qualifiers.length"
@@ -31,7 +37,7 @@
         </span>
         <span v-if="selectedPromo.balanced_leg" slot="tp" slot-scope="tp, rec">
           <span v-if="rec.hasOwnProperty('left_downline_points')">
-            LL {{ rec.left_downline_points ? rec.left_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            LL {{ rec.left_downline_points ? (rec.left_downline_points).toFixed(2) + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
             <a-tag :color="rec.left_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
             {{ rec.left_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
@@ -39,7 +45,7 @@
            <span v-else>LL 0/{{ selectedPromo.leg_pv }} <a-tag :color="'volcano'">Not Qualified</a-tag></span> <br>
 
           <span v-if="rec.hasOwnProperty('right_downline_points')">
-            RL {{ rec.right_downline_points ? rec.right_downline_points + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
+            RL {{ rec.right_downline_points ? (rec.right_downline_points).toFixed(2) + '/' + selectedPromo.leg_pv : '0/' + selectedPromo.leg_pv }}
             <a-tag :color="rec.right_downline_points >= selectedPromo.leg_pv ? 'green' : 'volcano'">
             {{ rec.right_downline_points >= selectedPromo.leg_pv ? 'Qualified' : 'Not Qualified' }}
             </a-tag>
@@ -71,8 +77,7 @@
       :pagination="{ pageSize: 50 }"
     >
       <a-button type="link" slot="promoTitle" slot-scope="promoTitle, rec" @click="getQualifiers(rec)">
-        <span v-if="!loading">{{ promoTitle }}</span>
-        <a-spin v-else-if="rec.id == selectedPromo.id" :indicator="indicator" />
+        {{ promoTitle }}
       </a-button>
       <span slot="image" slot-scope="image"><img :src="image"></span>
       <span slot="point" slot-scope="point, rec">
@@ -98,16 +103,6 @@
           <a href="#">Delete</a>
         </a-popconfirm>
       </span>
-      <!--          </a-menu-item>-->
-      <!--          <a-menu-item key="2">-->
-      <!--            <nuxt-link :to="{ name: 'users-id', params: { id: text.id , user: text }}">Edit</nuxt-link>-->
-      <!--          </a-menu-item>-->
-      <!--          <a-menu-item key="3">-->
-      <!--            Delete-->
-      <!--          </a-menu-item>-->
-      <!--        </a-menu>-->
-      <!--        <a-button> Actions <a-icon type="down" /> </a-button>-->
-      <!--      </a-dropdown>-->
 
       <span slot="active" slot-scope="active">
         <a-tag :color="active == '0' ? 'volcano' : 'green'">
@@ -213,5 +208,10 @@
 <style scoped>
   img {
     width: 120px;
+  }
+  .spin {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
   }
 </style>
