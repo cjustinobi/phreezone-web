@@ -92,6 +92,10 @@
       dataIndex: 'pack_sum',
     },
     {
+      title: 'Sales Allowance',
+      dataIndex: 'phreezone_special_sum',
+    },
+    {
       title: 'Total',
       scopedSlots: { customRender: 'total' }
     },
@@ -119,6 +123,7 @@
           Shopping: 'shopping_sum',
           StreamSales: 'stream_sum',
           UpgradePack: 'pack_sum',
+          SalesAllowance: 'phreezone_special_sum',
           AccountNumber: {
             field: 'user.account_number',
             callback: val => {

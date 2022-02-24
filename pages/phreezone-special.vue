@@ -67,7 +67,7 @@
               {{ prod.code }}
             </div>
             <p class="apart">
-              <span>{{ prod.price | currency }}<br><span>PV: {{ prod.pv }}</span></span>
+              <span>{{ prod.actual_amount | currency }}<br><span>PV: {{ prod.pv }}</span></span>
               <i @click="addProduct(prod, 1)" class="fa fa-cart-plus fa-2x"></i>
             </p>
 
@@ -143,6 +143,7 @@
         this.loading = true
 
         const res = (await this.$axios.$post(`user/saveOrders`, {
+          phreezoneSpecial: true,
           soldBy: this.userId,
           boughtBy: this.upgradeUser.id,
           items: this.selectedProducts,
@@ -153,8 +154,8 @@
           }, 0)
         }))
         if (res.success) {
-          this.reset()
           this.$message.success('Added successfully')
+          location.reload()
         }
       },
       async getAgentWallet() {
@@ -234,7 +235,7 @@
         }, 0)
       },
       reset() {
-        this.agentWallet -= document.getElementById('sub').innerHTML
+        // this.agentWallet -= document.getElementById('sub').innerHTML
         this.cart = false
         this.loading = false
         this.selectedProducts = []
