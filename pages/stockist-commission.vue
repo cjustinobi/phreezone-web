@@ -92,6 +92,10 @@
       dataIndex: 'pack_sum',
     },
     {
+      title: 'Phreezone Special Sales',
+      dataIndex: 'phreezone_special_sales',
+    },
+    {
       title: 'Sales Allowance',
       dataIndex: 'phreezone_special_sum',
     },
