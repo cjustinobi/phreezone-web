@@ -44,8 +44,8 @@
 <!--            <span slot="referral" slot-scope="item">{{ ref }}</span>-->
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
       <span slot="total" slot-scope="total, rec">
-        <b v-if="isAdmin">{{((+rec.shopping_sum + +rec.pack_sum + +rec.stream_sum + +phreezone_special_sum) - ((+rec.shopping_sum + +rec.pack_sum + +rec.stream_sum + +phreezone_special_sum) * 0.05)) | currency }}</b> <!-- 5% deduction -->
-        <b v-else>{{(+rec.shopping_sum + +rec.pack_sum + +rec.stream_sum + +phreezone_special_sum) | currency }}</b>
+        <b v-if="isAdmin">{{((+rec.shopping_sum + +rec.pack_sum + +rec.stream_sum + +rec.phreezone_special_sum) - ((+rec.shopping_sum + +rec.pack_sum + +rec.stream_sum + +rec.phreezone_special_sum) * 0.05)) | currency }}</b> <!-- 5% deduction -->
+        <b v-else>{{(+rec.shopping_sum + +rec.pack_sum + +rec.stream_sum + +rec.phreezone_special_sum) | currency }}</b>
       </span>
       <span slot="fn" slot-scope="fn">{{ fn.full_name }}</span>
     </a-table>
