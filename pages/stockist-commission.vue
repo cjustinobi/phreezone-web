@@ -93,7 +93,7 @@
     },
     {
       title: 'Phreezone Special Sales',
-      dataIndex: 'phreezone_special_sales',
+      dataIndex: 'phreezone_special_sales_sum',
     },
     {
       title: 'Sales Allowance',
