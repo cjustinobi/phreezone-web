@@ -153,8 +153,8 @@
       getWeekCommissions() {
         this.getCommissions()
       },
-      setWeek() {
-        this.week = this.$dateFns.getWeek(new Date()) - 1
+      async setWeek() {
+        this.week = await this.$axios.$get('date')
       }
     },
     // computed: {

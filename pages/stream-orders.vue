@@ -140,8 +140,8 @@
           this.$message.error(e.response.data.message)
         }
       },
-      setWeek() {
-        this.week = this.$dateFns.getWeek(new Date()) - 1
+      async setWeek() {
+        this.week = await this.$axios.$get('date')
       },
       async getMember() {
         try {
