@@ -145,6 +145,7 @@
         this.upgrades = (await this.$axios.$post(`user/upgradePacks/${this.upgradeUser ? this.upgradeUser.id : this.userId}`, {
           start: this.start,
           end: this.end,
+          singleUser: !!this.upgradeUser
         })).data
       },
       async redeem(upgradeId) {
@@ -202,9 +203,9 @@
     },
     watch: {
       upgradeUser(val) {
-        if (val) {
+        // if (val) {
           this.getUpgrades()
-        }
+        // }
       },
       end(val) {
         if (val && this.start) {

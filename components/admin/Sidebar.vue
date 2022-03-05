@@ -125,10 +125,8 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-<!--                <li v-if="isStockist"><nuxt-link to="/add-product">Add Product</nuxt-link></li>-->
-<!--                <li v-if="isStockist"><nuxt-link to="/items">Products</nuxt-link></li>-->
                 <li><nuxt-link to="/stream-orders">Stream Orders</nuxt-link></li>
-                <li v-if="isStockist"><nuxt-link to="/stream-upgrade-order">Upgrade Order</nuxt-link></li>
+<!--                <li v-if="isStockist"><nuxt-link to="/stream-upgrade-order">Upgrade Order</nuxt-link></li>-->
                 <li v-if="isAdmin"><nuxt-link to="/implemented-stream">Implement Stream</nuxt-link></li>
                 <li v-if="isAdmin"><nuxt-link to="/weekly-sales">Total Sales & Pay Record</nuxt-link></li>
               </ul>
@@ -141,7 +139,21 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li><nuxt-link to="/upgrade-order">Upgrade Order</nuxt-link></li>
+                <li><nuxt-link to="/upgrade-order">Pack Selection (EPP Upgrade)</nuxt-link></li>
+                <li><nuxt-link to="/stream-upgrade-order">Stream Purchase</nuxt-link></li>
+                <li><nuxt-link to="/phreezone-special">Phreezone Special</nuxt-link></li>
+              </ul>
+            </div>
+          </li>
+          <li v-if="isAdmin" class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-id-card"></i>
+              <span>Phreezone Special</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li><nuxt-link to="/categories">Categories</nuxt-link></li>
+                <li><nuxt-link to="/phreezone-products">Products</nuxt-link></li>
               </ul>
             </div>
           </li>
@@ -152,7 +164,7 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li v-if="isStockist"><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
+                <li><nuxt-link to="/stockist-commission">Stockist Commission</nuxt-link></li>
                 <li><nuxt-link to="/stockist-sales">Stockist Sales</nuxt-link></li>
               </ul>
             </div>

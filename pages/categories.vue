@@ -1,13 +1,13 @@
 <template>
   <div>
-    <a-page-header sub-title="Mainstream Categories"/>
+    <a-page-header sub-title="Categories"/>
     <a-row>
       <a-col :span="3">
         <a-button type="primary" @click="categoryForm = true">New Category</a-button>
       </a-col>
     </a-row>
     <br>
-    <a-modal :visible="categoryForm">
+    <a-modal :visible="categoryForm" @click="categoryForm = false">
       <template slot="footer">
         <a-button key="back" @click="reset">Cancel</a-button>
         <a-button key="submit" type="primary" :loading="loading" @click="createCategory">Submit</a-button>
