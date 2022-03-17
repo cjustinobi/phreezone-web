@@ -157,32 +157,32 @@
           case 'd3':
             r = 'Diamond 3'
             break;
-          case 'd4':
-            r = 'Diamond 4'
+          case 'l1':
+            r = 'Legend 1'
             break;
-          case 'd5':
-            r = 'Diamond 5'
+          case 'l2':
+            r = 'Legend 2'
             break;
-          case 'd6':
-            r = 'Diamond 6'
+          case 'l3':
+            r = 'Legend 3'
             break;
-          case 'd7':
-            r = 'Diamond 7'
+          case 'l4':
+            r = 'Legend 4'
             break;
-          case 's1':
-            r = 'Star 1'
+          case 'sd1':
+            r = 'Star Diamond 1'
             break;
-          case 's2':
-            r = 'Star 2'
+          case 'sd2':
+            r = 'Star Diamond 2'
             break;
-          case 's3':
-            r = 'Star 3'
+          case 'sd3':
+            r = 'Star Diamond 3'
             break;
-          case 's4':
-            r = 'Star 4'
+          case 'sd4':
+            r = 'Star Diamond 4'
             break;
-          case 's5':
-            r = 'Star 5'
+          case 'sd5':
+            r = 'Star Diamond 5'
             break;
           default:
             r = 'No rank'
