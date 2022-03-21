@@ -2,7 +2,9 @@
   <div>
     <a-page-header sub-title="Upgrade Order">
       <template slot="extra">
-        <a-button type="primary" @click="() => $router.push('/stream-upgrade-order')">Or Stream Upgrade</a-button>
+        <a-button type="primary" @click="() => $router.push({name: 'stream-upgrade-order', params: { ref: userReferral }})">
+          Or Stream Upgrade
+        </a-button>
       </template>
     </a-page-header>
     <h5 v-if="agentWallet">Available Amount: {{ agentWallet | currency }}</h5>

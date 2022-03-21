@@ -83,7 +83,7 @@
 
 <script>
   export default {
-    name: 'add-product',
+    name: 'stream-upgrade-order',
     layout: 'dashboard',
     data() {
       return {
@@ -289,6 +289,11 @@
 
       if(!this.isStockist) {
         this.$router.push('/home')
+      }
+
+      if (this.$route.params.ref) {
+        this.userReferral = this.$route.params.ref
+        this.getMember()
       }
     },
     watch: {
