@@ -12,7 +12,7 @@
       <span slot="fullName" slot-scope="fn, rec"><b>{{ rec.referral }}</b>  <br> <span>{{ rec.full_name }}</span></span>
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
-      <span slot="rank" slot-scope="rank, txt">{{ txt.rank | capitalize }}</span>
+      <span slot="rank" slot-scope="rank, txt">{{ txt.rank != null ? (txt.rank | capitalize) : ''}}</span>
 <!--      <span slot="total" slot-scope="total, rec">-->
 
 <!--        {{ rec.accumulatedEpp + rec.accumulatedSbp }}-->

@@ -22,7 +22,7 @@
       </a-form-model-item>
       <div class="buttons">
         <button type="button" class="btn btn-light" @click.prevent="$refs.file.click">Choose file</button>
-        <button type="button" class="btn btn-info" @click="upload">{{ loading ? 'Uploading ...' : 'Upload' }}</button>
+        <a-button type="primary" :disabled="disableBtn" class="btn btn-info" @click="upload">{{ loading ? 'Uploading ...' : 'Upload' }}</a-button>
       </div>
     </div>
 <!--    <div v-else>-->
@@ -68,7 +68,6 @@
     data() {
       return {
         img: '',
-        // img: require('assets/img/logo.png'),
         file: '',
         ref: '',
         amount: '',
@@ -76,7 +75,8 @@
         pendingPop: '',
         theMember: '',
         userReferral: '',
-        loading: false
+        loading: false,
+        binaryPop: ''
       }
     },
     computed: {
@@ -90,6 +90,9 @@
       },
       formVisibility() {
         return this.$store.getters['popVisibility']
+      },
+      disableBtn() {
+        return this.binaryPop == ''
       }
     },
     methods : {
@@ -99,12 +102,22 @@
       },
       async upload() {
 
-        if(this.amount == '' || this.ref == '' || this.file == '') {
+        this.loading = true
+        if(this.amount == '' || this.ref == '') {
+          this.loading = false
           this.$message.error('All fields are required')
           return
         }
 
-        this.loading = true
+        const { popExists } = await this.$axios.$post('user/check-pop', {
+          pop: this.binaryPop
+        })
+
+        if(popExists) {
+          this.loading = false
+          return this.$message.error('POP has been uploaded before')
+        }
+
         let res = await this.$axios.$post(`user/uploadConfirmation/${this.userId}`, this.form)
         if (res.success) {
           this.loading = false
@@ -133,8 +146,31 @@
     },
     beforeMount() {
       this.getPendingPop()
-    }
+    },
+    watch: {
+      file(img) {
+        if (img) {
+          const self = this
+          let reader = new FileReader();
+          reader.onload = function(event) {
+            let data = event.target.result
+            self.binaryPop = ArrayBufferToBinary(data)
+          };
+          reader.readAsArrayBuffer(img); //gets an ArrayBuffer of the file
 
+
+          function ArrayBufferToBinary(buffer) {
+            // Convert an array buffer to a string bit-representation: 0 1 1 0 0 0...
+            var dataView = new DataView(buffer);
+            var response = "", offset = (8/8);
+            for(var i = 0; i < dataView.byteLength; i += offset) {
+              response += dataView.getInt8(i).toString(2);
+            }
+            return response;
+          }
+        }
+      }
+    }
 
   }
 </script>
