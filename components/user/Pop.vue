@@ -109,14 +109,14 @@
           return
         }
 
-        const { popExists } = await this.$axios.$post('user/check-pop', {
-          pop: this.binaryPop
-        })
-
-        if(popExists) {
-          this.loading = false
-          return this.$message.error('POP has been uploaded before')
-        }
+        // const { popExists } = await this.$axios.$post('user/check-pop', {
+        //   pop: this.binaryPop
+        // })
+        //
+        // if(popExists) {
+        //   this.loading = false
+        //   return this.$message.error('POP has been uploaded before')
+        // }
 
         let res = await this.$axios.$post(`user/uploadConfirmation/${this.userId}`, this.form)
         if (res.success) {
