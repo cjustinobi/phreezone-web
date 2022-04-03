@@ -55,14 +55,22 @@
       <span slot="ids" slot-scope="ids, rec">
         <a @click.prevent="getItems(ids)" href="#">View</a>
       </span>
+      <span slot="user" slot-scope="user">
+        <span>{{ user.full_name }}</span><br>
+        <a-tag color="green">{{ user.referral }}</a-tag>
+      </span>
+      <span slot="stockist" slot-scope="stockist">
+        <span>{{ stockist.full_name }}</span><br>
+        <a-tag color="green">{{ stockist.referral }}</a-tag>
+      </span>
     </a-table>
   </div>
 </template>
 
 <script>
   const columns = [
-    {title: 'Full Name', dataIndex: 'user.full_name'},
-    {title: 'Sponsor ID', dataIndex: 'user.referral'},
+    {title: 'Full Name', dataIndex: 'user', scopedSlots: { customRender: 'user'}},
+    {title: 'Stockist', dataIndex: 'stockist', scopedSlots: { customRender: 'stockist'}},
     {title: 'Amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount'}},
     {title: 'Date', dataIndex: 'created_at', scopedSlots: { customRender: 'date'}},
     {title: 'View Items', dataIndex: 'ids', scopedSlots: { customRender: 'ids' },},
@@ -96,11 +104,15 @@
       }
     },
     methods: {
-      async getSales() {
-        this.sales = (await this.$axios.$post(`user/sales`, {
-          weekNumber: this.week,
-          userId: this.customer.id
-        })).data
+      getSales() {
+        const self =  this
+        setTimeout(async function () {
+          self.sales = (await self.$axios.$post(`user/sales`, {
+            weekNumber: self.week,
+            userId: self.customer.id
+          })).data
+        }, 3000)
+
       },
       async getItems(ids) {
         const res = await this.$axios.$post(`user/soldItems`, {

@@ -98,6 +98,7 @@
       this.getAgentWallet()
 
       if (this.$route.params.ref) {
+        debugger
         this.userReferral = this.$route.params.ref
         this.getMember()
       }

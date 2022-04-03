@@ -43,7 +43,7 @@
 
 <script>
   const columns = [
-    {title: 'Stockist Name', dataIndex: 'user.full_name'},
+    {title: 'Full Name', dataIndex: 'user.full_name'},
     {title: 'Item', dataIndex: 'item'},
     {title: 'Date', dataIndex: 'created_at', scopedSlots: { customRender: 'date'}},
     {title: 'Amount', key: 'amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount'}},
@@ -65,10 +65,13 @@
       }
     },
     methods: {
-      async getItems() {
-        this.items = (await this.$axios.$post(`user/boughtItems`, {
-          weekNumber: this.week
-        })).data
+      getItems() {
+        const self = this
+        setTimeout(async function () {
+          self.items = (await self.$axios.$post(`user/boughtItems`, {
+            weekNumber: self.week
+          })).data
+        }, 3000)
       },
       async setWeek() {
         this.week = await this.$axios.$get('date')
