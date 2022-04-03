@@ -13,8 +13,8 @@
         <a-col :md="8" :xs="24">
           <a-card>
             <a-statistic
-              title="Total Shopping Earned"
-              :value="userBonus.totalShoppingBonus | currency"
+              title="Credit Used"
+              :value="userBonus.totalShoppingBonusPaid | currency"
               :precision="2"
               :value-style="{ color: '#3f8600' }"
               style="margin-right: 50px"
@@ -22,20 +22,20 @@
 
           </a-card>
         </a-col>
+<!--        <a-col :md="8" :xs="24">-->
+<!--          <a-card>-->
+<!--            <a-statistic-->
+<!--              title="Total Shopping Paid"-->
+<!--              :value="userBonus.totalShoppingBonusPaid | currency"-->
+<!--              class="demo-class"-->
+<!--              :value-style="{ color: '#2d5d89' }"-->
+<!--            />-->
+<!--          </a-card>-->
+<!--        </a-col>-->
         <a-col :md="8" :xs="24">
           <a-card>
             <a-statistic
-              title="Total Shopping Paid"
-              :value="userBonus.totalShoppingBonusPaid | currency"
-              class="demo-class"
-              :value-style="{ color: '#2d5d89' }"
-            />
-          </a-card>
-        </a-col>
-        <a-col :md="8" :xs="24">
-          <a-card>
-            <a-statistic
-              title="Available Balance"
+              title="Credit Balance"
               :value="availableBalance | currency"
               class="demo-class"
               :value-style="{ color: '#1890ff' }"
@@ -144,10 +144,9 @@
             this.loading = true
             try {
               this.$axios.$post('user/spendShoppingBonus', this.dynamicValidateForm).then(res => {
-                this.loading = false
-                this.dynamicValidateForm.data = []
-                this.userReferral = ''
                 this.getShoppingBonus()
+                this.dynamicValidateForm.data = []
+                this.loading = false
                 this.$message.success('Added successfully')
               })
             } catch (e) {
@@ -184,18 +183,20 @@
             return +prev + +cur.amount;
           }, 0)
 
-          if (this.enteredAmount > this.availableBalance) {
-            this.$message.error('Item amount has exceeded available balance')
-            this.canSubmit = false
-          } else {
-            this.canSubmit = true
+          if (this.enteredAmount) {
+            if (this.enteredAmount > this.availableBalance) {
+              this.$message.error('Item amount has exceeded available balance')
+              this.canSubmit = false
+            } else {
+              this.canSubmit = true
+            }
           }
         },
         deep: true
       },
       userBonus: {
         handler: function (data) {
-          this.availableBalance = data.totalShoppingBonus - data.totalShoppingBonusPaid
+          this.availableBalance = data.creditEarned - data.totalShoppingBonusPaid
         }
       }
     }
