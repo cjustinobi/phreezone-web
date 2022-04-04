@@ -32,7 +32,7 @@
           type="number"/>
       </a-col>
       <a-col v-if="isAdmin" span="6">
-        <a-button type="primary" @click="implementStream" :loading="loading">Implement</a-button>
+<!--        <a-button type="primary" @click="implementStream" :loading="loading">Implement</a-button>-->
 <!--        <a-input-search-->
 <!--          placeholder="Sponsor ID"-->
 <!--          v-model="userReferral"-->
