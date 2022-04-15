@@ -112,7 +112,7 @@
       <span slot="leadership" slot-scope="lead">{{ lead == null ? 0 : lead }}</span>
       <span slot="spillover" slot-scope="spill">{{ spill == null ? 0 : spill }}</span>
       <span slot="stream" slot-scope="stream">{{ stream == null ? 0 : stream }}</span>
-<!--      <span slot="agent_stream" slot-scope="agent_stream">{{ agent_stream == null ? 0 : agent_stream }}</span>-->
+      <span slot="share_amount" slot-scope="share_amount">{{ share_amount == null ? 0 : share_amount }}</span>
       <span slot="fullName" slot-scope="fn, row">{{ row.first_name }} {{ row.last_name }}</span>
       <span slot="total" slot-scope="total"><b>{{ total }}</b></span>
       <span slot="actualAmount" slot-scope="actualAmount"><b>{{ actualAmount }}</b></span>
@@ -189,11 +189,11 @@
       dataIndex: 'stream_amount',
       scopedSlots: { customRender: 'stream' }
     },
-    // {
-    //   title: 'SSPB',
-    //   dataIndex: 'agent_stream_amount',
-    //   scopedSlots: { customRender: 'agent_stream' }
-    // },
+    {
+      title: 'Share',
+      dataIndex: 'share_amount',
+      scopedSlots: { customRender: 'share_amount' }
+    },
     {
       title: 'Total',
       dataIndex: 'total',
@@ -255,8 +255,7 @@
         this.getCommissions()
       },
       async setWeek() {
-        this.week = this.$axios.$get('date')
-        // this.week = this.$dateFns.getWeek(new Date()) - 1
+        this.week = await this.$axios.$get('date')
       }
     },
     computed: {

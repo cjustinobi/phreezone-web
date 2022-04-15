@@ -1,8 +1,7 @@
 export default {
-  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
+
   ssr: false,
 
-  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Phreezone',
     meta: [
@@ -26,14 +25,12 @@ export default {
     ]
   },
 
-  // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     'assets/css/bootstrap.css',
     'assets/css/all.css',
     'assets/css/style.css',
   ],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '@/plugins/excel',
     '@/plugins/helper',
@@ -42,19 +39,15 @@ export default {
     '@/plugins/vue-quill-editor'
   ],
 
-  // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
   serverMiddleware: ['~/api/index.js'],
 
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     '@nuxtjs/date-fns'
   ],
 
-  // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/cloudinary'
