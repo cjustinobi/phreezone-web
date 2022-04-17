@@ -21,7 +21,6 @@
     {title: 'Sponsor', dataIndex: 'sponsor', scopedSlots: {customRender: 'sponsor'}},
     {title: 'Slot', dataIndex: 'slot'},
     {title: 'Date', dataIndex: 'created_at', scopedSlots: {customRender: 'date'}},
-    {title: 'Date', dataIndex: 'created_at', scopedSlots: {customRender: 'date'}},
   ]
   import DateFormat from '@/mixins/dateFormat'
 

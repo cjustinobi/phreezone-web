@@ -98,7 +98,7 @@
         }
         else {
           this.loading = false
-          this.$message.error('failed')
+          this.$message.error(res.message)
         }
       },
       async getMember(shareholder = false) {
