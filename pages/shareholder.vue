@@ -14,8 +14,8 @@
       <ShareholdingForm />
     </a-modal>
     <h5 class="am" v-if="sponsorWallet">Available Amount: {{ sponsorWallet | currency }}</h5>
-    <small v-if="slot && share">Total Amount: {{ (+slot * share.price) | currency }}</small>
     <h5 v-else>Available Amount: NGN 0.00</h5> <br>
+    <small v-if="slot && share">Total Amount: {{ (+slot * share.price) | currency }}</small>
     <h6 class="sponsor" v-if="sponsor">Sponsor: {{ sponsor.full_name }}</h6>
     <h6 v-if="shareholder">Member: {{ shareholder.full_name }}</h6>
     <a-row :gutter="4">
@@ -88,6 +88,7 @@
           status: 'approved'
           })
         if (res.success) {
+          window.location.reload()
           this.loading = false
           this.sponsorWallet -= this.amount
           this.amount = ''

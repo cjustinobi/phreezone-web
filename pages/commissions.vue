@@ -248,9 +248,7 @@
           this.bonuses = res.filter(item => item.actualAmount != 0)
         }
       },
-      downloadBonus() {
-        return window.open(`${this.$axios.defaults.baseURL}exportBonuses?referral=${this.userReferral}&week=${this.week}`)
-      },
+
       getWeekCommissions() {
         this.getCommissions()
       },
