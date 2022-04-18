@@ -43,7 +43,7 @@
 
       </a-col>
     </a-row>
-    <Shareholders v-if="isAdmin" />
+    <Shareholders />
   </div>
 </template>
 

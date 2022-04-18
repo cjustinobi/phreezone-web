@@ -128,7 +128,7 @@
 
     </a-table>
 
-    <h4 v-if="pops">Shareholding wallets</h4>
+    <h4 v-if="pops">Shareholder wallets</h4>
 
     <a-table
       v-if="pops"

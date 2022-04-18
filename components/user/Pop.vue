@@ -8,7 +8,7 @@
       </a-page-header>
       <div>
         <a-radio-group v-model="walleType">
-          <a-radio-button value="agentWallet">Agent Wallet</a-radio-button>
+          <a-radio-button value="agentWallet">Main Wallet</a-radio-button>
           <a-radio-button value="shareholding">Shareholders Wallet</a-radio-button>
         </a-radio-group>
       </div>

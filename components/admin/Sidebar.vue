@@ -169,14 +169,14 @@
               </ul>
             </div>
           </li>
-          <li v-if="isStockist" class="sidebar-dropdown">
+          <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-id-card"></i>
               <span>Shareholders</span>
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li><nuxt-link to="/shareholder">Buy Slot</nuxt-link></li>
+                <li v-if="isStockist"><nuxt-link to="/shareholder">Buy Slot</nuxt-link></li>
                 <li><nuxt-link to="/dividends">Dividends</nuxt-link></li>
               </ul>
             </div>
