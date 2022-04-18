@@ -169,6 +169,18 @@
               </ul>
             </div>
           </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-id-card"></i>
+              <span>Shareholders</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li v-if="isStockist"><nuxt-link to="/shareholder">Buy Slot</nuxt-link></li>
+                <li><nuxt-link to="/dividends">Dividends</nuxt-link></li>
+              </ul>
+            </div>
+          </li>
           <li>
             <nuxt-link to="/bought-items">
               <i class="fa fa-folder"></i>

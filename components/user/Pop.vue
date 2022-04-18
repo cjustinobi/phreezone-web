@@ -6,8 +6,15 @@
           <a-button type="primary" @click="$emit('togglePop', { formVisibility: false })">View POP</a-button>
         </template>
       </a-page-header>
+      <div>
+        <a-radio-group v-model="walleType">
+          <a-radio-button value="agentWallet">Main Wallet</a-radio-button>
+          <a-radio-button value="shareholding">Shareholders Wallet</a-radio-button>
+        </a-radio-group>
+      </div>
       <img class="img-thumbnail" :src="url ? url : img"/>
       <input class="hide-input" @change="handleFile" ref="file" type="file">
+
       <a-form-model-item label="">
         <h6 v-if="theMember">{{ theMember.full_name }}</h6>
         <a-input v-model="userReferral" class="add-width" @blur="getMember" placeholder="Member code" />
@@ -25,38 +32,7 @@
         <a-button type="primary" :disabled="disableBtn" class="btn btn-info" @click="upload">{{ loading ? 'Uploading ...' : 'Upload' }}</a-button>
       </div>
     </div>
-<!--    <div v-else>-->
-<!--      <a-page-header sub-title="Proof of Payment">-->
-<!--        <template slot="extra">-->
-<!--          <a-button type="primary" @click="$emit('togglePop', { formVisibility: true })">Upload New POP</a-button>-->
-<!--        </template>-->
-<!--      </a-page-header>-->
-<!--      <div v-if="pendingPop">-->
-<!--        <a-card hoverable style="width: 240px">-->
-<!--          <img slot="cover" alt="pop" :src="`${$config.imagePath}/${pendingPop.pop_path}`"/>-->
-<!--          <a-card-meta>-->
-<!--            <template slot="description">-->
-<!--              <span v-if="pendingPop.status == 'pending'">{{ pendingPop.pending_amount | currency }}</span>-->
-<!--              <span v-else>{{ pendingPop.amount | currency }}</span>-->
-<!--              <a-tag color="orange">{{ pendingPop.status }}</a-tag>-->
-<!--              <p v-if="pendingPop.reject_reason">{{ pendingPop.reject_reason }}</p>-->
-<!--            </template>-->
-<!--          </a-card-meta>-->
-<!--        </a-card>-->
-<!--      </div>-->
-<!--      <a-empty-->
-<!--        v-else-->
-<!--        image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"-->
-<!--        :image-style="{-->
-<!--      height: '60px',-->
-<!--    }"-->
-<!--      >-->
-<!--        <span slot="description"> Everything looks clean here! </span>-->
-<!--        <a-button @click="formVisibilty = true" type="primary">-->
-<!--          Upload New PoP-->
-<!--        </a-button>-->
-<!--      </a-empty>-->
-<!--    </div>-->
+
   </div>
 </template>
 
@@ -74,9 +50,10 @@
         url: '',
         pendingPop: '',
         theMember: '',
+        sponsor: '',
         userReferral: '',
         loading: false,
-        binaryPop: ''
+        walleType: ''
       }
     },
     computed: {
@@ -91,8 +68,10 @@
       formVisibility() {
         return this.$store.getters['popVisibility']
       },
-      disableBtn() {
-        return this.binaryPop == ''
+      endpoint() {
+        return this.walleType === 'agentWallet' ?
+          `user/uploadConfirmation/${this.userId}` :
+          `user/uploadShareholdingConfirmation/${this.userId}`
       }
     },
     methods : {
@@ -102,23 +81,15 @@
       },
       async upload() {
 
-        this.loading = true
-        if(this.amount == '' || this.ref == '') {
-          this.loading = false
+        if(!this.walleType) return this.$message.error('Select wallet type you want to credit')
+
+        if(this.amount == '' || this.ref == '' || this.file == '') {
           this.$message.error('All fields are required')
           return
         }
 
-        // const { popExists } = await this.$axios.$post('user/check-pop', {
-        //   pop: this.binaryPop
-        // })
-        //
-        // if(popExists) {
-        //   this.loading = false
-        //   return this.$message.error('POP has been uploaded before')
-        // }
-
-        let res = await this.$axios.$post(`user/uploadConfirmation/${this.userId}`, this.form)
+        this.loading = true
+        let res = await this.$axios.$post(this.endpoint, this.form)
         if (res.success) {
           this.loading = false
           this.url = ''
@@ -139,6 +110,7 @@
           this.theMember = (await this.$axios.$post(`user/null`, {
             userReferral: this.userReferral
           })).data
+
         } catch (e) {
           this.$message.error('Invalid Referral code entered')
         }
@@ -146,31 +118,8 @@
     },
     beforeMount() {
       this.getPendingPop()
-    },
-    watch: {
-      file(img) {
-        if (img) {
-          const self = this
-          let reader = new FileReader();
-          reader.onload = function(event) {
-            let data = event.target.result
-            self.binaryPop = ArrayBufferToBinary(data)
-          };
-          reader.readAsArrayBuffer(img); //gets an ArrayBuffer of the file
-
-
-          function ArrayBufferToBinary(buffer) {
-            // Convert an array buffer to a string bit-representation: 0 1 1 0 0 0...
-            var dataView = new DataView(buffer);
-            var response = "", offset = (8/8);
-            for(var i = 0; i < dataView.byteLength; i += offset) {
-              response += dataView.getInt8(i).toString(2);
-            }
-            return response;
-          }
-        }
-      }
     }
+
 
   }
 </script>
@@ -190,5 +139,11 @@
   }
   .add-width {
     width: 200px;
+    margin-right: 5px;
+  }
+  .ant-radio-button-wrapper-checked, .ant-radio-button-wrapper-checked:hover {
+    background: #1890ff;
+    font-weight: 700;
+    color: #fefefe;
   }
 </style>
