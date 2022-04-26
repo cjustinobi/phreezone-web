@@ -106,7 +106,7 @@
         customer: '',
         userReferral: '',
         totalSales: '',
-        dateFormat: 'd MMM, Y',
+        dateFormat: 'p d MMM, Y',
       }
     },
     methods: {
