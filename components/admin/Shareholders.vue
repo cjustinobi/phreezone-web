@@ -1,7 +1,7 @@
 <template>
   <div class="shareholders">
     <h5>Shareholders</h5>
-    <a-table :columns="columns" :data-source="shareholders" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small" defaultPageSize="50">
+    <a-table :columns="columns" :data-source="filteredShareholders" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small" defaultPageSize="50">
       <span slot="user" slot-scope="user">
         <span>{{ user.full_name }}</span><br>
         <a-tag color="green">{{ user.referral }}</a-tag>
@@ -36,6 +36,12 @@
     methods: {
       async getShareholders() {
         this.shareholders = (await this.$axios.$get('admin/shareholders')).data
+      }
+    },
+    computed: {
+      filteredShareholders() {
+        return this.isAdmin ? this.shareholders :
+          this.shareholders.length ? this.shareholders.filter(sh => sh.id == this.userId) : []
       }
     },
     beforeMount() {
