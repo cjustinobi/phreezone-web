@@ -81,6 +81,7 @@
 
         this.loading = true
         let res = await this.$axios.$post(`admin/shareholders`, {
+          stockist_id: this.userId,
           user_id: this.shareholder.id,
           sponsor_id: this.sponsor.id,
           amount: this.amount,
