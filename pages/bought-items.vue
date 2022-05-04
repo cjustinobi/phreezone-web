@@ -33,6 +33,14 @@
     </a-row>
 
     <a-table v-if="items" :columns="columns" :data-source="items" :rowKey="record => record.id" size="small">
+      <span slot="user" slot-scope="user">
+        {{ user.full_name }}<br>
+        <a-tag color="green">{{ user.referral }}</a-tag>
+      </span>
+      <span slot="stockist" slot-scope="stockist">
+        {{ stockist.full_name }}<br>
+        <a-tag color="green">{{ stockist.referral }}</a-tag>
+      </span>
       <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>
       <span slot="ids" slot-scope="ids, rec">
         <a @click.prevent="getItems(ids)" href="#">View</a>
@@ -43,7 +51,8 @@
 
 <script>
   const columns = [
-    {title: 'Full Name', dataIndex: 'user.full_name'},
+    {title: 'Bought By', dataIndex: 'user', scopedSlots: { customRender: 'user'}},
+    {title: 'Sold By', dataIndex: 'stockist', scopedSlots: { customRender: 'stockist'}},
     {title: 'Item', dataIndex: 'item'},
     {title: 'Date', dataIndex: 'created_at', scopedSlots: { customRender: 'date'}},
     {title: 'Amount', key: 'amount', dataIndex: 'amount', scopedSlots: { customRender: 'amount'}},
@@ -61,7 +70,7 @@
         week: '',
         userReferral: '',
         totalSales: '',
-        dateFormat: 'd MMM, Y',
+        dateFormat: 'p d MMM, Y',
       }
     },
     methods: {
