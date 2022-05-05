@@ -17,7 +17,7 @@
         </div>
         <div class="user-info">
           <span class="user-name">
-            <strong>{{ $auth.user.full_name }}</strong><br>
+            <strong>{{ $auth.user.full_name }} - {{ $auth.user.referral }}</strong><br>
             <span v-if="$auth.user.package" class="badge badge-pill badge-warning">{{ $auth.user.package.name }}</span>
             <span v-else class="badge badge-pill badge-light">N/P</span>
           </span>

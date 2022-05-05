@@ -12,29 +12,19 @@
       <span slot="fullName" slot-scope="fn, rec"><b>{{ rec.referral }}</b>  <br> <span>{{ rec.full_name }}</span></span>
       <span slot="pkg" slot-scope="pkg" v-if="pkg">{{ pkg.name }}</span>
       <span slot="joined" slot-scope="joined">{{ formatDate(joined) }}</span>
-      <span slot="rank" slot-scope="rank, txt">{{ txt.rank != null ? (txt.rank | capitalize) : ''}}</span>
-<!--      <span slot="total" slot-scope="total, rec">-->
-
-<!--        {{ rec.accumulatedEpp + rec.accumulatedSbp }}-->
-<!--      </span>-->
-<!--      <span slot="cw_epp" slot-scope="cw_epp, rec">-->
-<!--        {{ rec.currentWeekPoint }}-->
-<!--&lt;!&ndash;        {{ rec.currentWeekPoint + rec.streamCurrentWeekPoint }}&ndash;&gt;-->
-<!--      </span>-->
-<!--      <span slot="pw_epp" slot-scope="pw_epp, rec">-->
-<!--        {{ rec.prevWeekPoint }}-->
-<!--&lt;!&ndash;        {{ rec.prevWeekPoint + rec.streamPrevWeekPoint }}&ndash;&gt;-->
-<!--      </span>-->
+      <span slot="rnk" slot-scope="rnk" v-if="rnk">{{ rnk | rank }}</span>
+      <span  v-else>No rank</span>
     </a-table>
   </div>
 </template>
 
 <script>
+
   const columns = [
     {
       title: 'Member',
       dataIndex: 'full_name',
-      fixed: 'left',
+      // fixed: 'left',
       scopedSlots: { customRender: 'fullName' },
     },
     {
@@ -50,7 +40,7 @@
     {
       title: 'Rank',
       dataIndex: 'rank',
-      scopedSlots: { customRender: 'rank' },
+      scopedSlots: { customRender: 'rnk' },
     },
     {
       title: 'Generation',
@@ -109,17 +99,13 @@
     //   scopedSlots: { customRender: 'sbp' },
     // },
   ]
+
+  import rank from '../mixins/rank'
   import DateFormat from '../mixins/dateFormat'
   export default {
     name: 'network-activities',
     layout: 'dashboard',
-    mixins: [DateFormat],
-    filters: {
-      capitalize(string) {
-        if (string == 0) return 'None'
-        return string.charAt(0).toUpperCase() + string.slice(1);
-     }
-    },
+    mixins: [DateFormat, rank],
     data() {
       return {
         columns,
