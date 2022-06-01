@@ -74,7 +74,15 @@
       <span slot="price" slot-scope="price"><span>{{ price | currency }}</span></span>
       <span slot="amount" slot-scope="amount"><span>{{ amount | currency }}</span></span>
     </a-table>
-
+    <download-excel
+      class="btn btn-primary"
+      :data="products"
+      :fields="excelFields"
+      worksheet="My Worksheet"
+      :name="`products.xls`"
+    >
+      Download
+    </download-excel>
   </div>
 </template>
 
@@ -126,7 +134,17 @@
           category_id: ''
         },
         products: '',
-        categories: ''
+        categories: '',
+        excelFields: {
+          Image: 'image_path',
+          Code: 'code',
+          AccountNumber: {
+            field: 'code',
+            callback: val => {
+              return JSON.stringify(val)
+            }
+          }
+        }
       }
     },
     methods: {

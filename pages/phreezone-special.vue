@@ -45,6 +45,13 @@
         <h6 v-if="upgradeUser">{{ upgradeUser.full_name }}</h6>
         <a-input v-model="userReferral" @blur="getMember" placeholder="Member code" />
         <br><br>
+        <a-space>
+          <a-input v-model="searchQuery" @change="search" placeholder="Search Product"/>
+          <a-button type="primary" :loading="searching" @click="resetProducts">
+            {{ searching ? 'Searching ... ' : 'Reset' }}
+          </a-button>
+        </a-space>
+        <br><br>
       </a-col>
       <a-col :md="{span: 6}">
         <a-card size="small" title="Product Order" style="width: 230px">
@@ -119,11 +126,12 @@
       return {
         cart: false,
         loading: false,
+        searching: false,
         columns,
         agentWallet: '',
         categories: '',
         products: [],
-        // tabProducts: [],
+        searchQuery: '',
         selectedProducts: [],
         userReferral: '',
         upgradeUser: '',
@@ -243,6 +251,24 @@
         this.upgradeUser = ''
         this.totalOrder = 0
         this.totalPv = 0
+      },
+      async search() {
+        if (this.searchQuery == '') return;
+        this.searching = true
+        const res = await this.$axios.$post('admin/product-search', {
+          searchQuery: this.searchQuery
+        })
+        if (res.data.length) {
+          this.searching = false
+          document.querySelector('.ant-tabs-nav-wrap').classList.add('hide')
+          return this.products = res.data
+        }
+        this.searching = false
+      },
+      resetProducts() {
+        this.searchQuery = ''
+        document.querySelector('.ant-tabs-nav-wrap').classList.remove('hide')
+        this.getProducts()
       }
     },
     beforeMount() {
@@ -306,6 +332,9 @@
   }
   .ant-modal {
     width: 50% !important;
+  }
+  .hide {
+    display: none;
   }
   .cart-items {
     display: grid;
