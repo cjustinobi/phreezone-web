@@ -137,7 +137,7 @@
           BankName: 'user.bank_name',
           Total: {
             callback: data => {
-              return +data.shopping_sum + +data.stream_sum + +data.pack_sum
+              return (+data.shopping_sum + +data.stream_sum + +data.pack_sum + +data.phreezone_special_sum)
             }
           }
         }

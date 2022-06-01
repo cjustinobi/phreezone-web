@@ -142,6 +142,7 @@
                 <li><nuxt-link to="/upgrade-order">Pack Selection (EPP Upgrade)</nuxt-link></li>
                 <li><nuxt-link to="/stream-upgrade-order">Stream Purchase</nuxt-link></li>
                 <li><nuxt-link to="/phreezone-special">Phreezone Special</nuxt-link></li>
+                <li v-if="isAdmin"><nuxt-link to="/stockist-order">Stockist Order</nuxt-link></li>
               </ul>
             </div>
           </li>
