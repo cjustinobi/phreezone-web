@@ -11,7 +11,7 @@
           min="1"
           type="number"/>
       </a-col>
-      <a-col :lg="6" :xs="8">
+      <a-col v-if="isAdmin" :lg="6" :xs="8">
         <a-input
           placeholder="Sponsor ID"
           v-model="userReferral"
@@ -33,7 +33,7 @@
       </a-col>
     </a-row>
 
-    <a-table v-if="bonuses" :columns="columns" :data-source="bonuses" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
+    <a-table v-if="bonuses" :columns="filteredColumns " :data-source="bonuses" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
 
       <span slot="paid" slot-scope="paid">
       <a-tag :color="paid == '0' ? 'volcano' : 'green'">
@@ -53,17 +53,6 @@
 </template>
 
 <script>
-  // import 'bootstrap/dist/css/bootstrap.min.css'
-  // import 'jquery/dist/jquery.min.js'
-  // // Datatable Modules
-  // import 'datatables.net-dt/js/dataTables.dataTables'
-  // import 'datatables.net-dt/css/jquery.dataTables.min.css'
-  // import 'datatables.net-buttons/js/dataTables.buttons.js'
-  // import 'datatables.net-buttons/js/buttons.colVis.js'
-  // import 'datatables.net-buttons/js/buttons.flash.js'
-  // import 'datatables.net-buttons/js/buttons.html5.js'
-  // import 'datatables.net-buttons/js/buttons.print.js'
-  // import $ from 'jquery'
 
   let columns = [
     {
@@ -157,10 +146,10 @@
         this.week = await this.$axios.$get('date')
       }
     },
-    // computed: {
-    //   columns() {
-    //     return this.isAdmin ? columns : columns.filter(column => column.dataIndex !== 'sponsor_shopping_amount')
-    //   },
+    computed: {
+      filteredColumns() {
+        return this.isAdmin ? columns : columns.filter(column => column.dataIndex !== 'phreezone_special_sales_sum')
+      }
     //   data() {
     //     let commissions = this.bonuses
     //     if (this.isAdmin) {
@@ -171,7 +160,7 @@
     //     }
     //     return commissions
     //   }
-    // },
+    },
     mounted() {
       this.getCommissions()
       this.setWeek()

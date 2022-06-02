@@ -51,7 +51,17 @@
         </a-button>
       </a-upload>
     </a-modal>
-    <a-table v-if="products" :columns="columns" :data-source="products" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small">
+    <a-button v-if="products.length" type="primary" @click="printProduct">Download</a-button>
+    <a-table
+      id="products"
+      class="myDivToPrint"
+      v-if="products"
+      :columns="columns"
+      :data-source="products"
+      :rowKey="record => record.id"
+      :scroll="{ x: 1500 }"
+      pagination={false}
+      size="small">
       <span slot="action" slot-scope="text">
         <a-popconfirm
           :title="`Sure you want to ${text.status ? 'disable' : 'enable'} product?`"
@@ -74,43 +84,40 @@
       <span slot="price" slot-scope="price"><span>{{ price | currency }}</span></span>
       <span slot="amount" slot-scope="amount"><span>{{ amount | currency }}</span></span>
     </a-table>
-    <download-excel
-      class="btn btn-primary"
-      :data="products"
-      :fields="excelFields"
-      worksheet="My Worksheet"
-      :name="`products.xls`"
-    >
-      Download
-    </download-excel>
+<!--    <download-excel-->
+<!--      class="btn btn-primary"-->
+<!--      :data="products"-->
+<!--      :fields="excelFields"-->
+<!--      worksheet="My Worksheet"-->
+<!--      :name="`products.xls`"-->
+<!--    >-->
+<!--      Download-->
+<!--    </download-excel>-->
+
   </div>
 </template>
 
 <script>
-  // import 'bootstrap/dist/css/bootstrap.min.css'
-  // import 'jquery/dist/jquery.min.js'
-  //Datatable Modules
-  // import 'datatables.net-dt/js/dataTables.dataTables'
-  // import 'datatables.net-dt/css/jquery.dataTables.min.css'
-  // import 'datatables.net-buttons/js/dataTables.buttons.js'
-  // import 'datatables.net-buttons/js/buttons.colVis.js'
-  // import 'datatables.net-buttons/js/buttons.flash.js'
-  // import 'datatables.net-buttons/js/buttons.html5.js'
-  // import 'datatables.net-buttons/js/buttons.print.js'
-  // import $ from 'jquery'
 
   import upload from '../mixins/upload'
 
-
   const columns = [
     {title: 'Image', dataIndex: 'image_path',scopedSlots: {customRender: 'image'}},
-    {title: 'Code', dataIndex: 'code',},
-    {title: 'Name', dataIndex: 'name',},
+    {title: 'Code', dataIndex: 'code'},
+    {title: 'Name', dataIndex: 'name'},
     {title: 'Amount', dataIndex: 'price',scopedSlots: {customRender: 'price'}},
     {title: 'Actual Amount', dataIndex: 'actual_amount',scopedSlots: {customRender: 'amount'}},
     {title: 'PV', dataIndex: 'pv',},
     {title: 'Status', dataIndex: 'status', scopedSlots: { customRender: 'status' }},
     {title: 'Action', scopedSlots: { customRender: 'action' }},
+  ]
+
+  const columns2 = [
+    {title: 'Image', dataIndex: 'image_path',scopedSlots: {customRender: 'image'}},
+    // {title: 'Code', dataIndex: 'code'},
+    {title: 'Name', dataIndex: 'name'},
+    {title: 'Actual Amount', dataIndex: 'actual_amount',scopedSlots: {customRender: 'amount'}},
+    {title: 'Actual Amount', dataIndex: 'actual_amount',scopedSlots: {customRender: 'amount'}},
   ]
 
   export default {
@@ -122,6 +129,7 @@
         loading: false,
         editMode: false,
         productForm: false,
+        defaultPageSize: 2000,
         productId: '',
         columns,
         fileList: '',
@@ -225,34 +233,46 @@
         this.fileList = [...this.fileList, file]
         return false
       },
-      initTable() {
-        setTimeout(function(){
-            $('#example').DataTable(
-              {
-                "paging":   false,
-                "ordering": false,
-                "info":     false,
-                "bFilter": false,
+      printProduct()  {
 
-                // pagingType: 'full_numbers',
-                // pageLength: 5,
-                processing: true,
-                dom: 'Bfrtip',
-                buttons: ['pdf'],
-                // columns: [
-                //   {
-                //     data: 'code',
-                //     render: function(data, type) {
-                //       console.log(data)
-                //     }
-                //   },
-                // ]
-              }
-            );
-          },
-          5000
-        );
-      }
+        this.columns = columns2
+        document.querySelector('.ant-pagination').style.display = 'none'
+        this.$nextTick(function() {
+          let mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+          mywindow.document.write('<html><head><title></title>');
+          mywindow.document.write('</head><body >');
+          mywindow.document.write('<h1>' + 'Phreezone Products'  + '</h1>');
+          mywindow.document.write(document.getElementById('products').innerHTML);
+          mywindow.document.write('</body></html>');
+
+          mywindow.document.close(); // necessary for IE >= 10
+          mywindow.focus(); // necessary for IE >= 10*/
+
+          mywindow.print()
+          this.columns = columns
+          document.querySelector('.ant-pagination').style.display = 'block'
+          // document.querySelector('.ant-pagination').classList.remove('hide')
+          this.getProducts()
+          mywindow.close();
+        })
+
+    // let mywindow = window.open('', 'PRINT', 'height=400,width=600');
+    //
+    // mywindow.document.write('<html><head><title>' + 'Products'  + '</title>');
+    // mywindow.document.write('</head><body >');
+    // mywindow.document.write('<h1>' + 'Products'  + '</h1>');
+    // mywindow.document.write(document.getElementById('products').innerHTML);
+    // mywindow.document.write('</body></html>');
+    //
+    // mywindow.document.close(); // necessary for IE >= 10
+    // mywindow.focus(); // necessary for IE >= 10*/
+    //
+    // mywindow.print();
+    // mywindow.close();
+
+    return true;
+  }
     },
     beforeMount() {
       this.getProducts()
@@ -282,5 +302,24 @@
     font-size: 1rem;
     border-radius: .25rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  @media print {
+    .myDivToPrint {
+      background-color: white;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 15px;
+      font-size: 14px;
+      line-height: 18px;
+    }
   }
 </style>

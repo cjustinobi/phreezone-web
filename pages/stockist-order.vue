@@ -3,27 +3,29 @@
     <a-page-header sub-title="Stockist Order"/>
 
     <a-row>
-      <a-col span="6">
+      <a-col :md="{span: 6}" :xs="{span: 10}">
         <a-input
           placeholder="Enter week number"
           v-model="week"
-          style="width: 188px; margin-bottom: 8px;"
+          style="max-width: 188px; margin-bottom: 8px;"
           @change="getItems"
           min="1"
           type="number"/>
       </a-col>
 
-<!--      <a-col>-->
-        <download-excel
-          class="btn btn-primary"
-          :data="items"
-          :fields="excelFields"
-          worksheet="My Worksheet"
-          :name="`week-${week}.xls`"
-        >
-          Download
-        </download-excel>
-<!--      </a-col>-->
+      <a-col v-if="isAdmin" :md="{span: 6}" :xs="{span: 6}">
+        <div class="download">
+          <download-excel
+            class="btn btn-primary"
+            :data="items"
+            :fields="excelFields"
+            worksheet="My Worksheet"
+            :name="`week-${week}.xls`"
+          >
+            Download
+          </download-excel>
+        </div>
+      </a-col>
     </a-row>
 
     <a-table
@@ -34,9 +36,13 @@
       :scroll="{ x: 1500, y: 300 }"
       size="small">
 
-      <span slot="stockist" slot-scope="stockist">
-        {{ stockist.full_name }}<br>
-        <a-tag color="green">{{ stockist.referral }}</a-tag>
+      <span slot="soldBy" slot-scope="soldBy">
+        {{ soldBy.full_name }}<br>
+        <a-tag color="green">{{ soldBy.referral }}</a-tag>
+      </span>
+      <span slot="boughtBy" slot-scope="boughtBy">
+        {{ boughtBy.full_name }}<br>
+        <a-tag color="green">{{ boughtBy.referral }}</a-tag>
       </span>
       <span slot="date" slot-scope="date">{{ formatDate(date) }}</span>
       <span slot="products" slot-scope="products">
@@ -65,7 +71,8 @@
 <script>
   const columns = [
     {title: 'Date', dataIndex: 'created_at', scopedSlots: { customRender: 'date'}},
-    {title: 'Sold By', dataIndex: 'sold_by', scopedSlots: { customRender: 'stockist'}},
+    {title: 'Sold By', dataIndex: 'sold_by', scopedSlots: { customRender: 'soldBy'}},
+    {title: 'Bought By', dataIndex: 'bought_by', scopedSlots: { customRender: 'boughtBy'}},
     {title: 'Product Name', dataIndex: 'items', scopedSlots: { customRender: 'products'}},
     // {title: 'Qty', dataIndex: 'items.qty'}
   ]
@@ -117,5 +124,11 @@
 <style scoped>
   .td {
     border-bottom: 1px solid #dfe0e2;
+  }
+  @media (max-width: 767px) {
+    .download {
+      margin-bottom: 20px;
+      margin-left: 10px;
+    }
   }
 </style>
