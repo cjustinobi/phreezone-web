@@ -7,23 +7,23 @@
     </a-page-header>
     <a-row>
       <a-col :span="3">
-        <table style="display: none" class="table table-hover table-bordered" id="example">
+        <table :style="{display: showTable}" class="table table-hover table-bordered" ref="example">
           <thead>
           <tr>
             <th>Image</th>
             <th>Code</th>
             <th>Name</th>
             <th>Amount</th>
-            <th>Pv</th>
+<!--            <th>Pv</th>-->
           </tr>
           </thead>
           <tbody>
-          <tr v-if="products.length" v-for="product in products" :key="product.id">
-            <td><img :src="product.image_path" /></td>
+          <tr class="pr-tr" v-if="products.length" v-for="product in products" :key="product.id">
+            <td><img width="100" :src="product.image_path" /></td>
             <td>{{product.code}}</td>
             <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td>{{product.pv}}</td>
+            <td>{{product.actual_amount}}</td>
+<!--            <td>{{product.pv}}</td>-->
           </tr>
           </tbody>
         </table>
@@ -54,7 +54,6 @@
     <a-button v-if="products.length" type="primary" @click="printProduct">Download</a-button>
     <a-table
       id="products"
-      class="myDivToPrint"
       v-if="products"
       :columns="columns"
       :data-source="products"
@@ -118,7 +117,6 @@
     {title: 'Name', dataIndex: 'name'},
     {title: 'Actual Amount', dataIndex: 'actual_amount',scopedSlots: {customRender: 'amount'}},
     {title: 'Actual Amount', dataIndex: 'actual_amount',scopedSlots: {customRender: 'amount'}},
-    {title: 'Actual Amount', dataIndex: 'actual_amount',scopedSlots: {customRender: 'amount'}},
   ]
 
   export default {
@@ -127,6 +125,7 @@
     mixins: [upload],
     data() {
       return {
+        showTable: 'none',
         loading: false,
         editMode: false,
         productForm: false,
@@ -235,42 +234,38 @@
         return false
       },
       printProduct()  {
-
-        this.columns = columns2
-        document.querySelector('.ant-pagination').style.display = 'none'
+        this.showTable = 'block'
         this.$nextTick(function() {
-          let mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-          mywindow.document.write('<html><head><title>Phreezone Products</title>');
-          mywindow.document.write('</head><body >');
-          mywindow.document.write('<h1>Phreezone Products</h1>');
-          mywindow.document.write(document.getElementById('products').innerHTML);
-          mywindow.document.write('</body></html>');
-
-          mywindow.document.close(); // necessary for IE >= 10
-          mywindow.focus(); // necessary for IE >= 10*/
-
-          mywindow.print()
-          this.columns = columns
-          document.querySelector('.ant-pagination').style.display = 'block'
-          // document.querySelector('.ant-pagination').classList.remove('hide')
-          this.getProducts()
-          mywindow.close();
+          let div2Print = this.$refs.example
+          let newWin = window.open('')
+          newWin.document.write(div2Print.outerHTML)
+          newWin.print()
+          newWin.close()
+          this.showTable = 'none'
         })
 
-    // let mywindow = window.open('', 'PRINT', 'height=400,width=600');
-    //
-    // mywindow.document.write('<html><head><title>' + 'Products'  + '</title>');
-    // mywindow.document.write('</head><body >');
-    // mywindow.document.write('<h1>' + 'Products'  + '</h1>');
-    // mywindow.document.write(document.getElementById('products').innerHTML);
-    // mywindow.document.write('</body></html>');
-    //
-    // mywindow.document.close(); // necessary for IE >= 10
-    // mywindow.focus(); // necessary for IE >= 10*/
-    //
-    // mywindow.print();
-    // mywindow.close();
+        // this.columns = columns2
+        // document.querySelector('.ant-pagination').style.display = 'none'
+        // this.$nextTick(function() {
+        //   let mywindow = window.open('', 'PRINT', 'height=400,width=600');
+        //
+        //   mywindow.document.write('<html><head><title>Phreezone Products</title>');
+        //   mywindow.document.write('</head><body >');
+        //   mywindow.document.write('<h1>Phreezone Products</h1>');
+        //   mywindow.document.write(document.getElementById('products').innerHTML);
+        //   mywindow.document.write('</body></html>');
+        //
+        //   mywindow.document.close(); // necessary for IE >= 10
+        //   mywindow.focus(); // necessary for IE >= 10*/
+        //
+        //   mywindow.print()
+        //   this.columns = columns
+        //   document.querySelector('.ant-pagination').style.display = 'block'
+        //   // document.querySelector('.ant-pagination').classList.remove('hide')
+        //   this.getProducts()
+        //   mywindow.close();
+        // })
+
 
     return true;
   }
@@ -283,44 +278,8 @@
   }
 </script>
 
-<style>
-  .buttons-print, .buttons-pdf {
-    background: #216ad4;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #fefefe;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-  }
-
-  .hide {
-    display: none;
-  }
-
-  @media print {
-    .myDivToPrint {
-      background-color: white;
-      height: 100%;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      margin: 0;
-      padding: 15px;
-      font-size: 14px;
-      line-height: 18px;
-    }
+<style scoped>
+  .pr-tr {
+    margin-bottom: 10px;
   }
 </style>
