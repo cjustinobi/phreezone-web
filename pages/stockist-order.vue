@@ -97,6 +97,12 @@
             callback: val => {
               return JSON.stringify(val.map(item => item.name))
             }
+          },
+          Qty: {
+            field: 'items',
+            callback: val => {
+              return JSON.stringify(val.map(item => item.qty))
+            }
           }
         }
       }

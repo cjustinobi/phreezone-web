@@ -10,10 +10,10 @@
         <table :style="{display: showTable}" class="table table-hover table-bordered" ref="example">
           <thead>
           <tr>
-            <th>Image</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Amount</th>
+            <th width="25%">Image</th>
+            <th width="20%">Code</th>
+            <th width="35%">Name</th>
+            <th width="20%">Amount</th>
 <!--            <th>Pv</th>-->
           </tr>
           </thead>
