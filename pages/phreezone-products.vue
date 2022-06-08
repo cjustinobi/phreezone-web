@@ -11,9 +11,10 @@
           <thead>
           <tr>
             <th width="25%">Image</th>
-            <th width="20%">Code</th>
+            <th width="15%">Code</th>
             <th width="35%">Name</th>
-            <th width="20%">Amount</th>
+            <th width="10%">PV</th>
+            <th width="15%">Amount</th>
 <!--            <th>Pv</th>-->
           </tr>
           </thead>
@@ -22,8 +23,8 @@
             <td><img width="100" :src="product.image_path" /></td>
             <td>{{product.code}}</td>
             <td>{{product.name}}</td>
+            <td>{{product.pv}}</td>
             <td>{{product.actual_amount}}</td>
-<!--            <td>{{product.pv}}</td>-->
           </tr>
           </tbody>
         </table>
