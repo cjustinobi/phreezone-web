@@ -70,9 +70,10 @@
       <thead>
       <tr>
         <th width="25%">Date</th>
-        <th width="25%">Full name</th>
+        <th width="20%">Full name</th>
         <th width="10%">ID</th>
         <th width="40%">Product/Amount/PV</th>
+        <th width="5%">Supply Status</th>
       </tr>
       </thead>
       <tbody>
