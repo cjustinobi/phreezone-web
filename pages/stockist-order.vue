@@ -14,17 +14,18 @@
       </a-col>
 
       <a-col v-if="isAdmin" :md="{span: 6}" :xs="{span: 6}">
-        <div class="download">
-          <download-excel
-            class="btn btn-primary"
-            :data="items"
-            :fields="excelFields"
-            worksheet="My Worksheet"
-            :name="`week-${week}.xls`"
-          >
-            Download
-          </download-excel>
-        </div>
+        <a-button v-if="items.length" type="primary" @click="printProduct">Download</a-button>
+<!--        <div class="download">-->
+<!--          <download-excel-->
+<!--            class="btn btn-primary"-->
+<!--            :data="items"-->
+<!--            :fields="excelFields"-->
+<!--            worksheet="My Worksheet"-->
+<!--            :name="`week-${week}.xls`"-->
+<!--          >-->
+<!--            Download-->
+<!--          </download-excel>-->
+<!--        </div>-->
       </a-col>
     </a-row>
 
@@ -62,9 +63,31 @@
           </tr>
           </tbody>
         </table>
-        {{product}}
       </span>
     </a-table>
+
+    <table :style="{display: showTable}" class="table table-hover table-bordered" ref="example">
+      <thead>
+      <tr>
+        <th width="25%">Date</th>
+        <th width="25%">Full name</th>
+        <th width="10%">ID</th>
+        <th width="40%">Product/Amount/PV</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="pr-tr" v-if="items.length" v-for="product in items" :key="product.id">
+        <td>{{formatDate(product.created_at)}}</td>
+        <td>{{product.sold_by.full_name}}</td>
+        <td>{{product.sold_by.referral}}</td>
+        <td v-if="product.items.length">
+          <div v-for="item in product.items">
+            {{item.name}} - <b>{{item.amount | currency}}</b> - {{item.pv}}
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -84,6 +107,7 @@
     mixins: [DateFormat],
     data() {
       return {
+        showTable: 'none',
         items: '',
         columns,
         week: '',
@@ -96,12 +120,6 @@
             field: 'items',
             callback: val => {
               return JSON.stringify(val.map(item => item.name))
-            }
-          },
-          Qty: {
-            field: 'items',
-            callback: val => {
-              return JSON.stringify(val.map(item => item.qty))
             }
           }
         }
@@ -119,6 +137,18 @@
       async setWeek() {
         this.week = await this.$axios.$get('date')
       },
+      printProduct()  {
+        this.showTable = 'block'
+        this.$nextTick(function() {
+          let div2Print = this.$refs.example
+          let newWin = window.open('')
+          newWin.document.write(div2Print.outerHTML)
+          newWin.print()
+          newWin.close()
+          this.showTable = 'none'
+        })
+        return true;
+      }
     },
     mounted() {
       this.setWeek()

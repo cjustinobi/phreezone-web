@@ -84,15 +84,6 @@
       <span slot="price" slot-scope="price"><span>{{ price | currency }}</span></span>
       <span slot="amount" slot-scope="amount"><span>{{ amount | currency }}</span></span>
     </a-table>
-<!--    <download-excel-->
-<!--      class="btn btn-primary"-->
-<!--      :data="products"-->
-<!--      :fields="excelFields"-->
-<!--      worksheet="My Worksheet"-->
-<!--      :name="`products.xls`"-->
-<!--    >-->
-<!--      Download-->
-<!--    </download-excel>-->
 
   </div>
 </template>
@@ -244,30 +235,6 @@
           newWin.close()
           this.showTable = 'none'
         })
-
-        // this.columns = columns2
-        // document.querySelector('.ant-pagination').style.display = 'none'
-        // this.$nextTick(function() {
-        //   let mywindow = window.open('', 'PRINT', 'height=400,width=600');
-        //
-        //   mywindow.document.write('<html><head><title>Phreezone Products</title>');
-        //   mywindow.document.write('</head><body >');
-        //   mywindow.document.write('<h1>Phreezone Products</h1>');
-        //   mywindow.document.write(document.getElementById('products').innerHTML);
-        //   mywindow.document.write('</body></html>');
-        //
-        //   mywindow.document.close(); // necessary for IE >= 10
-        //   mywindow.focus(); // necessary for IE >= 10*/
-        //
-        //   mywindow.print()
-        //   this.columns = columns
-        //   document.querySelector('.ant-pagination').style.display = 'block'
-        //   // document.querySelector('.ant-pagination').classList.remove('hide')
-        //   this.getProducts()
-        //   mywindow.close();
-        // })
-
-
     return true;
   }
     },
