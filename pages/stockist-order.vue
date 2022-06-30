@@ -72,7 +72,8 @@
         <th width="25%">Date</th>
         <th width="20%">Full name</th>
         <th width="10%">ID</th>
-        <th width="40%">Product/Amount/PV</th>
+        <th width="40%">Product/Qty</th>
+<!--        <th width="40%">Product/Amount/PV</th>-->
         <th width="5%">Supply Status</th>
       </tr>
       </thead>
@@ -83,7 +84,8 @@
         <td>{{product.sold_by.referral}}</td>
         <td v-if="product.items.length">
           <div v-for="item in product.items">
-            {{item.name}} - <b>{{item.amount | currency}}</b> - {{item.pv}}
+            {{item.name}} - {{item.qty}}
+<!--            {{item.name}} - <b>{{item.amount | currency}}</b> - {{item.pv}}-->
           </div>
         </td>
       </tr>
