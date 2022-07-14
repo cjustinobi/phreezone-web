@@ -14,18 +14,18 @@
       </a-col>
 
       <a-col v-if="isAdmin" :md="{span: 6}" :xs="{span: 6}">
-        <a-button v-if="items.length" type="primary" @click="printProduct">Download</a-button>
-<!--        <div class="download">-->
-<!--          <download-excel-->
-<!--            class="btn btn-primary"-->
-<!--            :data="items"-->
-<!--            :fields="excelFields"-->
-<!--            worksheet="My Worksheet"-->
-<!--            :name="`week-${week}.xls`"-->
-<!--          >-->
-<!--            Download-->
-<!--          </download-excel>-->
-<!--        </div>-->
+<!--        <a-button v-if="items.length" type="primary" @click="printProduct">Download</a-button>-->
+        <div class="download">
+          <download-excel
+            class="btn btn-primary"
+            :data="items"
+            :fields="excelFields"
+            worksheet="My Worksheet"
+            :name="`week-${week}.xls`"
+          >
+            Download
+          </download-excel>
+        </div>
       </a-col>
     </a-row>
 
@@ -117,13 +117,66 @@
         week: '',
         dateFormat: 'p d MMM, Y',
         excelFields: {
-          Date: 'created_at',
-          Fullname: 'sold_by.full_name',
+          Date: {
+            field: 'created_at',
+            callback: val => {
+              return this.formatDate(val)
+            }
+          },
+          'Sold by': 'sold_by.full_name',
+          'Bought by': 'bought_by.full_name',
           ID: 'sold_by.referral',
           Product: {
             field: 'items',
             callback: val => {
-              return JSON.stringify(val.map(item => item.name))
+              // return JSON.stringify(val.map(item => item.name))
+              const res = val.map(item => item.name)
+
+              let el = '<ul>'
+              res.forEach(item => {
+                el += `<li>${item}</li>`
+              })
+              el += '</ul>'
+              return el
+            }
+          },
+          'Code': {
+            field: 'items',
+            callback: val => {
+              const res = val.map(item => item.code)
+
+              let el = '<ul>'
+              res.forEach(code => {
+                el += `<li>${code}</li>`
+              })
+              el += '</ul>'
+              return el
+            }
+          },
+          Qty: {
+            field: 'items',
+            callback: val => {
+              const res = val.map(item => item.qty)
+
+              let el = '<ul>'
+              res.forEach(item => {
+                el += `<li>${item}</li>`
+              })
+              el += '</ul>'
+              return el
+            }
+          },
+          'Supply Status': {
+            field: 'items',
+            callback: val => {
+              const res = val.map(item => item.qty)
+
+              let el = '<ul>'
+              res.forEach(item => {
+                el += `<li>&nbsp;</li>`
+              })
+              el += '</ul>'
+              return el
             }
           }
         }

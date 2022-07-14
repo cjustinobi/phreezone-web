@@ -31,9 +31,17 @@
       <img class="img" @click="viewImage(image)" alt="pop" :src="`${$config.imagePath}/${previewImage}`"/>
     </a-modal>
     <h4 v-if="pops">Agent wallets</h4>
-    <a-table v-if="pops" :columns="columns" :data-source="pops['pops']" :rowKey="record => record.id" :scroll="{ x: 1500, y: 300 }" size="small" defaultPageSize="50">
+    <a-table
+      v-if="pops"
+      :columns="columns"
+      :data-source="pops['pops']"
+      :rowKey="record => record.id"
+      :scroll="{ x: 1500, y: 300 }"
+      size="small"
+      defaultPageSize="50"
+    >
 <!--      <img width="80px" @click="viewImage(image)" slot="image" slot-scope="image" alt="pop" :src="`${$config.imagePath}/${image}`"/>-->
-      <a href="#" slot="image" slot-scope="image" @click.prevent="viewImage(image)">View</a>
+      <a href="#" slot="agent_image" slot-scope="agent_image" @click.prevent="viewImage(agent_image)">View</a>
       <a-dropdown v-if="pop.status == 'pending'" slot="action" slot-scope="pop" href="javascript:;">
         <a-menu slot="overlay">
           <a-menu-item key="1">
@@ -97,27 +105,9 @@
       />
       <template slot="fullName" slot-scope="text, record, index, column">
       <span v-if="searchText && searchedColumn === column.dataIndex">
-<!--      <a-tag v-if="record.userType == '2'" color="geekblue">Stockist</a-tag>-->
-        <!--        <template-->
-        <!--          v-for="(fragment, i) in text-->
-        <!--            .toString()-->
-        <!--            .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"-->
-        <!--        >-->
-        <!--          <mark-->
-        <!--            v-if="fragment.toLowerCase() === searchText.toLowerCase()"-->
-        <!--            :key="i"-->
-        <!--            class="highlight"-->
-        <!--          >{{ fragment }}</mark-->
-        <!--          >-->
-        <!--          <template v-else>{{ fragment }}</template>-->
-        <!--        </template>-->
-      </span>
-        <!--      <template v-else>-->
-        <!--        {{ text }}-->
-        <!--        &lt;!&ndash;          <small style="display: inline">{{ record.referral }}</small>&ndash;&gt;-->
-        <!--        <a-tag v-if="record.userType == '2'" color="geekblue">Stockist</a-tag>-->
 
-        <!--      </template>-->
+      </span>
+
       </template>
       <span slot="status" slot-scope="status">
       <a-tag :color="status == 'pending' ? 'volcano' : status == 'rejected' ? 'red' : 'green' ">{{ status }}</a-tag>
@@ -223,11 +213,8 @@
     {
       title: 'Full Name',
       dataIndex: 'agent.full_name',
-      fixed: 'left',
+      // fixed: 'left',
       scopedSlots: {
-        // customRender: 'fullName',
-        // filterDropdown: 'filterDropdown',
-        // filterIcon: 'filterIcon',
       },
       onFilter: (value, record) =>
         record.full_name
@@ -245,7 +232,7 @@
     {
       title: 'Image',
       dataIndex: 'pop_path',
-      scopedSlots: {customRender: 'image'}
+      scopedSlots: {customRender: 'agent_image'}
     },
     {
       title: 'Sponsor ID',
@@ -275,9 +262,6 @@
       dataIndex: 'sponsor.full_name',
       fixed: 'left',
       scopedSlots: {
-        // customRender: 'fullName',
-        // filterDropdown: 'filterDropdown',
-        // filterIcon: 'filterIcon',
       },
       onFilter: (value, record) =>
         record.full_name

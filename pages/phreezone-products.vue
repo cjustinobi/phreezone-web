@@ -52,6 +52,13 @@
         </a-button>
       </a-upload>
     </a-modal>
+    <a-space>
+      <a-input v-model="searchQuery" @change="search" placeholder="Search Product"/>
+      <a-button type="primary" :loading="searching" @click="resetProducts">
+        {{ searching ? 'Searching ... ' : 'Reset' }}
+      </a-button>
+    </a-space>
+    <br><br>
     <a-button v-if="products.length" type="primary" @click="printProduct">Download</a-button>
     <a-table
       id="products"
@@ -118,10 +125,12 @@
     data() {
       return {
         showTable: 'none',
+        searching: false,
         loading: false,
         editMode: false,
         productForm: false,
         defaultPageSize: 2000,
+        searchQuery: '',
         productId: '',
         columns,
         fileList: '',
@@ -200,6 +209,22 @@
           this.getProducts()
           this.$message.success('Successfully deleted')
         }
+      },
+      async search() {
+        if (this.searchQuery == '') return;
+        this.searching = true
+        const res = await this.$axios.$post('admin/product-search', {
+          searchQuery: this.searchQuery
+        })
+        if (res.data.length) {
+          this.searching = false
+          return this.products = res.data
+        }
+        this.searching = false
+      },
+      resetProducts() {
+        this.searchQuery = ''
+        this.getProducts()
       },
       setCode() {
         const item = this.item
