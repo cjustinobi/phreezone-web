@@ -75,7 +75,9 @@
             </div>
             <p class="apart">
               <span>{{ prod.actual_amount | currency }}<br><span>PV: {{ prod.pv }}</span></span>
-              <i @click="addProduct(prod, 1)" class="fa fa-cart-plus fa-2x"></i>
+              <a :class="{'disable': prod.status === 0}" href="javascript:;">
+                <i @click="addProduct(prod, 1)" class="fa fa-cart-plus fa-2x"></i>
+              </a>
             </p>
 
           </div>
@@ -335,6 +337,10 @@
   }
   .hide {
     display: none;
+  }
+  .disable {
+    pointer-events: none;
+    color: lightgrey;
   }
   .cart-items {
     display: grid;
