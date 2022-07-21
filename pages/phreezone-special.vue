@@ -75,7 +75,7 @@
             </div>
             <p class="apart">
               <span>{{ prod.actual_amount | currency }}<br><span>PV: {{ prod.pv }}</span></span>
-              <a :class="{'disable': prod.status === 0}" href="javascript:;">
+              <a :class="{'disable': prod.status == '0'}" href="javascript:;">
                 <i @click="addProduct(prod, 1)" class="fa fa-cart-plus fa-2x"></i>
               </a>
             </p>
