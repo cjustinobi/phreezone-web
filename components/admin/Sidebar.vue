@@ -17,7 +17,7 @@
         </div>
         <div class="user-info">
           <span class="user-name">
-            <strong>{{ $auth.user.full_name }} - {{ $auth.user.referral }}</strong><br>
+            <strong @click="$router.push('/profile')">{{ $auth.user.full_name }} - {{ $auth.user.referral }}</strong><br>
             <span v-if="$auth.user.package" class="badge badge-pill badge-warning">{{ $auth.user.package.name }}</span>
             <span v-else class="badge badge-pill badge-light">N/P</span>
           </span>
@@ -263,5 +263,7 @@
 </script>
 
 <style scoped>
-
+  .user-name strong {
+    cursor: pointer;
+  }
 </style>
