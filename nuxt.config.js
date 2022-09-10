@@ -43,6 +43,11 @@ export default {
 
   serverMiddleware: ['~/api/index.js'],
 
+  server: {
+    host: process.env.NUXT_HOST,
+    port: process.env.NUXT_PORT,
+  },
+
   buildModules: [
     '@nuxtjs/date-fns'
   ],
